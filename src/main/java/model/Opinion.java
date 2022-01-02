@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.person.Customer;
+import model.person.Expert;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -14,15 +16,14 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
-public class Order {
+public class Opinion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double ProposedPrice;
-    private String jobDescription;
-    @CreationTimestamp
-    private Date registerDate;
-    private Date doDate;
     @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    private Customer customer;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Expert expert;
+    @CreationTimestamp
+    private Date registerOpinion;
 }

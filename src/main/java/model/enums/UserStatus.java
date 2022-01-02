@@ -1,6 +1,6 @@
 package model.enums;
 
-public enum UserState {
+public enum UserStatus {
     NEW(1, "new"),
     CONFIRMED(2, "confirmed"),
     WAITING_CONFIRM(3, "waiting_confirm"),
@@ -8,7 +8,7 @@ public enum UserState {
     private String nameState;
     private int numState;
 
-    UserState( int numState,String nameState) {
+    UserStatus(int numState, String nameState) {
         this.nameState = nameState;
         this.numState = numState;
     }

@@ -1,16 +1,15 @@
 package model.person;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Data
 @Entity
-public class Customer extends Person{
+public class Customer extends Person {
+    private double credit;
 }

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SaveCustomerDaoTest extends BaseTest {
-    CustomerDao customerDao;
+
 
     @BeforeEach
     void init() {
@@ -19,7 +19,7 @@ public class SaveCustomerDaoTest extends BaseTest {
 
     @AfterEach
     void after() {
-        System.out.println("******* after " + nameMethod + " method  *******");
+        System.out.println("******* after " + nameMethod + " test method  *******");
     }
 
     @Test
@@ -27,7 +27,7 @@ public class SaveCustomerDaoTest extends BaseTest {
         Customer customer = null;
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->
                 customerDao.save(customer));
-        Assertions.assertEquals("SECOND NUMBER IS ZERO ", runtimeException.getMessage());
+        Assertions.assertEquals("Customer is null ", runtimeException.getMessage());
         nameMethod = "null customer";
     }
 
@@ -49,6 +49,6 @@ public class SaveCustomerDaoTest extends BaseTest {
                 .build();
         int idAfterSave = customerDao.save(customer);
         assertEquals(idBeforeSave + 1, idAfterSave);
-        nameMethod = "insert customer test";
+        nameMethod = "insert customer ";
     }
 }

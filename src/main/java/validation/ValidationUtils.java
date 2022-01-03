@@ -13,26 +13,26 @@ public class ValidationUtils {
     public static boolean isValidInfo(String input) {
         String check = "";
         String[] split = input.split(",");
-        if (isValidCharacter(split[0])) {
-            check = "firstName";
-            return true;
-        } else if (isValidCharacter(split[1])) {
-            check = "lastName";
-            return true;
-        } else if (isValidEmail(split[2])) {
-            check = "email";
-            return true;
-        } else if (isValidPassword(split[3])) {
-            check = "password";
-            return true;
+        if (!isValidCharacter(split[0])) {
+            check += " firstName";
+        } else if (!isValidCharacter(split[1])) {
+            check += " lastName";
+
+        } else if (!isValidEmail(split[2])) {
+            check += " email";
+
+        } else if (!isValidPassword(split[3])) {
+            check += " password";
         } else if (isValidPhoneNumber(split[4])) {
-            check = "phoneNumber";
-            return true;
+            check += " phoneNumber";
+
         } else if (isValidNumeric(split[5])) {
-            check = "credit";
-            return true;
+            check += " credit";
         }
-        throw new InValidUserInfoException("---- " + check + " is not valid you should enter alphabet----");
+
+        if (check.length() > 1)
+            throw new InValidUserInfoException("---- " + check + " is not valid you should enter alphabet----");
+        else return true;
     }
 
     public static boolean isValidCharacter(String input) {
@@ -53,7 +53,8 @@ public class ValidationUtils {
          throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
      }*/
     public static boolean isValidEmail(String input) {
-        if (input.matches("^[A-Z0-9+_.-]+@[A-Z0-9.-]+$"))
+        if (input.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"))
             return true;
         throw new InValidUserInfoException("---- email that entered is not valid ----");
     }

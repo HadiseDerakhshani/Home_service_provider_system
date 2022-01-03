@@ -1,8 +1,13 @@
 package service;
 
 import dao.CustomerDao;
+import dto.CustomerDto;
 import model.enums.UserStatus;
 import model.person.Customer;
+import validation.ValidationFilter;
+
+import java.io.IOException;
+import java.util.List;
 
 public class CustomerService {
     private final CustomerDao customerDao = new CustomerDao();
@@ -11,7 +16,7 @@ public class CustomerService {
         customerDao.save(customer);
     }
 
-    public Customer createCustomer(String info) {//service or view
+    public Customer createCustomer(String info) {
         String[] split = info.split(",");
         Customer customer = Customer.builder()
                 .firstName(split[0])
@@ -25,4 +30,18 @@ public class CustomerService {
         return customer;
     }
 
+    public List<CustomerDto> filter(String filter) throws IOException {
+        String name = null, family = null, email = null;
+        boolean check = false;
+        String validInfo = ValidationFilter.isValidInfo(filter);
+        String[] split = validInfo.split(",");
+        if (!split[0].equals("null"))
+            name = split[0];
+        if (!split[1].equals("null"))
+            family = split[1];
+        if (!split[2].equals("null"))
+            email = split[2];
+        List<CustomerDto> listFilter = customerDao.filter(name, family, email);
+        return listFilter;
+    }
 }

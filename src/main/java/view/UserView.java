@@ -37,4 +37,9 @@ public class UserView {
         return info;
     }
 
+    public void filterCustomer() {
+        System.out.println("enter filter case name,family,emil:if not wanted case enter 0");
+        String filter = scanner.next();
+        String[] split = filter.split(",");
+    }
 }

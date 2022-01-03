@@ -4,10 +4,9 @@ import dto.CustomerDto;
 import model.person.Customer;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 
@@ -18,7 +17,7 @@ public class CustomerDao extends BaseDao {
 
     public int save(Customer customer) {//saveCustomer or save
         if (customer == null)
-            throw new RuntimeException("SECOND NUMBER IS ZERO ");
+            throw new RuntimeException("Customer is null ");
         else {
             session = builderSessionFactory().openSession();
             session.beginTransaction();
@@ -40,16 +39,40 @@ public class CustomerDao extends BaseDao {
         return maxId;
     }
 
-    public List<CustomerDto> filter(String caseFilter) {
-        String[] split = caseFilter.split(",");
+    public List<CustomerDto> filter(String name, String family, String email) {
         session = builderSessionFactory().openSession();
         session.beginTransaction();
         Criteria criteria = session.createCriteria(Customer.class, "c");
-        SimpleExpression name = Restrictions.eq("c.firstName", split[0]);
-        SimpleExpression family = Restrictions.eq("c.lastName", split[1]);
-        SimpleExpression email = Restrictions.eq("c.email", split[2]);
-        Disjunction orCon = Restrictions.or(name, family, email);
-        criteria.add(orCon);
+
+        Criterion nameCond = null;
+        if (name != null && name.length() != 0) {
+            nameCond = Restrictions.eq("c.firstName", name);
+        }
+        Criterion familyCond = null;
+        if (family != null && family.length() != 0) {
+            familyCond = Restrictions.eq("c.lastName", family);
+        }
+        Criterion emailCond = null;
+        if (email != null && email.length() != 0) {
+            emailCond = Restrictions.eq("c.email", email);
+        }
+
+
+        if (nameCond != null && familyCond != null && emailCond != null)
+            criteria.add(Restrictions.or(nameCond, familyCond, emailCond));
+        if (nameCond != null && familyCond != null && emailCond == null)
+            criteria.add(Restrictions.or(nameCond, familyCond));
+        if (nameCond != null && familyCond == null && emailCond != null)
+            criteria.add(Restrictions.or(nameCond, emailCond));
+        if (nameCond == null && familyCond != null && emailCond != null)
+            criteria.add(Restrictions.or(familyCond, emailCond));
+        if (nameCond != null && familyCond == null && emailCond == null)
+            criteria.add(nameCond);
+        if (nameCond == null && familyCond != null && emailCond == null)
+            criteria.add(familyCond);
+        if (nameCond == null && familyCond == null && emailCond != null)
+            criteria.add(emailCond);
+
         criteria.setProjection(Projections.projectionList()
                 .add(Projections.property("c.firstName").as("firstName"))
                 .add(Projections.property("c.lastName").as("lastName"))

@@ -30,11 +30,10 @@ public class CustomerService {
         return customer;
     }
 
-    public List<CustomerDto> filter(String filter) throws IOException {
+    public List<CustomerDto> filter(String filter) {
         String name = null, family = null, email = null;
         boolean check = false;
-        String validInfo = ValidationFilter.isValidInfo(filter);
-        String[] split = validInfo.split(",");
+        String[] split = filter.split(",");
         if (!split[0].equals("null"))
             name = split[0];
         if (!split[1].equals("null"))

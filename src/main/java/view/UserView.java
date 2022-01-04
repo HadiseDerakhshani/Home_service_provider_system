@@ -1,9 +1,12 @@
 package view;
 
+import dto.CustomerDto;
 import exception.InValidUserInfoException;
 import service.CustomerService;
+import validation.ValidationFilter;
 import validation.ValidationUtils;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UserView {
@@ -38,8 +41,24 @@ public class UserView {
     }
 
     public void filterCustomer() {
-        System.out.println("enter filter case name,family,emil:if not wanted case enter 0");
-        String filter = scanner.next();
-        String[] split = filter.split(",");
+
+        isContinue = false;
+        String info;
+        do {
+            System.out.println("enter filter case name,family,emil:if not wanted case enter 0");
+
+            info = scanner.next();
+            try {
+                 info=ValidationFilter.isValidInfo(info);
+                isContinue = true;
+                break;
+            } catch (InValidUserInfoException e) {
+                e.getMessage();
+                isContinue = false;
+            }
+        } while (isContinue);
+        List<CustomerDto> filter = customerService.filter(info);
+        filter.forEach(System.out::println);
     }
+
 }

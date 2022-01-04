@@ -18,6 +18,9 @@
 
 
         <mapping class="model.person.Customer"/>
+        <mapping class="model.serviceSystem.MasterService"/>
+        <mapping class="model.serviceSystem.BranchService"/>
+        <mapping class="model.person.Expert"/>
 
 
     </session-factory>

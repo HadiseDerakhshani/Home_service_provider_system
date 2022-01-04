@@ -33,10 +33,7 @@ public class SaveCustomerDaoTest extends BaseTest {
 
     @Test
     void notNullAsArgs_WhenSave_ThenCustomerIdResponseReturn() {
-        Customer customer = Customer.builder()
-                .firstName("ali")
-                .build();
-        int save = customerDao.save(customer);
+        int save = customerDao.save(creatCustomer());
         assertNotEquals(0, save);
         nameMethod = "notNull customer";
     }
@@ -44,11 +41,15 @@ public class SaveCustomerDaoTest extends BaseTest {
     @Test
     void customerInsert_WhenSave_ThenCustomerIdResponseReturn() {
         int idBeforeSave = customerDao.maxId();
-        Customer customer = Customer.builder()
-                .firstName("ali")
-                .build();
-        int idAfterSave = customerDao.save(customer);
+        int idAfterSave = customerDao.save(creatCustomer());
         assertEquals(idBeforeSave + 1, idAfterSave);
         nameMethod = "insert customer ";
+    }
+
+    Customer creatCustomer() {
+        return Customer.builder()
+                .firstName("ali")
+                .build();
+
     }
 }

@@ -4,9 +4,7 @@ import dao.CustomerDao;
 import dto.CustomerDto;
 import model.enums.UserStatus;
 import model.person.Customer;
-import validation.ValidationFilter;
 
-import java.io.IOException;
 import java.util.List;
 
 public class CustomerService {

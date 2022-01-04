@@ -2,7 +2,7 @@ package validation;
 
 import exception.InValidUserInfoException;
 
-public class ValidationFilter {
+public class ValidationFilterCustomer {
     public static String isValidInfo(String input) {
         String check, checkNull, name = null, family = null, email = null;
 

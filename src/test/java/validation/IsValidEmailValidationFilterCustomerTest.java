@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class IsValidEmailValidationFilterTest {
+public class IsValidEmailValidationFilterCustomerTest {
 
     String nameMethod = "";
 
@@ -23,7 +23,7 @@ public class IsValidEmailValidationFilterTest {
     @CsvSource({"samaseven@gmail.122"})
     void givenNumberForDomain_WhenIsValidEmail_ThenThrowsExceptionResponseReturn(String email) {
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->
-                ValidationFilter.isValidEmail(email));
+                ValidationFilterCustomer.isValidEmail(email));
         Assertions.assertEquals("---- email that entered is not valid ----", runtimeException.getMessage());
         nameMethod = "number as domain for email";
     }
@@ -32,7 +32,7 @@ public class IsValidEmailValidationFilterTest {
     @CsvSource({"samaseven5gmail.com"})
     void givenNumberForAnnotation_WhenIsValidEmail_ThenThrowsExceptionResponseReturn(String email) {
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->
-                ValidationFilter.isValidEmail(email));
+                ValidationFilterCustomer.isValidEmail(email));
         Assertions.assertEquals("---- email that entered is not valid ----", runtimeException.getMessage());
         nameMethod = "number as @ for email";
     }
@@ -41,7 +41,7 @@ public class IsValidEmailValidationFilterTest {
     @CsvSource({"samaseven@gmail.com"})
     void givenCorrect_WhenIsValidEmail_ThenTrueResponseReturn(String email) {
         boolean result = false;
-        String validEmail = ValidationFilter.isValidEmail(email);
+        String validEmail = ValidationFilterCustomer.isValidEmail(email);
         if (validEmail.equals("true"))
             result = true;
         Assertions.assertTrue(result);

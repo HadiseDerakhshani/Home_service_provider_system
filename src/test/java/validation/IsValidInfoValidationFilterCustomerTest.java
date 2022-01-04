@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
 
-public class IsValidInfoValidationFilterTest {
+public class IsValidInfoValidationFilterCustomerTest {
     String nameMethod = "";
 
     @BeforeEach
@@ -25,7 +25,7 @@ public class IsValidInfoValidationFilterTest {
     void givenZeroAsName_WhenIsValidInfo_ThenNullInNameResponseReturn(String name, String family, String email) throws IOException {
         String info = name + "," + family + "," + email;
         String result = null;
-        String validInfo = ValidationFilter.isValidInfo(info);
+        String validInfo = ValidationFilterCustomer.isValidInfo(info);
         String[] split = validInfo.split(",");
         if (!split[0].equals("null"))
             result = split[0];
@@ -38,7 +38,7 @@ public class IsValidInfoValidationFilterTest {
     void givenZeroAsFamily_WhenIsValidInfo_ThenNullInNameResponseReturn(String name, String family, String email) throws IOException {
         String info = name + "," + family + "," + email;
         String result = null;
-        String validInfo = ValidationFilter.isValidInfo(info);
+        String validInfo = ValidationFilterCustomer.isValidInfo(info);
         String[] split = validInfo.split(",");
         if (!split[1].equals("null"))
             result = split[1];
@@ -51,7 +51,7 @@ public class IsValidInfoValidationFilterTest {
     void givenZeroAsEmail_WhenIsValidInfo_ThenNullInNameResponseReturn(String name, String family, String email) throws IOException {
         String info = name + "," + family + "," + email;
         String result = null;
-        String validInfo = ValidationFilter.isValidInfo(info);
+        String validInfo = ValidationFilterCustomer.isValidInfo(info);
         String[] split = validInfo.split(",");
         if (!split[2].equals("null"))
             result = split[2];
@@ -64,7 +64,7 @@ public class IsValidInfoValidationFilterTest {
     void givenZeroAsName_WhenIsValidInfo_ThenNullInNameResponseReturn(String name, String family, String email, String test) {
         String info = name + "," + family + "," + email + "," + test;
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->
-                ValidationFilter.isValidInfo(info));
+                ValidationFilterCustomer.isValidInfo(info));
         Assertions.assertEquals("----entered more than invalid you shod 1 or 2 or 3 case for filter ----", runtimeException.getMessage());
         nameMethod = "the length of string not valid";
 

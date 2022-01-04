@@ -2,7 +2,7 @@ package validation;
 
 import exception.InValidUserInfoException;
 
-public class ValidationUtils {
+public class ValidationInfo {
    /* public static boolean isValidMenu(String input) {
         if (input.matches("[1-2]+"))
             return true;
@@ -23,10 +23,10 @@ public class ValidationUtils {
 
         } else if (!isValidPassword(split[3])) {
             check += " password";
-        } else if (isValidPhoneNumber(split[4])) {
+        } else if (!isValidPhoneNumber(split[4])) {
             check += " phoneNumber";
 
-        } else if (isValidNumeric(split[5])) {
+        } else if (!isValidNumeric(split[5])) {
             check += " credit";
         }
 

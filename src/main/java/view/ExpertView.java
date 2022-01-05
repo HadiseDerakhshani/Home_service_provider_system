@@ -1,5 +1,6 @@
 package view;
 
+import dto.ExpertDto;
 import exception.InValidUserInfoException;
 import model.enums.UserStatus;
 import model.person.Expert;
@@ -8,9 +9,7 @@ import service.BranchDutyService;
 import service.CustomerService;
 import service.ExpertService;
 import service.MasterDutyService;
-import validation.ValidationDutyInfo;
-import validation.ValidationInfo;
-import validation.ValidationInfoExpert;
+import validation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,4 +148,42 @@ public class ExpertView {
         return list;
     }
 
+    public void filterExpert() {
+
+        isContinue = false;
+        String info;
+        do {
+            System.out.println("enter filter case name,family,emil:if not wanted case enter 0");
+
+            info = scanner.next();
+            try {
+                info = ValidationFilterExpert.isValidInfo(info);
+                isContinue = true;
+                break;
+            } catch (InValidUserInfoException e) {
+                e.getMessage();
+                isContinue = false;
+            }
+        } while (isContinue);
+        List<ExpertDto> filter = expertService.filter(info);
+        filter.forEach(System.out::println);
+    }
+
+    public void update(String email) {
+        isContinue = false;
+        String value;
+        System.out.println(" select item for update : \n1.firstname \n2.lastname \n3.email \n4.password " +
+                "\n5.phoneNumber \n6.credit \n7.Score \n8.image \n9.listService");
+        info = scanner.next();
+        try {
+            ValidationInfoExpert.isValidSelectUpdate(info);
+            System.out.println("enter new value for update");
+            value = scanner.next();
+            ValidationUpdateExpert.isValidInfo(info, value);
+            expertService.update(info, value, email);
+            isContinue = true;
+        } catch (InValidUserInfoException e) {
+            e.getMessage();
+        }
+    }
 }

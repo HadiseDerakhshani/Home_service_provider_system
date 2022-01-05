@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import service.ExpertService;
 
 import java.util.List;
 
@@ -135,5 +136,25 @@ public class ExpertDao extends BaseDao {
         return expert;
     }
 
+    public int update(String querySyntax, String value, String email, int filed) {
+        ExpertService expertService = new ExpertService();
+        int update;
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery(querySyntax);
+        switch (filed) {
+            case 6 -> query.setParameter("newValue", Double.parseDouble(value));
+            case 7 -> query.setParameter("newValue", Integer.parseInt(value));
+            default -> query.setParameter("newValue", value);
+        }
+        query.setParameter("email", email);
+        update = query.executeUpdate();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return update;
+    }
 
 }

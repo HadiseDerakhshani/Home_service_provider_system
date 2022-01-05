@@ -1,7 +1,6 @@
 package view;
 
 import dto.CustomerDto;
-import dto.ExpertDto;
 import exception.InValidUserInfoException;
 import model.enums.UserStatus;
 import model.person.Customer;
@@ -12,7 +11,6 @@ import service.ExpertService;
 import service.MasterDutyService;
 import validation.ValidationDutyInfo;
 import validation.ValidationFilterCustomer;
-import validation.ValidationFilterExpert;
 import validation.ValidationInfo;
 
 import java.util.ArrayList;
@@ -124,6 +122,10 @@ public class UserView {
         return info;
     }
 
+    public void updateCustomer() {
+        System.out.println("");
+    }
+
     public void filterCustomer() {
 
         isContinue = false;
@@ -144,26 +146,6 @@ public class UserView {
         filter.forEach(System.out::println);
     }
 
-    public void filterExpert() {
-
-        isContinue = false;
-        String info;
-        do {
-            System.out.println("enter filter case name,family,emil:if not wanted case enter 0");
-
-            info = scanner.next();
-            try {
-                info = ValidationFilterExpert.isValidInfo(info);
-                isContinue = true;
-                break;
-            } catch (InValidUserInfoException e) {
-                e.getMessage();
-                isContinue = false;
-            }
-        } while (isContinue);
-        List<ExpertDto> filter = expertService.filter(info);
-        filter.forEach(System.out::println);
-    }
 
     public void addMasterDuty() {
         System.out.println("********* MasterDuty information entry form ********");

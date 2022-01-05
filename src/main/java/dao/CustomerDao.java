@@ -104,4 +104,23 @@ public class CustomerDao extends BaseDao {
         return customer;
     }
 
+    public int update(String querySyntax, String value, String email, int filed) {
+        int update;
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery(querySyntax);
+        if (filed == 6)
+            query.setParameter("newValue", Double.parseDouble(value));
+        else
+            query.setParameter("newValue", value);
+
+        query.setParameter("email", email);
+        update = query.executeUpdate();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return update;
+    }
 }

@@ -82,4 +82,25 @@ public class ExpertService {
         expertFind.setUserStatus(UserStatus.WAITING_CONFIRM);
         return expertFind;
     }
+
+    public void update(String input, String value, String email) {
+        String query = null;
+        int filed = 0;
+
+        if (input.equals("6")) {
+            filed = 6;
+            query = "update Expert  e set e.credit=:newValue where e.email=:email";
+        } else if (input.equals("7")) {
+            filed = 7;
+            query = "update Expert  e set e.score=:newValue where e.email=:email";
+        } else
+            switch (input) {
+                case "1" -> query = "update Expert e set e.firstName=:newValue where e.email=:email";
+                case "2" -> query = "update Expert e  set e.lastName=:newValue where e.email=:email";
+                case "3" -> query = "update Expert e  set e.email=:newValue where e.email=:email";
+                case "4" -> query = "update Customer  c set c.password=:newValue where c.email=:email";
+                case "5" -> query = "update Customer  c set c.phoneNumber=:newValue where c.email=:email";
+            }
+        expertDao.update(query, value, email, filed);
+    }
 }

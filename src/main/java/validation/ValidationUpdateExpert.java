@@ -2,32 +2,42 @@ package validation;
 
 import exception.InValidUserInfoException;
 
-public class ValidationInfoExpert {
+public class ValidationUpdateExpert {
 
-    public static boolean isValidInfo(String input) {
+    public static boolean isValidInfo(String input, String value) {
         String check = "";
-        String[] split = input.split(",");
-        if (!isValidCharacter(split[0])) {
-            check += " firstName";
-        } else if (!isValidCharacter(split[1])) {
-            check += " lastName";
-
-        } else if (!isValidEmail(split[2])) {
-            check += " email";
-
-        } else if (!isValidPassword(split[3])) {
-            check += " password";
-        } else if (!isValidPhoneNumber(split[4])) {
-            check += " phoneNumber";
-
-        } else if (!isValidNumeric(split[5])) {
-            check += " credit";
-        } else if (!isValidScore(split[6])) {
-            check += " Score";
+        switch (input) {
+            case "1":
+                if (!isValidCharacter(value))
+                    check += " firstName";
+                break;
+            case "2":
+                if (!isValidCharacter(value))
+                    check += " lastName";
+                break;
+            case "3":
+                if (!isValidEmail(value))
+                    check += " email";
+                break;
+            case "4":
+                if (!isValidPassword(value))
+                    check += " password";
+                break;
+            case "5":
+                if (!isValidPhoneNumber(value))
+                    check += " phoneNumber";
+                break;
+            case "6":
+                if (!isValidNumeric(value))
+                    check += " credit";
+                break;
+            case " 7":
+                if (!isValidScore(value))
+                    check += " Score";
+                break;
         }
-
         if (check.length() > 1)
-            throw new InValidUserInfoException("---- " + check + " is not valid you should enter alphabet----");
+            throw new InValidUserInfoException("---- " + check + " is not valid ----");
         else return true;
     }
 

@@ -57,4 +57,22 @@ public class CustomerService {
         customerFind.setUserStatus(UserStatus.WAITING_CONFIRM);
         return customerFind;
     }
+
+    public void update(String input, String value, String email) {
+        String query = null;
+        int filed = 0;
+        if (input.equals("6")) {
+            filed = 6;
+            query = "update Customer  c set c.credit=:newValue where c.email=:email";
+        } else
+            switch (input) {
+                case "1" -> query = "update Customer  c set c.firstName=:newValue where c.email=:email";
+                case "2" -> query = "update Customer  c set c.lastName=:newValue where c.email=:email";
+                case "3" -> query = "update Customer  c set c.email=:newValue where c.email=:email";
+                case "4" -> query = "update Customer  c set c.password=:newValue where c.email=:email";
+                case "5" -> query = "update Customer  c set c.phoneNumber=:newValue where c.email=:email";
+
+            }
+        customerDao.update(query, value, email, filed);
+    }
 }

@@ -4,6 +4,8 @@ import model.serviceSystem.BranchDuty;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 public class BranchDutyDao extends BaseDao {
     private Session session;
 
@@ -31,4 +33,13 @@ public class BranchDutyDao extends BaseDao {
         return maxId;
     }
 
+    public List<BranchDuty> findByName() {
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from BranchDuty");
+        List<BranchDuty> resultList = query.getResultList();
+        session.getTransaction().commit();
+        session.close();
+        return resultList;
+    }
 }

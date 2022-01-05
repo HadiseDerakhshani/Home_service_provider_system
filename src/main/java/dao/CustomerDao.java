@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomerDao extends BaseDao {
     private Session session;
 
-    public int save(Customer customer) {//saveCustomer or save
+    public int save(Customer customer) {
         if (customer == null)
             throw new RuntimeException("Customer is null ");
         else {
@@ -73,6 +73,7 @@ public class CustomerDao extends BaseDao {
         if (nameCond == null && familyCond == null && emailCond != null)
             criteria.add(emailCond);
 
+
         criteria.setProjection(Projections.projectionList()
                 .add(Projections.property("c.firstName").as("firstName"))
                 .add(Projections.property("c.lastName").as("lastName"))
@@ -87,7 +88,7 @@ public class CustomerDao extends BaseDao {
         session.getTransaction().commit();
         session.close();
         return list;
-
     }
+
 
 }

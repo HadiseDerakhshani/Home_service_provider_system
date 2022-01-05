@@ -6,12 +6,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MasterDutyDaoTest extends BaseTest {
 
@@ -41,14 +42,14 @@ public class MasterDutyDaoTest extends BaseTest {
         RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () ->
                 masterDutyDao.save(masterDuty));
         Assertions.assertEquals("masterService is null ", runtimeException.getMessage());
-        nameMethod = "null masterService";
+        nameMethod = "null masterDuty";
     }
 
     @Test
     void notNullAsArgs_WhenSave_ThenCustomerIdResponseReturn() {
         int save = masterDutyDao.save(createMasterService());
         assertNotEquals(0, save);
-        nameMethod = "notNull masterServiceDao";
+        nameMethod = "notNull masterDutyDao";
     }
 
     @Test
@@ -56,6 +57,20 @@ public class MasterDutyDaoTest extends BaseTest {
         int idBeforeSave = masterDutyDao.maxId();
         int idAfterSave = masterDutyDao.save(createMasterService());
         assertEquals(idBeforeSave + 1, idAfterSave);
-        nameMethod = "insert masterServiceDao ";
+        nameMethod = "insert masterDutyDao ";
+    }
+
+    @ParameterizedTest
+    @CsvSource({"moving"})
+    void givenNameRepeated_WhenFindByName_ThenTrueResponseReturn(String name) {
+        assertTrue(masterDutyDao.findByName(name));
+        nameMethod = "find by name ";
+    }
+
+    @ParameterizedTest
+    @CsvSource({"moving"})
+    void givenNameNotRepeated_WhenFindByName_ThenTrueResponseReturn(String name) {
+        assertFalse(masterDutyDao.findByName(name));
+        nameMethod = "find by name ";
     }
 }

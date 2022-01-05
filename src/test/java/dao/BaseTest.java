@@ -5,4 +5,5 @@ public class BaseTest {
     public CustomerDao customerDao;
     public MasterDutyDao masterDutyDao;
     public BranchDutyDao branchDutyDao;
+    public ExpertDao expertDao;
 }

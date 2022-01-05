@@ -4,7 +4,7 @@ package model.person;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import model.serviceSystem.BranchDuty;
+import model.serviceSystem.MasterDuty;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,10 +18,10 @@ import java.util.List;
 @Data
 @Entity
 public class Expert extends Person {
-    //  private Image image;
+
     private byte[] image;
     private int score;
     private double credit;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList", fetch = FetchType.EAGER)
-    private List<BranchDuty> serviceList = new ArrayList<>();
+    private List<MasterDuty> serviceList = new ArrayList<>();
 }

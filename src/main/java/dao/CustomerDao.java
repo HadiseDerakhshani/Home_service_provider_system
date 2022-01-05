@@ -90,5 +90,18 @@ public class CustomerDao extends BaseDao {
         return list;
     }
 
+    public Customer findByEmail(String email) {
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from Customer c where c.email=:email");
+        query.setParameter("email", email);
+        Customer customer = (Customer) query.uniqueResult();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return customer;
+    }
 
 }

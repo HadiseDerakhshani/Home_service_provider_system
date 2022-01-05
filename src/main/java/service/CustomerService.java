@@ -11,7 +11,9 @@ public class CustomerService {
     private final CustomerDao customerDao = new CustomerDao();
 
     public void save(Customer customer) {
+        customer.setUserStatus(UserStatus.WAITING_CONFIRM);
         customerDao.save(customer);
+
     }
 
     public Customer createCustomer(String info) {
@@ -22,7 +24,7 @@ public class CustomerService {
                 .email(split[2])
                 .password(split[3])
                 .phoneNumber(split[4])
-                .userStatus(UserStatus.WAITING_CONFIRM)
+                .userStatus(UserStatus.NEW)
                 .credit(Double.parseDouble(split[5]))
                 .build();
         return customer;
@@ -40,5 +42,19 @@ public class CustomerService {
             email = split[2];
         List<CustomerDto> listFilter = customerDao.filter(name, family, email);
         return listFilter;
+    }
+
+    public boolean checkPassword(Customer customer, String pass) {
+        if (customer.getPassword().equals(pass)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public Customer checkEmail(String email) {
+        Customer customerFind = customerDao.findByEmail(email);
+        customerFind.setUserStatus(UserStatus.WAITING_CONFIRM);
+        return customerFind;
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class ExpertDaoTest extends BaseTest {
+public class SaveExpertDaoTest extends BaseTest {
     @BeforeEach
     void init() {
         expertDao = new ExpertDao();

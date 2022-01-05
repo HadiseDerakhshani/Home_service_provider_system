@@ -17,11 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-public class Expert extends Person {
+public class Expert extends User {
 
     private byte[] image;
     private int score;
     private double credit;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList", fetch = FetchType.EAGER)
     private List<MasterDuty> serviceList = new ArrayList<>();
+
 }

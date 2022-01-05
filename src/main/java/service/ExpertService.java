@@ -15,6 +15,7 @@ public class ExpertService {
     ExpertDao expertDao = new ExpertDao();
 
     public void save(Expert expert) {
+        expert.setUserStatus(UserStatus.WAITING_CONFIRM);
         expertDao.save(expert);
     }
 
@@ -26,7 +27,7 @@ public class ExpertService {
                 .email(split[2])
                 .password(split[3])
                 .phoneNumber(split[4])
-                .userStatus(UserStatus.WAITING_CONFIRM)
+                .userStatus(UserStatus.NEW)
                 .credit(Double.parseDouble(split[5]))
                 .score(Integer.parseInt(split[6]))
                 .build();
@@ -67,5 +68,18 @@ public class ExpertService {
             duty = split[3];
         List<ExpertDto> listFilter = expertDao.filter(name, family, email, duty);
         return listFilter;
+    }
+
+    public boolean checkPassword(Expert expert, String pass) {
+        if (expert.getPassword().equals(pass))
+            return true;
+        return false;
+
+    }
+
+    public Expert checkEmail(String email) {
+        Expert expertFind = expertDao.findByEmail(email);
+        expertFind.setUserStatus(UserStatus.WAITING_CONFIRM);
+        return expertFind;
     }
 }

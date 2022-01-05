@@ -47,11 +47,12 @@ public class ValidationInfo {
         throw new InValidUserInfoException("----entered is not valid you should enter numeric----");
     }
 
-    /* public static boolean isValidSelectSearch(String input) {
-         if (input.matches("[1-3]+"))
-             return true;
-         throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
-     }*/
+    public static boolean isValidLogin(String input) {
+        if (input.matches("[1-3]+"))
+            return true;
+        throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
+    }
+
     public static boolean isValidEmail(String input) {
         if (input.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"))

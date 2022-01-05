@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @SuperBuilder
 @Data
 @Entity
-public class Manager extends Person {
+public class Manager extends User {
 
     private String username;
     private String password;

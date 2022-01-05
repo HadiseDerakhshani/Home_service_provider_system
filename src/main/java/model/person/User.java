@@ -14,7 +14,7 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 
-public class Person {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

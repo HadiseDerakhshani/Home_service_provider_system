@@ -10,6 +10,6 @@ import javax.persistence.Entity;
 @SuperBuilder
 @Data
 @Entity
-public class Customer extends Person {
+public class Customer extends User {
     private double credit;
 }

@@ -121,5 +121,19 @@ public class ExpertDao extends BaseDao {
         return list;
     }
 
+    public Expert findByEmail(String email) {
+
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from Expert e where e.email=:email");
+        query.setParameter("email", email);
+        Expert expert = (Expert) query.uniqueResult();
+
+        session.getTransaction().commit();
+        session.close();
+        return expert;
+    }
+
 
 }

@@ -30,7 +30,7 @@ public class ManagerService {
     }
 
     public void expertConfirmation() {
-        Map<String, Double> priceMap = new HashMap<>();
+       // Map<String, Double> priceMap = new HashMap<>();
         List<Order> orderList = orderService.findByStatus(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
         int count = 0;
         for (Order order : orderList) {

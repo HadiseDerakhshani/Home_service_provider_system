@@ -21,6 +21,10 @@
         <mapping class="model.serviceSystem.MasterDuty"/>
         <mapping class="model.serviceSystem.BranchDuty"/>
         <mapping class="model.person.Expert"/>
+        <mapping class="model.Order"/>
+        <mapping class="model.Opinion"/>
+        <mapping class="model.Suggestion"/>
+        <mapping class="model.Address"/>
 
 
     </session-factory>

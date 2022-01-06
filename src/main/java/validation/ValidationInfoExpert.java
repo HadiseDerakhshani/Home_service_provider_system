@@ -76,9 +76,4 @@ public class ValidationInfoExpert {
         throw new InValidUserInfoException("---- the byte of picture is more than 300 Kilobyte----");
     }
 
-    public static boolean isValidSelectUpdate(String input) {
-        if (input.matches("[1-9]+"))
-            return true;
-        throw new InValidUserInfoException("----entered is not valid you should enter numeric----");
-    }
 }

@@ -3,12 +3,6 @@ package validation;
 import exception.InValidUserInfoException;
 
 public class ValidationInfo {
-   /* public static boolean isValidMenu(String input) {
-        if (input.matches("[1-2]+"))
-            return true;
-        throw new InValidUserInfoException("----entered is not valid you should enter number 1 or 2----");
-    }*/
-
 
     public static boolean isValidInfo(String input) {
         String check = "";
@@ -60,11 +54,7 @@ public class ValidationInfo {
         throw new InValidUserInfoException("---- email that entered is not valid ----");
     }
 
-    /* public static boolean isValidSelectFilter(String input) {
-         if (input.matches("[1-8]+"))
-             return true;
-         throw new InValidUserInfoException("----entered is not valid you should enter number 1-8 ----");
-     }*/
+
     public static boolean isValidPassword(String input) {
         if (input.matches("^[a-zA-Z0-9]{8}+$"))
             return true;
@@ -77,9 +67,4 @@ public class ValidationInfo {
         throw new InValidUserInfoException("---- phoneNumber  that entered is not valid ----");
     }
 
-   /* public  static boolean isValidSplitFilter(String input){
-        if(input.matches("[1-8]+"))
-            return  true;
-        throw  new InValidUserInfoException("----entered is not valid you should enter number 1-8 ----");
-    }*/
 }

@@ -1,14 +1,14 @@
 package view;
 
 import dto.ExpertDto;
+import dto.OrderDto;
 import exception.InValidUserInfoException;
 import model.enums.UserStatus;
 import model.person.Expert;
 import model.serviceSystem.MasterDuty;
-import service.BranchDutyService;
-import service.CustomerService;
 import service.ExpertService;
 import service.MasterDutyService;
+import service.OrderService;
 import validation.*;
 
 import java.util.ArrayList;
@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ExpertView {
-    private CustomerService customerService = new CustomerService();
-    private BranchDutyService branchDutyService = new BranchDutyService();
+    //  private CustomerService customerService = new CustomerService();
+    //  private BranchDutyService branchDutyService = new BranchDutyService();
     private MasterDutyService masterDutyService = new MasterDutyService();
+    private OrderService orderService = new OrderService();
     private ExpertService expertService = new ExpertService();
     private boolean isContinue;
     private String info;
@@ -176,14 +177,35 @@ public class ExpertView {
                 "\n5.phoneNumber \n6.credit \n7.Score \n8.image \n9.listService");
         info = scanner.next();
         try {
-            ValidationInfoExpert.isValidSelectUpdate(info);
+
+            ValidationUpdate.isValidUpdateExpert(info);
             System.out.println("enter new value for update");
             value = scanner.next();
-            ValidationUpdateExpert.isValidInfo(info, value);
+            ValidationUpdate.isValidInfo(info, value);
             expertService.update(info, value, email);
             isContinue = true;
         } catch (InValidUserInfoException e) {
             e.getMessage();
         }
+    }
+
+    public void giveSuggestion() {
+        List<OrderDto> list = orderService.findToGetSuggest();
+        isContinue = false;
+        int count = 0;
+        for (OrderDto orderDto : list) {
+            System.out.println(count + " ==> ");
+        }
+
+        do {
+            System.out.println("enter number of order for given suggest");
+            info = scanner.next();
+            try {
+                ValidationInfoExpert.isValidNumeric(info);
+                //register sugeesst
+            } catch (InValidUserInfoException e) {
+                e.getMessage();
+            }
+        } while (isContinue);
     }
 }

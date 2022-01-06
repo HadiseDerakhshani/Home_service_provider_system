@@ -12,6 +12,7 @@ import service.MasterDutyService;
 import validation.ValidationDutyInfo;
 import validation.ValidationFilterCustomer;
 import validation.ValidationInfo;
+import validation.ValidationUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +123,22 @@ public class UserView {
         return info;
     }
 
-    public void updateCustomer() {
-        System.out.println("");
+    public void update(String email) {
+        isContinue = false;
+        String value;
+        System.out.println(" select item for update : \n1.firstname \n2.lastname \n3.email \n4.password " +
+                "\n5.phoneNumber \n6.credit ");
+        info = scanner.next();
+        try {
+            ValidationUpdate.isValidUpdateCustomer(info);
+            System.out.println("enter new value for update");
+            value = scanner.next();
+            ValidationUpdate.isValidInfo(info, value);
+            customerService.update(info, value, email);
+            isContinue = true;
+        } catch (InValidUserInfoException e) {
+            e.getMessage();
+        }
     }
 
     public void filterCustomer() {

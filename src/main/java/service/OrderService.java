@@ -35,4 +35,14 @@ public class OrderService {
     public List<OrderDto> findToGetSuggest() {
         return orderDao.findToGetSuggest();
     }
+
+    public void updateStatus(int id, OrderStatus status) {
+        orderDao.updateStatus(id, status);
+    }
+
+    public void updateSuggestion(int id, Suggestion suggest) {
+        Order order = orderDao.findById(id);
+        order.getSuggestion().add(suggest);
+        orderDao.updateSuggestion(id, order.getSuggestion());
+    }
 }

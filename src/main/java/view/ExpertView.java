@@ -109,7 +109,7 @@ public class ExpertView {
                 if (!expertService.checkPassword(expert, info))
                     isContinue = false;
                 else {
-                    ///////menu filter,delete,update credit
+
                     System.out.println("************ Welcome Expert ************");
                     isContinue = true;
                     break;
@@ -189,12 +189,13 @@ public class ExpertView {
         }
     }
 
-    public void giveSuggestion() {
+    public void giveSuggestion(Expert expert) {
         List<OrderDto> list = orderService.findToGetSuggest();
         isContinue = false;
         int count = 0;
         for (OrderDto orderDto : list) {
-            System.out.println(count + " ==> ");
+
+            System.out.println(count + " ==> " + orderDto);
         }
 
         do {
@@ -202,10 +203,31 @@ public class ExpertView {
             info = scanner.next();
             try {
                 ValidationInfoExpert.isValidNumeric(info);
-                //register sugeesst
+
+                expertService.addSuggest(Integer.parseInt(info), list, getInfoSuggest(), expert);
+                isContinue = true;
+                break;
             } catch (InValidUserInfoException e) {
                 e.getMessage();
             }
         } while (isContinue);
+    }
+
+    public String getInfoSuggest() {
+        System.out.println("********* Suggestion information entry form ********");
+        isContinue = false;
+        do {
+            System.out.println("enter info like sample : ProposedPrice,durationOfWork,startTime");
+            info = scanner.next();
+            try {
+                ValidationInfoSuggestion.isValidInfo(info);
+                isContinue = true;
+                break;
+            } catch (InValidUserInfoException e) {
+                e.getMessage();
+            }
+        } while (isContinue);
+
+        return info;
     }
 }

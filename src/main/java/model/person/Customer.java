@@ -3,7 +3,7 @@ package model.person;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import model.Suggestion;
+import model.Order;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -17,5 +17,5 @@ import java.util.List;
 public class Customer extends User {
     private double credit;
     @OneToMany
-    private List<Suggestion> suggestionList = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
 }

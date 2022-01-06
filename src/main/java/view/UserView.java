@@ -142,7 +142,6 @@ public class UserView {
     }
 
     public void filterCustomer() {
-
         isContinue = false;
         String info;
         do {

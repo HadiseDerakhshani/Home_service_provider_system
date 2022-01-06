@@ -2,6 +2,7 @@ package dao;
 
 import dto.OrderDto;
 import model.Order;
+import model.Suggestion;
 import model.enums.OrderStatus;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -39,11 +40,14 @@ public class OrderDao extends BaseDao {
     }
 
     public List<OrderDto> findToGetSuggest() {
+
         session = builderSessionFactory().openSession();
         session.beginTransaction();
         Criteria criteria = session.createCriteria(Order.class, "0");
         criteria.add(Restrictions.eq("o.status", OrderStatus.WAITING_FOR_EXPERT_SUGGESTION.name()));
+
         criteria.setProjection(Projections.projectionList()
+                .add(Projections.property("o.id").as("id"))
                 .add(Projections.property("o.ProposedPrice").as("ProposedPrice"))
                 .add(Projections.property("o.jobDescription").as("jobDescription"))
                 .add(Projections.property("o.doDate").as("doDate"))
@@ -55,5 +59,52 @@ public class OrderDao extends BaseDao {
         session.getTransaction().commit();
         session.close();
         return list;
+    }
+
+
+    public int updateStatus(int id, OrderStatus status) {
+
+        int update;
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("update Order  o set o.status=:newValue , o.suggestion=:newValue where o.id=:id");
+        query.setParameter("newValue", status);
+        query.setParameter("newValue", status);
+        query.setParameter("id", id);
+        update = query.executeUpdate();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return update;
+    }
+
+    public Order findById(int id) {
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Order o where  o.id=:id");
+        query.setParameter("id", id);
+        Order order = (Order) query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        return order;
+    }
+
+    public int updateSuggestion(int id, List<Suggestion> suggest) {
+
+        int update;
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("update Order  o set o.suggestion=:newValue where o.id=:id");
+        query.setParameter("newValue", suggest);
+        query.setParameter("id", id);
+        update = query.executeUpdate();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return update;
     }
 }

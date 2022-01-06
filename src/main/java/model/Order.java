@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -30,6 +31,6 @@ public class Order {
     private Customer customer;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Suggestion suggestion;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Suggestion> suggestion;
 }

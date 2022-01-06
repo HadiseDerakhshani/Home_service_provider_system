@@ -2,6 +2,9 @@ package service;
 
 import dao.ExpertDao;
 import dto.ExpertDto;
+import dto.OrderDto;
+import model.Suggestion;
+import model.enums.OrderStatus;
 import model.enums.UserStatus;
 import model.person.Expert;
 import validation.ValidationInfoExpert;
@@ -12,7 +15,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExpertService {
-    ExpertDao expertDao = new ExpertDao();
+    private ExpertDao expertDao = new ExpertDao();
+    private SuggestionService suggestService = new SuggestionService();
+    private OrderService orderService = new OrderService();
 
     public void save(Expert expert) {
         expert.setUserStatus(UserStatus.WAITING_CONFIRM);
@@ -103,4 +108,12 @@ public class ExpertService {
             }
         expertDao.update(query, value, email, filed);
     }
+
+    public void addSuggest(int numberOrder, List<OrderDto> list, String input, Expert expert) {
+        int id = list.get(numberOrder - 1).getId();
+        Suggestion suggest = suggestService.createSuggest(input, expert);
+        orderService.updateStatus(id, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+        orderService.updateSuggestion(id, suggest);
+    }
+
 }

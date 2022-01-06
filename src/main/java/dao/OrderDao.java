@@ -107,4 +107,16 @@ public class OrderDao extends BaseDao {
         session.close();
         return update;
     }
+
+    public List<Order> findByStatus(OrderStatus status) {
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Order o where  o.status=:status");
+        query.setParameter("status", status);
+        List<Order> order = (List<Order>) query.list();
+        session.getTransaction().commit();
+        session.close();
+        return order;
+    }
+
 }

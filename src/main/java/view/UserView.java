@@ -2,7 +2,6 @@ package view;
 
 import dto.CustomerDto;
 import exception.InValidUserInfoException;
-import model.enums.UserStatus;
 import model.person.Customer;
 import model.serviceSystem.BranchDuty;
 import service.BranchDutyService;
@@ -62,8 +61,9 @@ public class UserView {
             try {
                 ValidationInfo.isValidEmail(info);
                 Customer customer = customerService.checkEmail(info);
-                if (customer != null && customer.getUserStatus().equals(UserStatus.CONFIRMED.name()))
+                if (customer != null)
                     checkPasswordCustomer(customer);
+
                 else {
                     System.out.println("customer for this email not exit");
                 }
@@ -85,8 +85,8 @@ public class UserView {
                 if (!customerService.checkPassword(customer, info))
                     isContinue = false;
                 else {
-                    ///////
                     System.out.println("************ Welcome Customer ************");
+                    System.out.println(customerService.showCustomer(customer.getEmail()));
                     isContinue = true;
                     break;
                 }
@@ -240,6 +240,5 @@ public class UserView {
         } while (isContinue);
         return info;
     }
-
 
 }

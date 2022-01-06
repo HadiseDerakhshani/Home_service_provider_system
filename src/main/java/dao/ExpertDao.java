@@ -156,4 +156,29 @@ public class ExpertDao extends BaseDao {
         return update;
     }
 
+    public ExpertDto showByEmail(String email) {
+        session = builderSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Expert.class, "c");
+        criteria.add(Restrictions.eq("c.email", email));
+
+        criteria.setProjection(Projections.projectionList()
+                .add(Projections.property("e.firstName").as("firstName"))
+                .add(Projections.property("e.lastName").as("lastName"))
+                .add(Projections.property("e.email").as("emil"))
+                .add(Projections.property("e.phoneNumber").as("phoneNumber"))
+                .add(Projections.property("e.dateRegister").as("dateRegister"))
+                .add(Projections.property("e.image").as("image"))
+                .add(Projections.property("e.score").as("score"))
+                .add(Projections.property("e.serviceList").as("serviceList")));
+        criteria.setResultTransformer(Transformers.aliasToBean(ExpertDto.class));
+        ExpertDto expert = (ExpertDto) criteria.uniqueResult();
+
+
+        session.getTransaction().commit();
+
+        session.close();
+        return expert;
+    }
+
 }

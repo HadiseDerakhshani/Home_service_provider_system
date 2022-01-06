@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Builder
 @AllArgsConstructor
@@ -33,4 +34,17 @@ public class Order {
     private Address address;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Suggestion> suggestion;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id && Double.compare(order.ProposedPrice, ProposedPrice) == 0 && Objects.equals(jobDescription, order.jobDescription) && Objects.equals(registerDate, order.registerDate) && Objects.equals(doDate, order.doDate) && status == order.status && Objects.equals(customer, order.customer) && Objects.equals(address, order.address) && Objects.equals(suggestion, order.suggestion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, ProposedPrice, jobDescription, registerDate, doDate, status, customer, address, suggestion);
+    }
 }

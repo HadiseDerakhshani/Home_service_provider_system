@@ -116,4 +116,8 @@ public class ExpertService {
         orderService.updateSuggestion(id, suggest);
     }
 
+    public ExpertDto showExpert(String email) {
+        return expertDao.showByEmail(email);
+    }
+
 }

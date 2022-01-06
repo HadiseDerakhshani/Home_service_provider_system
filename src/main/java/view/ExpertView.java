@@ -3,7 +3,6 @@ package view;
 import dto.ExpertDto;
 import dto.OrderDto;
 import exception.InValidUserInfoException;
-import model.enums.UserStatus;
 import model.person.Expert;
 import model.serviceSystem.MasterDuty;
 import service.ExpertService;
@@ -86,7 +85,7 @@ public class ExpertView {
             try {
                 ValidationInfo.isValidEmail(info);
                 Expert expert = expertService.checkEmail(info);
-                if (expert != null && expert.getUserStatus().equals(UserStatus.CONFIRMED.name()))
+                if (expert != null)
                     checkPasswordExpert(expert);
                 else {
                     System.out.println("customer for this email not exit");
@@ -111,6 +110,7 @@ public class ExpertView {
                 else {
 
                     System.out.println("************ Welcome Expert ************");
+                    System.out.println(expertService.showExpert(expert.getEmail()));
                     isContinue = true;
                     break;
                 }

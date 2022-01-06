@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import model.enums.UserStatus;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,5 +29,7 @@ public class User {
     private UserStatus userStatus;
     @CreationTimestamp
     private Date dateRegister;
+    @UpdateTimestamp
+    private Date dateUpdate;
 
 }

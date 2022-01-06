@@ -15,10 +15,6 @@ import java.util.List;
 public class OrderService {
     OrderDao orderDao = new OrderDao();
 
-    public void save(Order order) {
-        orderDao.save(order);
-    }
-
     public Order createOrder(String info, Customer customer, Address address, Suggestion suggestion) throws ParseException {
         String[] split = info.split(",");
         Order order = Order.builder()
@@ -29,6 +25,7 @@ public class OrderService {
                 .customer(customer)
                 .address(address)
                 .build();
+        orderDao.save(order);
         return order;
     }
 
@@ -44,5 +41,9 @@ public class OrderService {
         Order order = orderDao.findById(id);
         order.getSuggestion().add(suggest);
         orderDao.updateSuggestion(id, order.getSuggestion());
+    }
+
+    public List<Order> findByStatus(OrderStatus status) {
+        return orderDao.findByStatus(status);
     }
 }

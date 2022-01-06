@@ -30,6 +30,14 @@ public class CustomerService {
         return customer;
     }
 
+    public List<CustomerDto> findByStatus() {
+        return customerDao.findByStatus();
+    }
+
+    public void updateStatus(List<String> emailList) {
+        customerDao.updateStatus(emailList);
+    }
+
     public List<CustomerDto> filter(String filter) {
         String name = null, family = null, email = null;
         boolean check = false;
@@ -54,8 +62,13 @@ public class CustomerService {
 
     public Customer checkEmail(String email) {
         Customer customerFind = customerDao.findByEmail(email);
-        customerFind.setUserStatus(UserStatus.WAITING_CONFIRM);
-        return customerFind;
+        if (customerFind.getUserStatus().equals(UserStatus.CONFIRMED.name()))
+            return customerFind;
+        else return null;
+    }
+
+    public CustomerDto showCustomer(String email) {
+        return customerDao.showByEmail(email);
     }
 
     public void update(String input, String value, String email) {

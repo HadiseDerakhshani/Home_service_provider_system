@@ -1,3 +1,4 @@
+/*
 package view;
 
 import data.dto.CustomerDto;
@@ -101,7 +102,7 @@ public class UserView {
         System.out.println("********* Customer information entry form ********");
         String info = getInformation();
         if (info != null) {
-            customerService.save(customerService.createCustomer(info));
+           // customerService.save(customerService.createCustomer(info));
         }
     }
 
@@ -241,4 +242,4 @@ public class UserView {
         return info;
     }
 
-}
+}*/

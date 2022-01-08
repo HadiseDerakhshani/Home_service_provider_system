@@ -31,7 +31,7 @@ public interface CustomerDao extends CrudRepository<Customer, Integer> {
 
     List<Customer> findByUserStatus(UserStatus status);
 
-    List<Customer> findByEmail(String email);
+  Customer findByEmail(String email);
 
     @Transactional
     @Modifying
@@ -40,13 +40,8 @@ public interface CustomerDao extends CrudRepository<Customer, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update Customer set firstName=:newValue where email=:email", nativeQuery = true)
-    void updateFirstName(@Param("newValue") String name, @Param("email") String email);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Customer set lastName=:newValue where email=:email", nativeQuery = true)
-    void updateLastName(@Param("newValue") String family, @Param("email") String email);
+    @Query(value = "update Customer set phonenumber=:newValue where email=:email", nativeQuery = true)
+    void updateLastName(@Param("newValue") String phoneNumber, @Param("email") String email);
 
     @Transactional
     @Modifying

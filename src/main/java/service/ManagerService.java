@@ -8,7 +8,7 @@ import data.model.user.Expert;
 import java.util.*;
 
 public class ManagerService {
-    private CustomerService customerService = new CustomerService();
+   // private CustomerService customerService = new CustomerService();
     private ExpertService expertService = new ExpertService();
     private OrderService orderService = new OrderService();
     private SuggestionService suggestionService = new SuggestionService();
@@ -16,15 +16,15 @@ public class ManagerService {
     private SubServiceService subServiceService = new SubServiceService();
 
 
-    public void customerConfirmation() {
-        List<CustomerDto> byStatus = customerService.findByStatus();
+    /*public void customerConfirmation() {
+     //   List<CustomerDto> byStatus = customerService.findByStatus();
         List<String> customerListEmail = new ArrayList<>();
         for (CustomerDto customer : byStatus) {
             if (customer.getDateRegister().compareTo(customer.getDateUpdate()) == -1)
                 customerListEmail.add(customer.getEmail());
         }
-        customerService.updateStatus(customerListEmail);
-    }
+      //  customerService.updateStatus(customerListEmail);
+    }*/
 
     public void expertConfirmation() {
         Map<String, Double> priceMap = new HashMap<>();

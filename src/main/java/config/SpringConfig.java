@@ -7,5 +7,5 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan(basePackages = "java")
 @Import(value = {DatabaseConfig.class})
-public class SpringDaoConfig {
+public class SpringConfig {
 }

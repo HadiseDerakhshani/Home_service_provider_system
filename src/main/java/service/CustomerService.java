@@ -1,31 +1,32 @@
+/*
 package service;
 
 import data.dao.CustomerDao;
 import data.dto.CustomerDto;
-import data.enums.UserStatus;
-import data.user.Customer;
+import data.model.enums.UserStatus;
+import data.model.user.Customer;
 
 import java.util.List;
 
 public class CustomerService {
-    private final CustomerDao customerDao = new CustomerDao();
+   // private final CustomerDao customerDao;
 
-    public void save(Customer customer) {
-        customer.setUserStatus(UserStatus.WAITING_CONFIRM);
-        customerDao.save(customer);
+ //   public void save(Customer customer) {
+     //   customer.setUserStatus(UserStatus.WAITING_CONFIRM);
+      //  customerDao.save(customer);
 
     }
 
-    public Customer createCustomer(String info) {
-        String[] split = info.split(",");
-        Customer customer = Customer.builder()
-                .firstName(split[0])
-                .lastName(split[1])
-                .email(split[2])
-                .password(split[3])
-                .phoneNumber(split[4])
+  //  public Customer createCustomer(String name,String family,String email,String pass,String phone,double credit) {
+
+    //    Customer customer = Customer.builder()
+                .firstName(name)
+                .lastName(family)
+                .email(email)
+                .password(pass)
+                .phoneNumber(phone)
                 .userStatus(UserStatus.NEW)
-                .credit(Double.parseDouble(split[5]))
+                .credit(credit)
                 .build();
         return customer;
     }
@@ -89,3 +90,4 @@ public class CustomerService {
         customerDao.update(query, value, email, filed);
     }
 }
+*/

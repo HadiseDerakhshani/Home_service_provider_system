@@ -1,7 +1,7 @@
 package data.dao;
 
 import data.dto.ExpertDto;
-import data.user.Expert;
+import data.model.user.Expert;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;

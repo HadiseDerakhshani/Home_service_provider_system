@@ -1,7 +1,7 @@
-package data.user;
+package data.model.user;
 
 
-import data.serviceSystem.Service;
+import data.model.serviceSystem.Service;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

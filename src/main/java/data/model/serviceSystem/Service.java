@@ -1,6 +1,6 @@
-package data.serviceSystem;
+package data.model.serviceSystem;
 
-import data.user.Expert;
+import data.model.user.Expert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

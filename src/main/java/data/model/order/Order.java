@@ -1,7 +1,7 @@
-package data.order;
+package data.model.order;
 
-import data.enums.OrderStatus;
-import data.user.Customer;
+import data.model.enums.OrderStatus;
+import data.model.user.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

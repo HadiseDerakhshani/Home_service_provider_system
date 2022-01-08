@@ -1,6 +1,6 @@
 package data.dto;
 
-import data.order.Address;
+import data.model.order.Address;
 import lombok.Data;
 
 import java.util.Date;

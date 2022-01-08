@@ -1,4 +1,4 @@
-package data.enums;
+package data.model.enums;
 
 public enum OrderStatus {
     WAITING_FOR_EXPERT_SUGGESTION,

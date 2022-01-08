@@ -1,4 +1,4 @@
-package data.enums;
+package data.model.enums;
 
 public enum UserStatus {
     NEW(1, "new"),

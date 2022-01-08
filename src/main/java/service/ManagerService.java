@@ -1,9 +1,9 @@
 package service;
 
 import data.dto.CustomerDto;
-import data.enums.OrderStatus;
-import data.order.Order;
-import data.user.Expert;
+import data.model.enums.OrderStatus;
+import data.model.order.Order;
+import data.model.user.Expert;
 
 import java.util.*;
 

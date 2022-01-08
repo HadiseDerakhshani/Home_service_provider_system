@@ -1,6 +1,6 @@
-package data.user;
+package data.model.user;
 
-import data.order.Order;
+import data.model.order.Order;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

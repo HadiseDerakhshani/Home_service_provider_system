@@ -1,9 +1,9 @@
 package data.dao;
 
 import data.dto.OrderDto;
-import data.enums.OrderStatus;
-import data.order.Order;
-import data.order.Suggestion;
+import data.model.enums.OrderStatus;
+import data.model.order.Order;
+import data.model.order.Suggestion;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;

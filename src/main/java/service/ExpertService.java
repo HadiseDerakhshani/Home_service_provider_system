@@ -3,10 +3,10 @@ package service;
 import data.dao.ExpertDao;
 import data.dto.ExpertDto;
 import data.dto.OrderDto;
-import data.enums.OrderStatus;
-import data.enums.UserStatus;
-import data.order.Suggestion;
-import data.user.Expert;
+import data.model.enums.OrderStatus;
+import data.model.enums.UserStatus;
+import data.model.order.Suggestion;
+import data.model.user.Expert;
 import validation.ValidationInfoExpert;
 
 import java.io.File;

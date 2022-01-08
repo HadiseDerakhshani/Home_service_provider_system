@@ -1,7 +1,7 @@
-package data.order;
+package data.model.order;
 
-import data.user.Customer;
-import data.user.Expert;
+import data.model.user.Customer;
+import data.model.user.Expert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

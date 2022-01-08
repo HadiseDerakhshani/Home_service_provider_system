@@ -1,4 +1,4 @@
-package data.serviceSystem;
+package data.model.serviceSystem;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package service;
 
 import data.dao.SubServiceDao;
-import data.serviceSystem.SubService;
+import data.model.serviceSystem.SubService;
 
 import java.util.List;
 import java.util.Map;

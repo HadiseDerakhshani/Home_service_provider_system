@@ -1,8 +1,8 @@
 package view;
 
 import data.dto.CustomerDto;
-import data.serviceSystem.SubService;
-import data.user.Customer;
+import data.model.serviceSystem.SubService;
+import data.model.user.Customer;
 import exception.InValidUserInfoException;
 import service.CustomerService;
 import service.ExpertService;

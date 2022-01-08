@@ -2,8 +2,8 @@ package view;
 
 import data.dto.ExpertDto;
 import data.dto.OrderDto;
-import data.serviceSystem.Service;
-import data.user.Expert;
+import data.model.serviceSystem.Service;
+import data.model.user.Expert;
 import exception.InValidUserInfoException;
 import service.ExpertService;
 import service.OrderService;

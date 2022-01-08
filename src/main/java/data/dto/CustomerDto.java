@@ -1,6 +1,6 @@
 package data.dto;
 
-import data.enums.UserStatus;
+import data.model.enums.UserStatus;
 import lombok.Data;
 
 import java.util.Date;

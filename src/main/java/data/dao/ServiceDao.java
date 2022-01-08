@@ -1,6 +1,6 @@
 package data.dao;
 
-import data.serviceSystem.Service;
+import data.model.serviceSystem.Service;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 

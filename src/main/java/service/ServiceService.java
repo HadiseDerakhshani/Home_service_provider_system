@@ -1,8 +1,8 @@
 package service;
 
 import data.dao.ServiceDao;
-import data.serviceSystem.Service;
-import data.serviceSystem.SubService;
+import data.model.serviceSystem.Service;
+import data.model.serviceSystem.SubService;
 
 import java.util.List;
 

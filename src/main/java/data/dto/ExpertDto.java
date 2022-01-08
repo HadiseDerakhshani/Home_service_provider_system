@@ -1,6 +1,6 @@
 package data.dto;
 
-import data.serviceSystem.Service;
+import data.model.serviceSystem.Service;
 import lombok.Data;
 
 import java.util.ArrayList;

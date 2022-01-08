@@ -1,6 +1,6 @@
 package data.dao;
 
-import data.order.Suggestion;
+import data.model.order.Suggestion;
 import org.hibernate.Session;
 
 public class SuggestionDao extends BaseDao {

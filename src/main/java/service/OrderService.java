@@ -2,11 +2,11 @@ package service;
 
 import data.dao.OrderDao;
 import data.dto.OrderDto;
-import data.enums.OrderStatus;
-import data.order.Address;
-import data.order.Order;
-import data.order.Suggestion;
-import data.user.Customer;
+import data.model.enums.OrderStatus;
+import data.model.order.Address;
+import data.model.order.Order;
+import data.model.order.Suggestion;
+import data.model.user.Customer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

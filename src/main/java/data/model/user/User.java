@@ -1,7 +1,7 @@
-package data.user;
+package data.model.user;
 
-import data.enums.UserRole;
-import data.enums.UserStatus;
+import data.model.enums.UserRole;
+import data.model.enums.UserStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

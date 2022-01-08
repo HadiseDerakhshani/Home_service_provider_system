@@ -1,8 +1,8 @@
 package service;
 
-import dao.SuggestionDao;
-import model.Suggestion;
-import model.person.Expert;
+import data.dao.SuggestionDao;
+import data.order.Suggestion;
+import data.user.Expert;
 
 public class SuggestionService {
     private SuggestionDao suggestionDao = new SuggestionDao();

@@ -1,9 +1,9 @@
 package service;
 
-import dao.CustomerDao;
-import dto.CustomerDto;
-import model.enums.UserStatus;
-import model.person.Customer;
+import data.dao.CustomerDao;
+import data.dto.CustomerDto;
+import data.enums.UserStatus;
+import data.user.Customer;
 
 import java.util.List;
 

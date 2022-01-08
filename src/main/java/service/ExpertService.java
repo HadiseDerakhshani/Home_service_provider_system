@@ -1,12 +1,12 @@
 package service;
 
-import dao.ExpertDao;
-import dto.ExpertDto;
-import dto.OrderDto;
-import model.Suggestion;
-import model.enums.OrderStatus;
-import model.enums.UserStatus;
-import model.person.Expert;
+import data.dao.ExpertDao;
+import data.dto.ExpertDto;
+import data.dto.OrderDto;
+import data.enums.OrderStatus;
+import data.enums.UserStatus;
+import data.order.Suggestion;
+import data.user.Expert;
 import validation.ValidationInfoExpert;
 
 import java.io.File;
@@ -117,7 +117,7 @@ public class ExpertService {
     }
 
     public ExpertDto showExpert(String email) {
-        return expertDao.showByEmail(email);
+        return expertDao.selectByEmail(email);
     }
 
 }

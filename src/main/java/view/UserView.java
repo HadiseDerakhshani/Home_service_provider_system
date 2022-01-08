@@ -1,13 +1,13 @@
 package view;
 
-import dto.CustomerDto;
+import data.dto.CustomerDto;
+import data.serviceSystem.SubService;
+import data.user.Customer;
 import exception.InValidUserInfoException;
-import model.person.Customer;
-import model.serviceSystem.BranchDuty;
-import service.BranchDutyService;
 import service.CustomerService;
 import service.ExpertService;
-import service.MasterDutyService;
+import service.ServiceService;
+import service.SubServiceService;
 import validation.ValidationDutyInfo;
 import validation.ValidationFilterCustomer;
 import validation.ValidationInfo;
@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 public class UserView {
     private CustomerService customerService = new CustomerService();
-    private BranchDutyService branchDutyService = new BranchDutyService();
-    private MasterDutyService masterDutyService = new MasterDutyService();
+    private SubServiceService subServiceService = new SubServiceService();
+    private ServiceService serviceService = new ServiceService();
     private ExpertService expertService = new ExpertService();
     private boolean isContinue;
     private String info;
@@ -171,8 +171,8 @@ public class UserView {
 
             try {
                 if (ValidationInfo.isValidCharacter(info)) {
-                    if (!masterDutyService.findByName(info)) {
-                        masterDutyService.save(masterDutyService.createMasterDuty(addBranchDuty(info), info));
+                    if (!serviceService.findByName(info)) {
+                        serviceService.save(serviceService.createMasterDuty(addBranchDuty(info), info));
                         isContinue = true;
                         break;
                     } else {
@@ -187,8 +187,8 @@ public class UserView {
         } while (isContinue);
     }
 
-    public List<BranchDuty> addBranchDuty(String nameDuty) {
-        List<BranchDuty> branchDutyList = new ArrayList<>();
+    public List<SubService> addBranchDuty(String nameDuty) {
+        List<SubService> subServiceList = new ArrayList<>();
         int number;
         String info;
         isContinue = false;
@@ -199,22 +199,22 @@ public class UserView {
                 number = Integer.parseInt(info);
                 if (number > 0) {
                     for (int i = 0; i < number; i++) {
-                        branchDutyList.add(branchDutyService.createBranchDuty(getInfoBranchDuty()));
+                        subServiceList.add(subServiceService.createBranchDuty(getInfoBranchDuty()));
                     }
                 } else {
                     System.out.println("Enter Description of service :");
                     info = scanner.next();
                     ValidationDutyInfo.isValidCharacter(info);
-                    branchDutyList.add(branchDutyService.createBranchDuty(nameDuty + "," + info));
+                    subServiceList.add(subServiceService.createBranchDuty(nameDuty + "," + info));
                 }
                 isContinue = true;
                 break;
             }
         } while (isContinue);
-        for (BranchDuty branchDuty : branchDutyList) {
-            branchDutyService.save(branchDuty);
+        for (SubService subService : subServiceList) {
+            subServiceService.save(subService);
         }
-        return branchDutyList;
+        return subServiceList;
     }
 
     public String getInfoBranchDuty() {
@@ -226,7 +226,7 @@ public class UserView {
             info = scanner.next();
             try {
                 ValidationDutyInfo.isValidInfo(info);
-                if (!branchDutyService.findByName(info)) {
+                if (!subServiceService.findByName(info)) {
                     isContinue = true;
                     break;
                 } else {

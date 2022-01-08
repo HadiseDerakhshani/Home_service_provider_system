@@ -1,13 +1,13 @@
 package view;
 
-import dto.ExpertDto;
-import dto.OrderDto;
+import data.dto.ExpertDto;
+import data.dto.OrderDto;
+import data.serviceSystem.Service;
+import data.user.Expert;
 import exception.InValidUserInfoException;
-import model.person.Expert;
-import model.serviceSystem.MasterDuty;
 import service.ExpertService;
-import service.MasterDutyService;
 import service.OrderService;
+import service.ServiceService;
 import validation.*;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class ExpertView {
     //  private CustomerService customerService = new CustomerService();
     //  private BranchDutyService branchDutyService = new BranchDutyService();
-    private MasterDutyService masterDutyService = new MasterDutyService();
+    private ServiceService serviceService = new ServiceService();
     private OrderService orderService = new OrderService();
     private ExpertService expertService = new ExpertService();
     private boolean isContinue;
@@ -120,14 +120,14 @@ public class ExpertView {
         } while (isContinue);
     }
 
-    public List<MasterDuty> showMasterDuty() {
+    public List<Service> showMasterDuty() {
         isContinue = false;
-        List<MasterDuty> list = new ArrayList<>();
-        List<MasterDuty> dutyList = masterDutyService.showAll();
+        List<Service> list = new ArrayList<>();
+        List<Service> dutyList = serviceService.showAll();
         int count = 0;
-        for (MasterDuty masterDuty : dutyList) {
+        for (Service service : dutyList) {
             System.out.print((++count) + " : ");
-            System.out.print(masterDuty);
+            System.out.print(service);
         }
         do {
             System.out.println("enter the number of service for work :");

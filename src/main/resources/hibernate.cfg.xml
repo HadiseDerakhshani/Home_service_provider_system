@@ -17,14 +17,14 @@
         <property name="format_sql">true</property>
 
 
-        <mapping class="model.person.Customer"/>
-        <mapping class="model.serviceSystem.MasterDuty"/>
-        <mapping class="model.serviceSystem.BranchDuty"/>
-        <mapping class="model.person.Expert"/>
-        <mapping class="model.Order"/>
-        <mapping class="model.Opinion"/>
-        <mapping class="model.Suggestion"/>
-        <mapping class="model.Address"/>
+        <mapping class="data.user.Customer"/>
+        <mapping class="data.serviceSystem.Service"/>
+        <mapping class="data.serviceSystem.SubService"/>
+        <mapping class="data.user.Expert"/>
+        <mapping class="data.order.Order"/>
+        <mapping class="data.order.Comment"/>
+        <mapping class="data.order.Suggestion"/>
+        <mapping class="data.order.Address"/>
 
 
     </session-factory>

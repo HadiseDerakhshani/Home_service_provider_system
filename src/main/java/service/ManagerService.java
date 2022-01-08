@@ -1,22 +1,19 @@
 package service;
 
-import dto.CustomerDto;
-import model.Order;
-import model.enums.OrderStatus;
-import model.person.Expert;
+import data.dto.CustomerDto;
+import data.enums.OrderStatus;
+import data.order.Order;
+import data.user.Expert;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ManagerService {
     private CustomerService customerService = new CustomerService();
     private ExpertService expertService = new ExpertService();
     private OrderService orderService = new OrderService();
     private SuggestionService suggestionService = new SuggestionService();
-    private MasterDutyService masterDutyService = new MasterDutyService();
-    private BranchDutyService branchDutyService = new BranchDutyService();
+    private ServiceService serviceService = new ServiceService();
+    private SubServiceService subServiceService = new SubServiceService();
 
 
     public void customerConfirmation() {
@@ -38,9 +35,11 @@ public class ManagerService {
             double priceExpert = order.getSuggestion().get(count).getProposedPrice();
             double priceCustomer = order.getProposedPrice();
             double difficult = (priceExpert - priceCustomer) <= 0 ? 0 : (priceExpert - priceCustomer);
-
+            priceMap.put(expert.getEmail(), difficult);
+            count++;
         }
+
+        Optional<Map.Entry<String, Double>> minDifferentPrice = priceMap.entrySet().stream().min(Map.Entry.<String, Double>comparingByValue());
+        ///expert ba sugest price nazdik customer
     }
-
-
 }

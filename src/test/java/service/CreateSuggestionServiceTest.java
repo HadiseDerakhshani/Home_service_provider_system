@@ -1,6 +1,6 @@
 package service;
 
-import model.person.Expert;
+import data.user.Expert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

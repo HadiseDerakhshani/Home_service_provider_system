@@ -1,14 +1,8 @@
 package data.dao;
 
-import data.dto.CustomerDto;
 
 import data.model.enums.UserStatus;
 import data.model.user.Customer;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,39 +14,47 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CustomerDao extends CrudRepository<Customer,Integer> {
- @Override
- Customer save(Customer  customer);
- @Override
- Optional<Customer> findById(Integer id);
- @Override
- void deleteById(Integer id);
- @Override
- void delete(Customer customer);
- List<Customer> findByFirstNameOrLastNameOrEmail(String name,String family,String email);
- List<Customer> findByUserStatus(UserStatus status);
- List<Customer> findByEmail(String email);
+public interface CustomerDao extends CrudRepository<Customer, Integer> {
+    @Override
+    Customer save(Customer customer);
 
- @Transactional
- @Modifying
- @Query(value="update Customer set userStatus=:nawValue where email=:email",nativeQuery = true)
- void updateStatus(@Param("newValue") UserStatus newValue, @Param("email") String email);
- @Transactional
- @Modifying
- @Query(value="update Customer set firstName=:newValue where email=:email",nativeQuery = true)
- void updateFirstName(@Param("newValue") String name, @Param("email") String email);
- @Transactional
- @Modifying
- @Query(value="update Customer set lastName=:newValue where email=:email",nativeQuery = true)
- void updateLastName(@Param("newValue") String family, @Param("email") String email);
+    @Override
+    Optional<Customer> findById(Integer id);
 
- @Transactional
- @Modifying
- @Query(value="update Customer set credit=:newValue where email=:email",nativeQuery = true)
- void updateCredit(@Param("newValue") double newValue, @Param("email") String email);
+    @Override
+    void deleteById(Integer id);
 
- @Transactional
- @Modifying
- @Query(value="update Customer set password=:newValue where email=:email",nativeQuery = true)
- void updatePassword(@Param("newValue") String newValue, @Param("email") String email);
+    @Override
+    void delete(Customer customer);
+
+    List<Customer> findByFirstNameOrLastNameOrEmail(String name, String family, String email);
+
+    List<Customer> findByUserStatus(UserStatus status);
+
+    List<Customer> findByEmail(String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Customer set userStatus=:nawValue where email=:email", nativeQuery = true)
+    void updateStatus(@Param("newValue") UserStatus newValue, @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Customer set firstName=:newValue where email=:email", nativeQuery = true)
+    void updateFirstName(@Param("newValue") String name, @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Customer set lastName=:newValue where email=:email", nativeQuery = true)
+    void updateLastName(@Param("newValue") String family, @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Customer set credit=:newValue where email=:email", nativeQuery = true)
+    void updateCredit(@Param("newValue") double newValue, @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Customer set password=:newValue where email=:email", nativeQuery = true)
+    void updatePassword(@Param("newValue") String newValue, @Param("email") String email);
 }

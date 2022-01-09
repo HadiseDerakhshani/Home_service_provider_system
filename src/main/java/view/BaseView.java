@@ -19,4 +19,6 @@ public class BaseView {
     public OrderService orderService = context.getBean(OrderService.class);
     public ExpertService expertService = context.getBean(ExpertService.class);
     public SuggestionService suggestionService = context.getBean(SuggestionService.class);
+    public ExpertView expertView = context.getBean(ExpertView.class);
+    public CustomerView customerView = context.getBean(CustomerView.class);
 }

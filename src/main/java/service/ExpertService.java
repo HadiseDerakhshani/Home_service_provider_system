@@ -26,14 +26,14 @@ import java.util.List;
 public class ExpertService {
 
     ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-    public UserService userService = context.getBean(UserService.class);
-    public CustomerService customerService = context.getBean(CustomerService.class);
+
+
     public SubServiceService subServiceService = context.getBean(SubServiceService.class);
     public ServiceService serviceService = context.getBean(ServiceService.class);
     public OrderService orderService = context.getBean(OrderService.class);
-    public ExpertService expertService = context.getBean(ExpertService.class);
-    public SuggestionService suggestionService = context.getBean(SuggestionService.class);
+
     private ExpertDao expertDao;
+
     @Autowired
     public ExpertService(ExpertDao expertDao) {
         this.expertDao = expertDao;

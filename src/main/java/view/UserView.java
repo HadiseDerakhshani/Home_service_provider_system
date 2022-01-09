@@ -7,6 +7,7 @@ import validation.ValidationInfo;
 
 public class UserView extends BaseView {
 
+
     public void loginMemberUser() {
         isContinue = false;
         do {
@@ -31,7 +32,7 @@ public class UserView extends BaseView {
             try {
                 ValidationInfo.isValidPassword(info);
                 if (userService.checkPassword(user, info)) {
-                    showUser(user);//menu
+                    showMenu(user);//menu
                     isContinue = true;
                     break;
                 } else
@@ -42,17 +43,17 @@ public class UserView extends BaseView {
         } while (isContinue);
     }
 
-    public void showUser(User user) {
+    public void showMenu(User user) {
 
         switch (user.getUserRole().name()) {
             case "EXPERT":
-                user = expertService.findByEmail(user.getEmail());
+                expertView.MenuExpert(user.getEmail());
                 break;
             case "CUSTOMER":
-                user = customerService.findByEmail(user.getEmail());
+                //  user = customerService.findByEmail(user.getEmail());
                 break;
             default:
-                user = userService.findByEmail(user.getEmail());
+                //  user = userService.findByEmail(user.getEmail());
                 break;
         }
         System.out.println(user);

@@ -14,6 +14,7 @@ import validation.ValidationUpdate;
 import java.util.ArrayList;
 import java.util.List;
 
+@org.springframework.stereotype.Service
 public class ExpertView extends BaseView {
     /*private ExpertService expertService = context.getBean(ExpertService.class);
     private Scanner scanner = new Scanner(System.in);
@@ -72,7 +73,8 @@ public class ExpertView extends BaseView {
         expertService.save(expert);
     }
 
-    public void MenuExpert(Expert expert) {
+    public void MenuExpert(String email) {
+        Expert expert = expertService.findByEmail(email);
         isContinue = false;
         System.out.println("************ Welcome Expert ************");
         do {

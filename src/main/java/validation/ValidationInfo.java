@@ -67,4 +67,10 @@ public class ValidationInfo {
         throw new InValidUserInfoException("---- phoneNumber  that entered is not valid ----");
     }
 
+    public static boolean isValidByte(int image) {
+        if (image <= 300000)
+            return true;
+        throw new InValidUserInfoException("---- the byte of picture is more than 300 Kilobyte----");
+    }
+
 }

@@ -3,7 +3,9 @@ package service;
 import data.dao.SuggestionDao;
 import data.model.order.Suggestion;
 import data.model.user.Expert;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SuggestionService {
     private SuggestionDao suggestionDao = new SuggestionDao();
 

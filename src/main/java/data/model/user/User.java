@@ -12,13 +12,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @SuperBuilder
 @NoArgsConstructor
 
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String firstName;
     private String lastName;

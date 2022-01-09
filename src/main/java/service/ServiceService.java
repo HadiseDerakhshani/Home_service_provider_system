@@ -6,6 +6,7 @@ import data.model.serviceSystem.SubService;
 
 import java.util.List;
 
+@org.springframework.stereotype.Service
 public class ServiceService {
     ServiceDao serviceDao = new ServiceDao();
 

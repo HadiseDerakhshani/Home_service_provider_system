@@ -9,7 +9,7 @@ import exception.InValidUserInfoException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import validation.ValidationInfoExpert;
+import validation.ValidationInfo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +37,8 @@ public class ExpertService {
         return mapper.map(expert, ExpertDto.class);
     }
 
-    public Expert createExpert(String name, String family, String email, String pass, String phone, double credit, int score) {
+    public Expert createExpert(String name, String family, String email, String pass, String phone,
+                               double credit, int score, String image) {
         if (findByEmail(email) == null) {
             Expert expert = Expert.builder()
                     .firstName(name)
@@ -50,7 +51,8 @@ public class ExpertService {
                     .score(score)
                     .userRole(UserRole.EXPERT)
                     .build();
-            return expert;
+
+            return addPicture(expert, image);
         } else
             throw new InValidUserInfoException("Expert is exit for this email");
     }
@@ -62,7 +64,7 @@ public class ExpertService {
         System.out.println(imageFile.length);
         try {
 
-            ValidationInfoExpert.isValidByte(imageFile.length);
+            ValidationInfo.isValidByte(imageFile.length);
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(imageFile);
             fileInputStream.close();
@@ -93,7 +95,10 @@ public class ExpertService {
     public Expert findByEmailAndUserStatus(String email, UserStatus status) {
         return expertDao.findByEmailAndUserStatus(email, status);
 
+    }
 
+    public ExpertDto findExpert(Expert expert) {
+        return createExpertDto(findByEmail(expert.getEmail()));
     }
 
   /*  public void update(String input, String value, String email) {

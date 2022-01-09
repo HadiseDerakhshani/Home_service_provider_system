@@ -1,6 +1,5 @@
 package data.model.serviceSystem;
 
-import data.model.user.Expert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +21,5 @@ public class Service {
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
     private List<SubService> subServiceList = new ArrayList<>();
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Expert> expertList = new ArrayList<>();
+
 }

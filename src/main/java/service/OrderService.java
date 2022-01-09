@@ -7,13 +7,21 @@ import data.model.order.Address;
 import data.model.order.Order;
 import data.model.order.Suggestion;
 import data.model.user.Customer;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class OrderService {
-    OrderDao orderDao = new OrderDao();
+    private OrderDao orderDao;
+
+    public OrderService(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
 
     public Order createOrder(String info, Customer customer, Address address, Suggestion suggestion) throws ParseException {
         String[] split = info.split(",");
@@ -30,10 +38,20 @@ public class OrderService {
     }
 
     public List<OrderDto> findToGetSuggest() {
-        return orderDao.findToGetSuggest();
+        List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
+                OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+        ArrayList<OrderDto> listOrderDtos = new ArrayList<>();
+        for (Order order : list) {
+            listOrderDtos.add(creatOrderDto(order));
+        }
+        return listOrderDtos;
     }
 
-    public void updateStatus(int id, OrderStatus status) {
+    public OrderDto creatOrderDto(Order order) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(order, OrderDto.class);
+    }
+  /*  public void updateStatus(int id, OrderStatus status) {
         orderDao.updateStatus(id, status);
     }
 
@@ -45,5 +63,5 @@ public class OrderService {
 
     public List<Order> findByStatus(OrderStatus status) {
         return orderDao.findByStatus(status);
-    }
+    }*/
 }

@@ -1,18 +1,12 @@
 package service;
 
-import data.model.enums.OrderStatus;
-import data.model.order.Order;
-import data.model.user.Expert;
+import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+@Service
 public class ManagerService {
     // private CustomerService customerService = new CustomerService();
     private ExpertService expertService;
-    private OrderService orderService = new OrderService();
+    // private OrderService orderService = new OrderService();
     private SuggestionService suggestionService = new SuggestionService();
     private ServiceService serviceService = new ServiceService();
     private SubServiceService subServiceService = new SubServiceService();
@@ -28,7 +22,7 @@ public class ManagerService {
       //  customerService.updateStatus(customerListEmail);
     }*/
 
-    public void expertConfirmation() {
+    /*public void expertConfirmation() {
         Map<String, Double> priceMap = new HashMap<>();
         List<Order> orderList = orderService.findByStatus(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
         int count = 0;
@@ -39,9 +33,9 @@ public class ManagerService {
             double difficult = (priceExpert - priceCustomer) <= 0 ? 0 : (priceExpert - priceCustomer);
             priceMap.put(expert.getEmail(), difficult);
             count++;
-        }
+        }*/
 
-        Optional<Map.Entry<String, Double>> minDifferentPrice = priceMap.entrySet().stream().min(Map.Entry.<String, Double>comparingByValue());
-        ///expert ba sugest price nazdik customer
-    }
+    //    Optional<Map.Entry<String, Double>> minDifferentPrice = priceMap.entrySet().stream().min(Map.Entry.<String, Double>comparingByValue());
+    ///expert ba sugest price nazdik customer
+    // }
 }

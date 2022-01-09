@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service//باید بردارم
 @Repository
 public interface CustomerDao extends JpaRepository<Customer, Integer> {
     @Override

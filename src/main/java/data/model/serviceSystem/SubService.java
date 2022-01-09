@@ -1,12 +1,15 @@
 package data.model.serviceSystem;
 
+import data.model.user.Expert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -23,5 +26,7 @@ public class SubService {
     @ElementCollection
     @MapKeyColumn(name = "name")
     @Column(name = "Description")
-    private Map<String, String> branchServiceMap = new HashMap<>();
+    private Map<String, String> subServiceMap = new HashMap<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Expert> expertList = new ArrayList<>();
 }

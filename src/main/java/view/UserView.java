@@ -1,31 +1,66 @@
-/*
 package view;
 
-import data.dto.CustomerDto;
-import data.model.serviceSystem.SubService;
-import data.model.user.Customer;
+import data.model.user.User;
 import exception.InValidUserInfoException;
-import service.CustomerService;
-import service.ExpertService;
-import service.ServiceService;
-import service.SubServiceService;
-import validation.ValidationDutyInfo;
-import validation.ValidationFilterCustomer;
+import exception.IsNullObjectException;
 import validation.ValidationInfo;
-import validation.ValidationUpdate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+public class UserView extends BaseView {
 
-public class UserView {
-    private CustomerService customerService = new CustomerService();
-    private SubServiceService subServiceService = new SubServiceService();
-    private ServiceService serviceService = new ServiceService();
-    private ExpertService expertService = new ExpertService();
-    private boolean isContinue;
-    private String info;
-    private Scanner scanner = new Scanner(System.in);
+    public void loginMemberUser() {
+        isContinue = false;
+        do {
+            System.out.println("enter email :");
+            info = scanner.next();
+            try {
+                ValidationInfo.isValidEmail(info);
+                checkPasswordUser(userService.findByEmail(info));
+                isContinue = true;
+                break;
+            } catch (InValidUserInfoException | IsNullObjectException e) {
+                e.getMessage();
+            }
+        } while (isContinue);
+    }
+
+    public void checkPasswordUser(User user) {
+        isContinue = false;
+        do {
+            System.out.println("enter password");
+            info = scanner.next();
+            try {
+                ValidationInfo.isValidPassword(info);
+                if (userService.checkPassword(user, info)) {
+                    showUser(user);//menu
+                    isContinue = true;
+                    break;
+                } else
+                    System.out.println(" password is not correct");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } while (isContinue);
+    }
+
+    public void showUser(User user) {
+
+        switch (user.getUserRole().name()) {
+            case "EXPERT":
+                user = expertService.findByEmail(user.getEmail());
+                break;
+            case "CUSTOMER":
+                user = customerService.findByEmail(user.getEmail());
+                break;
+            default:
+                user = userService.findByEmail(user.getEmail());
+                break;
+        }
+        System.out.println(user);
+    }
+
+
+}
+/*
 
     public void loginByCustomer() {
         isContinue = false;
@@ -54,51 +89,7 @@ public class UserView {
         } while (isContinue);
     }
 
-    public void loginMemberCustomer() {
-        isContinue = false;
-        do {
-            System.out.println("enter email :");
-            info = scanner.next();
-            try {
-                ValidationInfo.isValidEmail(info);
-                Customer customer = customerService.checkEmail(info);
-                if (customer != null)
-                    checkPasswordCustomer(customer);
-
-                else {
-                    System.out.println("customer for this email not exit");
-                }
-                isContinue = true;
-                break;
-            } catch (InValidUserInfoException e) {
-                e.getMessage();
-            }
-        } while (isContinue);
-    }
-
-    public void checkPasswordCustomer(Customer customer) {
-        isContinue = false;
-        do {
-            System.out.println("enter password");
-            info = scanner.next();
-            try {
-                ValidationInfo.isValidPassword(info);
-                if (!customerService.checkPassword(customer, info))
-                    isContinue = false;
-                else {
-                    System.out.println("************ Welcome Customer ************");
-                    System.out.println(customerService.showCustomer(customer.getEmail()));
-                    isContinue = true;
-                    break;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } while (isContinue);
-    }
-
-
-    public void addCustomer() {
+       public void addCustomer() {
         System.out.println("********* Customer information entry form ********");
         String info = getInformation();
         if (info != null) {

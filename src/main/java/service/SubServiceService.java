@@ -2,10 +2,12 @@ package service;
 
 import data.dao.SubServiceDao;
 import data.model.serviceSystem.SubService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class SubServiceService {
     SubServiceDao subServiceDao = new SubServiceDao();
 
@@ -18,7 +20,7 @@ public class SubServiceService {
         SubService subService = SubService.builder()
                 .price(Double.parseDouble(split[2]))
                 .build();
-        subService.getBranchServiceMap().put(split[0], split[1]);
+        subService.getSubServiceMap().put(split[0], split[1]);
         return subService;
     }
 
@@ -27,7 +29,7 @@ public class SubServiceService {
         List<SubService> list = subServiceDao.findByName();
         Map.Entry<String, String> stringEntry = null;
         for (SubService subService : list) {
-            stringEntry = subService.getBranchServiceMap().
+            stringEntry = subService.getSubServiceMap().
                     entrySet().stream().filter(m -> m.getKey().equals(split[0])).findAny().orElse(null);
         }
         if (stringEntry != null)

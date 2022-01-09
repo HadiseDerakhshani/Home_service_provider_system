@@ -1,22 +1,20 @@
 package data.dao;
 
-import data.dto.OrderDto;
 import data.model.enums.OrderStatus;
 import data.model.order.Order;
-import data.model.order.Suggestion;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class OrderDao extends BaseDao {
-    private Session session;
+@Repository
+public interface OrderDao extends JpaRepository<Order, Integer> {
+    Order save(Order order);
 
-    public int save(Order order) {
+    List<Order> findByStatusOrStatus(OrderStatus statusSelect, OrderStatus statusSuggest);
+}
+
+  /*  public int save(Order order) {
         if (order == null)
             throw new RuntimeException("order is null ");
         else {
@@ -108,5 +106,5 @@ public class OrderDao extends BaseDao {
         session.close();
         return order;
     }
+*/
 
-}

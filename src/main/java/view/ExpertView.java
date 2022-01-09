@@ -1,71 +1,88 @@
-/*
 package view;
 
-import data.dto.ExpertDto;
 import data.dto.OrderDto;
 import data.model.serviceSystem.Service;
 import data.model.user.Expert;
 import exception.InValidUserInfoException;
-import service.ExpertService;
-import service.OrderService;
-import service.ServiceService;
 import validation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ExpertView {
+public class ExpertView extends BaseView {
+    /*private ExpertService expertService = context.getBean(ExpertService.class);
+    private Scanner scanner = new Scanner(System.in);
+    private boolean isContinue;
+    private String info;*/
+/*
     //  private CustomerService customerService = new CustomerService();
     //  private BranchDutyService branchDutyService = new BranchDutyService();
     private ServiceService serviceService = new ServiceService();
     private OrderService orderService = new OrderService();
-    private ExpertService expertService = new ExpertService();
-    private boolean isContinue;
-    private String info;
-    private Scanner scanner = new Scanner(System.in);
+    private ExpertService expertService = new ExpertService();*/
 
 
-  //  public void addExpert() {
+    public void addExpert() {
+        String name, family, email, pass, phone, credit, score, image;
         System.out.println("********* Expert information entry form ********");
         Expert expert = null;
         isContinue = false;
         String info;
         do {
-            System.out.println("Enter Information Like Sample: firstName,lastName,email," +
-                    "password,phoneNumber,credit,score,image file address");
-            info = scanner.next();
             try {
-                ValidationInfoExpert.isValidInfo(info);
-                String[] split = info.split(",");
-              //  expert = expertService.createExpert(info);
-                expert = expertService.addPicture(expert, split[7]);
+                System.out.println("Enter firstName :");
+                name = scanner.next();
+                ValidationInfo.isValidCharacter(name);
+                System.out.println("Enter lastName :");
+                family = scanner.next();
+                ValidationInfo.isValidCharacter(family);
+                System.out.println("Enter email :");
+                email = scanner.next();
+                ValidationInfo.isValidEmail(email);
+                System.out.println("Enter password :");
+                pass = scanner.next();
+                ValidationInfo.isValidPassword(pass);
+                System.out.println("Enter phoneNumber :");
+                phone = scanner.next();
+                ValidationInfo.isValidPhoneNumber(phone);
+                System.out.println("Enter amount for wallet :");
+                credit = scanner.next();
+                ValidationInfo.isValidNumeric(credit);
+                System.out.println("Enter score:");
+                score = scanner.next();
+                ValidationInfo.isValidNumeric(score);
+                System.out.println("Enter image file address :");
+                image = scanner.next();
+                ValidationInfo.isValidNumeric(image);
+                expert = expertService.createExpert(name, family, email, pass, phone, Double.parseDouble(credit),
+                        Integer.parseInt(score), image);
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException e) {
                 e.getMessage();
-                isContinue = false;
             }
         } while (isContinue);
-        expert.setServiceList(showMasterDuty());
+
+        //  expert.setServiceList(showMasterDuty());
         expertService.save(expert);
     }
 
-    public void loginByExpert() {
+    public void MenuExpert(Expert expert) {
         isContinue = false;
-
+        System.out.println("************ Welcome Expert ************");
         do {
-            System.out.println("select Item :\n 1.new Expert \n2.member Expert \n3.exit");
+
+            System.out.println("select Item :\n 1.show Expert Information \n2.register suggestion \n3.exit");
             info = scanner.next();
             try {
                 ValidationInfo.isValidLogin(info);
 
                 switch (info) {
                     case "1":
-                        addExpert();
+                        expertService.findExpert(expert);
                         break;
                     case "2":
-                        loginMemberExpert();
+                        ////////
                         break;
                     case "3":
                         break;
@@ -89,7 +106,7 @@ public class ExpertView {
                 if (expert != null)
                     checkPasswordExpert(expert);
                 else {
-                    System.out.println("customer for this email not exit");
+                    System.out.println("Expert for this email not exit");
                 }
                 isContinue = true;
                 break;
@@ -111,7 +128,7 @@ public class ExpertView {
                 else {
 
                     System.out.println("************ Welcome Expert ************");
-                    System.out.println(expertService.showExpert(expert.getEmail()));
+                    //      System.out.println(expertService.showExpert(expert.getEmail()));
                     isContinue = true;
                     break;
                 }
@@ -167,8 +184,8 @@ public class ExpertView {
                 isContinue = false;
             }
         } while (isContinue);
-        List<ExpertDto> filter = expertService.filter(info);
-        filter.forEach(System.out::println);
+        // List<ExpertDto> filter = expertService.filter(info);
+        //   filter.forEach(System.out::println);
     }
 
     public void update(String email) {
@@ -183,7 +200,7 @@ public class ExpertView {
             System.out.println("enter new value for update");
             value = scanner.next();
             ValidationUpdate.isValidInfo(info, value);
-            expertService.update(info, value, email);
+            // expertService.update(info, value, email);
             isContinue = true;
         } catch (InValidUserInfoException e) {
             e.getMessage();
@@ -205,7 +222,7 @@ public class ExpertView {
             try {
                 ValidationInfoExpert.isValidNumeric(info);
 
-                expertService.addSuggest(Integer.parseInt(info), list, getInfoSuggest(), expert);
+                //    expertService.addSuggest(Integer.parseInt(info), list, getInfoSuggest(), expert);
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException e) {
@@ -233,3 +250,4 @@ public class ExpertView {
     }
 }
 */
+        }

@@ -45,7 +45,7 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Customer set phonenumber=:newValue where email=:email", nativeQuery = true)
-    void updateLastName(@Param("newValue") String phoneNumber, @Param("email") String email);
+    void updatePhoneNumber(@Param("newValue") String phoneNumber, @Param("email") String email);
 
     @Transactional
     @Modifying

@@ -25,22 +25,22 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Order createOrder(String info, Customer customer, Address address, Suggestion suggestion) throws ParseException {
-        String[] split = info.split(",");
+    public Order createOrder(double price, String description, String date, Customer customer, Address address) throws ParseException {
+
         Order order = Order.builder()
-                .ProposedPrice(Double.parseDouble(split[0]))
-                .jobDescription(split[1])
-                .doDate(new SimpleDateFormat("yyyy/mm/dd").parse(split[2]))
+                .ProposedPrice(price)
+                .jobDescription(description)
+                .doDate(new SimpleDateFormat("yyyy/mm/dd").parse(date))
                 .status(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION)
                 .customer(customer)
                 .address(address)
                 .build();
+
         orderDao.save(order);
         return order;
     }
 
     public List<OrderDto> findToGetSuggest() {
-
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
                 OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
         if (list != null) {
@@ -50,7 +50,7 @@ public class OrderService {
             }
             return listOrderDto;
         } else
-            throw new IsNullObjectException("order is not for given Suggestion");
+            throw new IsNullObjectException("---order is not for given Suggestion---");
     }
 
     public Order findByRegisterDate(Date date) {
@@ -67,7 +67,6 @@ public class OrderService {
     }
 
     public void updateSuggestion(Order order, Suggestion suggest) {
-
         order.getSuggestion().add(suggest);
         orderDao.updateSuggestion(order.getSuggestion(), order.getId());
     }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Suggestion> suggestion;
+    private List<Suggestion> suggestion = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

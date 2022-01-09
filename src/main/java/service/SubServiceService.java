@@ -3,11 +3,13 @@ package service;
 import data.dao.SubServiceDao;
 import data.dto.SubServiceDto;
 import data.model.serviceSystem.SubService;
+import data.model.user.Expert;
 import exception.IsNullObjectException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +31,16 @@ public class SubServiceService {
     }
 
     public SubService createSubService(String name, String description, double price) {
-        SubService subService = SubService.builder()
-                .price(price)
-                .build();
-        subService.getSubServiceMap().put(name, description);
-        return subService;
+        Map<String, String> subMap = new HashMap<>();
+        subMap.put(name, description);
+        if (findByName(subMap) != null) {
+            SubService subService = SubService.builder()
+                    .price(price)
+                    .build();
+            subService.getSubServiceMap().put(name, description);
+            return subService;
+        }
+        throw new IsNullObjectException("------- SubService is exited --------");
     }
 
     public List<SubServiceDto> findAll() {
@@ -50,6 +57,11 @@ public class SubServiceService {
 
     public SubService findByName(Map<String, String> subServiceMap) {
         return subServiceDao.findBySubServiceMap(subServiceMap);
+    }
+
+    public void addExpertToList(Expert expert, SubService service) {
+        service.getExpertList().add(expert);
+        subServiceDao.updateExpertList(service.getExpertList(), service.getId());
     }
   /*  public boolean findByName(String name) {
         String[] split = name.split(",");

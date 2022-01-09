@@ -3,6 +3,7 @@ package service;
 import data.dao.SuggestionDao;
 import data.model.order.Suggestion;
 import data.model.user.Expert;
+import exception.IsNullObjectException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +22,10 @@ public class SuggestionService {
                 .startTime(time)
                 .expert(expert)
                 .build();
-        suggestionDao.save(suggestion);
-        return suggestion;
+        if (!suggestionDao.exists(suggestion)) {
+            suggestionDao.save(suggestion);
+            return suggestion;
+        } else
+            throw new IsNullObjectException("---this suggestion exited---");
     }
 }

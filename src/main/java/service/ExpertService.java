@@ -64,8 +64,8 @@ public class ExpertService {
                     .score(score)
                     .userRole(UserRole.EXPERT)
                     .build();
-
             return addPicture(expert, image);
+
         } else
             throw new InValidUserInfoException("Expert is exit for this email");
     }
@@ -130,7 +130,7 @@ public class ExpertService {
         orderService.updateSuggestion(order, suggestion);
     }
 
-    public void addSubServiceExpert(Expert expert, List<SubServiceDto> subServiceList, int index) {
+    public List<SubService> addSubServiceExpert(Expert expert, List<SubServiceDto> subServiceList, int index) {
         index--;
         Map.Entry<String, String> searchSubService = null;
         SubServiceDto subServiceDto = subServiceList.get(index);
@@ -142,10 +142,13 @@ public class ExpertService {
         }
         if (searchSubService == null) {
             expert.getServiceList().add(subService);
-            expertDao.updateServiceList(expert.getServiceList(), expert.getEmail());
+            return expert.getServiceList();
         } else
             throw new IsNullObjectException("---not add Because this subService exit in expert service list---");
     }
 
+    public void updateServiceList(List<SubService> list, String email) {
+        expertDao.updateServiceList(list, email);
+    }
 }
 

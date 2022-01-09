@@ -26,6 +26,11 @@ public class CustomerService {
         customerDao.save(customer);
     }
 
+    public CustomerDto createCustomerDto(Customer customer) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(customer, CustomerDto.class);
+    }
+
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit) {
         if (findByEmail(email) == null) {
             Customer customer = Customer.builder()
@@ -41,6 +46,10 @@ public class CustomerService {
             return customer;
         } else
             throw new InValidUserInfoException("Customer is exit for this email");
+    }
+
+    public CustomerDto findCustomer(Customer customer) {
+        return createCustomerDto(findByEmail(customer.getEmail()));
     }
 
     public List<Customer> findByUserStatus(UserStatus status) {
@@ -63,6 +72,14 @@ public class CustomerService {
         return false;
     }
 
+    public void changePassword(Customer customer, String newPass) {
+        customerDao.updatePassword(newPass, customer.getEmail());
+    }
+
+    public void changePhoneNumber(Customer customer, String newPhoneNumber) {
+        customerDao.updatePhoneNumber(newPhoneNumber, customer.getEmail());
+    }
+
     public Customer findByEmailAndUserStatus(String email, UserStatus status) {
         return customerDao.findByEmailAndUserStatus(email, status);
     }
@@ -71,8 +88,9 @@ public class CustomerService {
         return customerDao.findByEmail(email);
     }
 
-    public CustomerDto createCustomerDto(Customer customer) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(customer, CustomerDto.class);
+    public void IncreaseCredit(Customer customer, double amount) {
+        double credit = findByEmail(customer.getEmail()).getCredit();
+        customer.setCredit(credit + amount);
+        customerDao.save(customer);
     }
 }

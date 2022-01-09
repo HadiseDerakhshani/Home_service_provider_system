@@ -85,4 +85,17 @@ public class ValidationInfo {
             return true;
         throw new InValidUserInfoException("----entered is not valid you should enter between 1-" + count + " ----");
     }
+
+    public static boolean isValidDate(String phoneNumber) {
+        if (phoneNumber.matches("    ^[1-4]\\d{3}\\/((0[1-6]\\/((3[0-1])|([1-2][0-9])|" +
+                "(0[1-9])))|((1[0-2]|(0[7-9]))\\/(30|31|([1-2][0-9])|(0[1-9]))))$\n"))
+            return true;
+        throw new InValidUserInfoException("---- Date that entered is not valid ----");
+    }
+
+    public static boolean isValidRequestOrder(String input) {
+        if (input.matches("[1-2]+"))
+            return true;
+        throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
+    }
 }

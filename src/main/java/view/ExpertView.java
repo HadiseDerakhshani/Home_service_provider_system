@@ -4,28 +4,16 @@ import data.dto.OrderDto;
 import data.dto.SubServiceDto;
 import data.model.order.Order;
 import data.model.order.Suggestion;
+import data.model.serviceSystem.SubService;
 import data.model.user.Expert;
 import exception.InValidUserInfoException;
 import exception.IsNullObjectException;
-import validation.ValidationFilterExpert;
 import validation.ValidationInfo;
-import validation.ValidationUpdate;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class ExpertView extends BaseView {
-    /*private ExpertService expertService = context.getBean(ExpertService.class);
-    private Scanner scanner = new Scanner(System.in);
-    private boolean isContinue;
-    private String info;*/
-/*
-    //  private CustomerService customerService = new CustomerService();
-    //  private BranchDutyService branchDutyService = new BranchDutyService();
-    private ServiceService serviceService = new ServiceService();
-    private OrderService orderService = new OrderService();
-    private ExpertService expertService = new ExpertService();*/
-
 
     public void addExpert() {
         String name, family, email, pass, phone, credit, score, image;
@@ -68,7 +56,7 @@ public class ExpertView extends BaseView {
             }
         } while (isContinue);
 
-        //  expert.setServiceList(showMasterDuty());
+        expert.setServiceList(addSubService(expert));
         expertService.save(expert);
     }
 
@@ -77,7 +65,6 @@ public class ExpertView extends BaseView {
         isContinue = false;
         System.out.println("************ Welcome Expert ************");
         do {
-
             System.out.println("select Item :\n 1.show Expert Information \n2.register suggestion " +
                     " \n3.change password \n 4.change phoneNumber \n 5.add subService \n6.exit");
             info = scanner.next();
@@ -104,7 +91,8 @@ public class ExpertView extends BaseView {
                         expertService.changePhoneNumber(expert, info);
                         break;
                     case "5":
-                        addSubService(expert);
+                        List<SubService> list = addSubService(expert);
+                        expertService.updateServiceList(list, expert.getEmail());
                         break;
                     case "6":
                         break;
@@ -118,11 +106,11 @@ public class ExpertView extends BaseView {
     }
 
 
-    public void addSubService(Expert expert) {
+    public List<SubService> addSubService(Expert expert) {
         isContinue = false;
-        List<SubServiceDto> subServiceDtoList = null;
+        List<SubService> list = null;
         try {
-            subServiceDtoList = subServiceService.findAll();
+            List<SubServiceDto> subServiceDtoList = subServiceService.findAll();
             int count = 1;
             for (SubServiceDto subService : subServiceDtoList) {
                 System.out.print(count++ + " : " + subService);
@@ -134,7 +122,8 @@ public class ExpertView extends BaseView {
                     ValidationInfo.isValidNumeric(info);
                     int index = Integer.parseInt(info);
                     ValidationInfo.isValidSelect(count, index);
-                    expertService.addSubServiceExpert(expert, subServiceDtoList, index);
+                    list = expertService.addSubServiceExpert(expert, subServiceDtoList, index);
+                    subServiceService.addExpertToList(expert, list.get(list.size() - 1));
                 } catch (InValidUserInfoException | IsNullObjectException e) {
                     e.getMessage();
                     isContinue = false;
@@ -143,9 +132,10 @@ public class ExpertView extends BaseView {
         } catch (IsNullObjectException e) {
             e.getMessage();
         }
+        return list;
     }
 
-    public void filterExpert() {
+   /* public void filterExpert() {
 
         isContinue = false;
         String info;
@@ -164,9 +154,9 @@ public class ExpertView extends BaseView {
         } while (isContinue);
         // List<ExpertDto> filter = expertService.filter(info);
         //   filter.forEach(System.out::println);
-    }
+    }*/
 
-    public void update(String email) {
+   /* public void update(String email) {
         isContinue = false;
         String value;
         System.out.println(" select item for update : \n1.firstname \n2.lastname \n3.email \n4.password " +
@@ -183,7 +173,7 @@ public class ExpertView extends BaseView {
         } catch (InValidUserInfoException e) {
             e.getMessage();
         }
-    }
+    }*/
 
     public void giveSuggestion(Expert expert) {
 
@@ -237,7 +227,7 @@ public class ExpertView extends BaseView {
                 suggest = suggestionService.createSuggest(price, timeSpan, timeStart, expert);
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException e) {
+            } catch (InValidUserInfoException | IsNullObjectException e) {
                 e.getMessage();
             }
         } while (isContinue);

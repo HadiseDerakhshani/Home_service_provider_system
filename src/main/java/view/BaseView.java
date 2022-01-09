@@ -8,17 +8,18 @@ import service.*;
 import java.util.Scanner;
 
 public class BaseView {
-    public boolean isContinue;
-    public String info;
-    public Scanner scanner = new Scanner(System.in);
+    protected boolean isContinue;
+    protected String info;
+    protected Scanner scanner = new Scanner(System.in);
     ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-    public UserService userService = context.getBean(UserService.class);
-    public CustomerService customerService = context.getBean(CustomerService.class);
-    public SubServiceService subServiceService = context.getBean(SubServiceService.class);
-    public ServiceService serviceService = context.getBean(ServiceService.class);
-    public OrderService orderService = context.getBean(OrderService.class);
-    public ExpertService expertService = context.getBean(ExpertService.class);
-    public SuggestionService suggestionService = context.getBean(SuggestionService.class);
-    public ExpertView expertView = context.getBean(ExpertView.class);
-    public CustomerView customerView = context.getBean(CustomerView.class);
+    protected UserService userService = context.getBean(UserService.class);
+    protected CustomerService customerService = context.getBean(CustomerService.class);
+    protected SubServiceService subServiceService = context.getBean(SubServiceService.class);
+    protected ServiceService serviceService = context.getBean(ServiceService.class);
+    protected OrderService orderService = context.getBean(OrderService.class);
+    protected AddressService addressService = context.getBean(AddressService.class);
+    protected ExpertService expertService = context.getBean(ExpertService.class);
+    protected SuggestionService suggestionService = context.getBean(SuggestionService.class);
+    protected ExpertView expertView = context.getBean(ExpertView.class);
+    protected CustomerView customerView = context.getBean(CustomerView.class);
 }

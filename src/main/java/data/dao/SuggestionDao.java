@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
     @Override
     Suggestion save(Suggestion suggestion);
+
+    boolean exists(Suggestion suggestion);
 }

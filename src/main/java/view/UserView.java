@@ -63,76 +63,11 @@ public class UserView extends BaseView {
 }
 /*
 
-    public void loginByCustomer() {
-        isContinue = false;
 
-        do {
-            System.out.println("select Item :\n 1.new customer \n2.member customer \n3.exit");
-            info = scanner.next();
-            try {
-                ValidationInfo.isValidLogin(info);
 
-                switch (info) {
-                    case "1":
-                        addCustomer();
-                        break;
-                    case "2":
-                        loginMemberCustomer();
-                        break;
-                    case "3":
-                        break;
-                }
-                isContinue = true;
-                break;
-            } catch (InValidUserInfoException e) {
-                e.getMessage();
-            }
-        } while (isContinue);
-    }
 
-       public void addCustomer() {
-        System.out.println("********* Customer information entry form ********");
-        String info = getInformation();
-        if (info != null) {
-           // customerService.save(customerService.createCustomer(info));
-        }
-    }
 
-    public String getInformation() {
-        isContinue = false;
-        String info;
-        do {
-            System.out.println("Enter Information Like Sample: firstName,lastName,email,password,phoneNumber,credit");
-            info = scanner.next();
-            try {
-                ValidationInfo.isValidInfo(info);
-                isContinue = true;
-                break;
-            } catch (InValidUserInfoException e) {
-                e.getMessage();
-                isContinue = false;
-            }
-        } while (isContinue);
-        return info;
-    }
 
-    public void update(String email) {
-        isContinue = false;
-        String value;
-        System.out.println(" select item for update : \n1.firstname \n2.lastname \n3.email \n4.password " +
-                "\n5.phoneNumber \n6.credit ");
-        info = scanner.next();
-        try {
-            ValidationUpdate.isValidUpdateCustomer(info);
-            System.out.println("enter new value for update");
-            value = scanner.next();
-            ValidationUpdate.isValidInfo(info, value);
-            customerService.update(info, value, email);
-            isContinue = true;
-        } catch (InValidUserInfoException e) {
-            e.getMessage();
-        }
-    }
 
     public void filterCustomer() {
         isContinue = false;

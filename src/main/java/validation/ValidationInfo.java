@@ -41,6 +41,12 @@ public class ValidationInfo {
         throw new InValidUserInfoException("----entered is not valid you should enter numeric----");
     }
 
+    public static boolean isValidIndex(int count, int index) {
+        if (index >= 1 && index <= count)
+            return true;
+        throw new InValidUserInfoException("----entered is not valid you should enter between 1-" + count + " ----");
+    }
+
     public static boolean isValidLogin(String input) {
         if (input.matches("[1-3]+"))
             return true;

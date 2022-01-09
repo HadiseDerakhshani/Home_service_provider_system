@@ -7,7 +7,7 @@ public class ManagerService {
     // private CustomerService customerService = new CustomerService();
     private ExpertService expertService;
     // private OrderService orderService = new OrderService();
-    private SuggestionService suggestionService = new SuggestionService();
+    private SuggestionService suggestionService;
     private ServiceService serviceService = new ServiceService();
     private SubServiceService subServiceService = new SubServiceService();
 

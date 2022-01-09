@@ -1,10 +1,15 @@
 package view;
 
 import data.dto.OrderDto;
+import data.model.order.Order;
+import data.model.order.Suggestion;
 import data.model.serviceSystem.Service;
 import data.model.user.Expert;
 import exception.InValidUserInfoException;
-import validation.*;
+import validation.ValidationDutyInfo;
+import validation.ValidationFilterExpert;
+import validation.ValidationInfo;
+import validation.ValidationUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +87,7 @@ public class ExpertView extends BaseView {
                         expertService.findExpert(expert);
                         break;
                     case "2":
-                        ////////
+                        giveSuggestion(expert);
                         break;
                     case "3":
                         break;
@@ -212,7 +217,6 @@ public class ExpertView extends BaseView {
         isContinue = false;
         int count = 0;
         for (OrderDto orderDto : list) {
-
             System.out.println(count + " ==> " + orderDto);
         }
 
@@ -220,9 +224,12 @@ public class ExpertView extends BaseView {
             System.out.println("enter number of order for given suggest");
             info = scanner.next();
             try {
-                ValidationInfoExpert.isValidNumeric(info);
-
-                //    expertService.addSuggest(Integer.parseInt(info), list, getInfoSuggest(), expert);
+                ValidationInfo.isValidNumeric(info);
+                int index = Integer.parseInt(info);
+                ValidationInfo.isValidIndex(count, index);
+                OrderDto orderDto = list.get(index - 1);
+                Order order = orderService.findByRegisterDate(orderDto.getRegisterDate());
+                expertService.addSuggest(order, getSuggest(expert), expert);
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException e) {
@@ -231,14 +238,28 @@ public class ExpertView extends BaseView {
         } while (isContinue);
     }
 
-    public String getInfoSuggest() {
+    public Suggestion getSuggest(Expert expert) {
         System.out.println("********* Suggestion information entry form ********");
         isContinue = false;
+        Suggestion suggest = null;
         do {
-            System.out.println("enter info like sample : ProposedPrice,durationOfWork,startTime");
-            info = scanner.next();
+
             try {
-                ValidationInfoSuggestion.isValidInfo(info);
+                System.out.println("enter ProposedPrice : ");
+                info = scanner.next();
+                ValidationInfo.isValidNumeric(info);
+                double price = Double.parseDouble(info);
+
+                System.out.println("enter durationOfWork : ");
+                info = scanner.next();
+                ValidationInfo.isValidNumeric(info);
+                int timeSpan = Integer.parseInt(info);
+
+                System.out.println("enter startTime : ");
+                info = scanner.next();
+                ValidationInfo.isValidNumeric(info);
+                int timeStart = Integer.parseInt(info);
+                suggest = suggestionService.createSuggest(price, timeSpan, timeStart, expert);
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException e) {
@@ -246,8 +267,6 @@ public class ExpertView extends BaseView {
             }
         } while (isContinue);
 
-        return info;
+        return suggest;
     }
 }
-*/
-        }

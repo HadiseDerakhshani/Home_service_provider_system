@@ -27,6 +27,7 @@ public class Order {
     @CreationTimestamp
     private Date registerDate;
     private Date doDate;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @ManyToOne(cascade = CascadeType.ALL)
     private Customer customer;

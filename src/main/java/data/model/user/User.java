@@ -15,7 +15,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @SuperBuilder
 @NoArgsConstructor
-
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

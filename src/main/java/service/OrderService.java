@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,27 +41,32 @@ public class OrderService {
     public List<OrderDto> findToGetSuggest() {
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
                 OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
-        ArrayList<OrderDto> listOrderDtos = new ArrayList<>();
+        ArrayList<OrderDto> listOrderDto = new ArrayList<>();
         for (Order order : list) {
-            listOrderDtos.add(creatOrderDto(order));
+            listOrderDto.add(creatOrderDto(order));
         }
-        return listOrderDtos;
+        return listOrderDto;
+    }
+
+    public Order findByRegisterDate(Date date) {
+        return orderDao.findByRegisterDate(date);
     }
 
     public OrderDto creatOrderDto(Order order) {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(order, OrderDto.class);
     }
-  /*  public void updateStatus(int id, OrderStatus status) {
-        orderDao.updateStatus(id, status);
+
+    public void updateStatus(int id, OrderStatus status) {
+        orderDao.updateStatus(status, id);
     }
 
-    public void updateSuggestion(int id, Suggestion suggest) {
-        Order order = orderDao.findById(id);
+    public void updateSuggestion(Order order, Suggestion suggest) {
+
         order.getSuggestion().add(suggest);
-        orderDao.updateSuggestion(id, order.getSuggestion());
+        orderDao.updateSuggestion(order.getSuggestion(), order.getId());
     }
-
+/*
     public List<Order> findByStatus(OrderStatus status) {
         return orderDao.findByStatus(status);
     }*/

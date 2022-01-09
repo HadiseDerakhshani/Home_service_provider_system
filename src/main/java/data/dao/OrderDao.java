@@ -2,9 +2,15 @@ package data.dao;
 
 import data.model.enums.OrderStatus;
 import data.model.order.Order;
+import data.model.order.Suggestion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -12,6 +18,21 @@ public interface OrderDao extends JpaRepository<Order, Integer> {
     Order save(Order order);
 
     List<Order> findByStatusOrStatus(OrderStatus statusSelect, OrderStatus statusSuggest);
+
+    Order findById(int id);
+
+    Order findByRegisterDate(Date date);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Order set status=:nawValue where id=:id", nativeQuery = true)
+    void updateStatus(@Param("newValue") OrderStatus newValue, @Param("id") int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Order set suggestion=:nawValue where id=:id", nativeQuery = true)
+    void updateSuggestion(@Param("newValue") List<Suggestion> newValue, @Param("id") int id);
+
 }
 
   /*  public int save(Order order) {

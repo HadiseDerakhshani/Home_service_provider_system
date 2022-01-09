@@ -1,23 +1,11 @@
 package data.dao;
 
 import data.model.order.Suggestion;
-import org.hibernate.Session;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class SuggestionDao extends BaseDao {
-    private Session session;
-
-    public int save(Suggestion suggestion) {
-        if (suggestion == null)
-            throw new RuntimeException("Suggestion is null ");
-        else {
-            session = builderSessionFactory().openSession();
-            session.beginTransaction();
-            int id = (int) session.save(suggestion);
-            session.getTransaction().commit();
-            session.close();
-            return id;
-        }
-    }
-
-
+@Repository
+public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
+    @Override
+    Suggestion save(Suggestion suggestion);
 }

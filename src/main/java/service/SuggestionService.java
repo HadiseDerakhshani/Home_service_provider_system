@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SuggestionService {
-    private SuggestionDao suggestionDao = new SuggestionDao();
+    private SuggestionDao suggestionDao;
 
-    public Suggestion createSuggest(String info, Expert expert) {
-        String[] split = info.split(",");
+    public SuggestionService(SuggestionDao suggestionDao) {
+        this.suggestionDao = suggestionDao;
+    }
+
+    public Suggestion createSuggest(double price, int timeSpan, int time, Expert expert) {
+
         Suggestion suggestion = Suggestion.builder()
-                .ProposedPrice(Double.parseDouble(split[0]))
-                .durationOfWork(Integer.parseInt(split[1]))
-                .startTime(Integer.parseInt(split[2]))
+                .ProposedPrice(price)
+                .durationOfWork(timeSpan)
+                .startTime(time)
                 .expert(expert)
                 .build();
         suggestionDao.save(suggestion);

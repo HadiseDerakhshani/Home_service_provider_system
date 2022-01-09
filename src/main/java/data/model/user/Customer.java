@@ -16,6 +16,7 @@ import java.util.List;
 @SuperBuilder
 @Data
 @Entity
+
 public class Customer extends User {
 
     @OneToMany

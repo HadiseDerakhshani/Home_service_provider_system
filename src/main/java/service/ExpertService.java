@@ -1,13 +1,19 @@
 package service;
 
+import config.SpringConfig;
 import data.dao.ExpertDao;
 import data.dto.ExpertDto;
+import data.model.enums.OrderStatus;
 import data.model.enums.UserRole;
 import data.model.enums.UserStatus;
+import data.model.order.Order;
+import data.model.order.Suggestion;
 import data.model.user.Expert;
 import exception.InValidUserInfoException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import validation.ValidationInfo;
 
@@ -19,13 +25,19 @@ import java.util.List;
 @Service
 public class ExpertService {
 
+    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    public UserService userService = context.getBean(UserService.class);
+    public CustomerService customerService = context.getBean(CustomerService.class);
+    public SubServiceService subServiceService = context.getBean(SubServiceService.class);
+    public ServiceService serviceService = context.getBean(ServiceService.class);
+    public OrderService orderService = context.getBean(OrderService.class);
+    public ExpertService expertService = context.getBean(ExpertService.class);
+    public SuggestionService suggestionService = context.getBean(SuggestionService.class);
     private ExpertDao expertDao;
-
     @Autowired
     public ExpertService(ExpertDao expertDao) {
         this.expertDao = expertDao;
     }
-
 
     public void save(Expert expert) {
         expert.setUserStatus(UserStatus.WAITING_CONFIRM);
@@ -122,11 +134,11 @@ public class ExpertService {
         expertDao.update(query, value, email, filed);
     }*/
 
-   /* public void addSuggest(int numberOrder, List<OrderDto> list, String input, Expert expert) {
-        //int id = list.get(numberOrder - 1).getId();
-        Suggestion suggest = suggestService.createSuggest(input, expert);
-        orderService.updateStatus(5, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
-        orderService.updateSuggestion(5, suggest);
-    }*/
+    public void addSuggest(Order order, Suggestion suggestion, Expert expert) {
+        if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION.name()))
+            orderService.updateStatus(order.getId(), OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+
+        orderService.updateSuggestion(order, suggestion);
+    }
 
 }

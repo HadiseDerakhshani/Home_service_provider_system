@@ -3,13 +3,16 @@ package service;
 import config.SpringConfig;
 import data.dao.ExpertDao;
 import data.dto.ExpertDto;
+import data.dto.SubServiceDto;
 import data.model.enums.OrderStatus;
 import data.model.enums.UserRole;
 import data.model.enums.UserStatus;
 import data.model.order.Order;
 import data.model.order.Suggestion;
+import data.model.serviceSystem.SubService;
 import data.model.user.Expert;
 import exception.InValidUserInfoException;
+import exception.IsNullObjectException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -21,15 +24,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExpertService {
 
     ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-
-
     public SubServiceService subServiceService = context.getBean(SubServiceService.class);
-    public ServiceService serviceService = context.getBean(ServiceService.class);
     public OrderService orderService = context.getBean(OrderService.class);
 
     private ExpertDao expertDao;
@@ -100,6 +101,14 @@ public class ExpertService {
 
     }
 
+    public void changePassword(Expert expert, String newPass) {
+        expertDao.updatePassword(newPass, expert.getEmail());
+    }
+
+    public void changePhoneNumber(Expert expert, String newPhoneNumber) {
+        expertDao.updatePhoneNumber(newPhoneNumber, expert.getEmail());
+    }
+
     public Expert findByEmail(String email) {
         return expertDao.findByEmail(email);
     }
@@ -113,26 +122,6 @@ public class ExpertService {
         return createExpertDto(findByEmail(expert.getEmail()));
     }
 
-  /*  public void update(String input, String value, String email) {
-        String query = null;
-        int filed = 0;
-
-        if (input.equals("6")) {
-            filed = 6;
-            query = "update Expert  e set e.credit=:newValue where e.email=:email";
-        } else if (input.equals("7")) {
-            filed = 7;
-            query = "update Expert  e set e.score=:newValue where e.email=:email";
-        } else
-            switch (input) {
-                case "1" -> query = "update Expert e set e.firstName=:newValue where e.email=:email";
-                case "2" -> query = "update Expert e  set e.lastName=:newValue where e.email=:email";
-                case "3" -> query = "update Expert e  set e.email=:newValue where e.email=:email";
-                case "4" -> query = "update Customer  c set c.password=:newValue where c.email=:email";
-                case "5" -> query = "update Customer  c set c.phoneNumber=:newValue where c.email=:email";
-            }
-        expertDao.update(query, value, email, filed);
-    }*/
 
     public void addSuggest(Order order, Suggestion suggestion, Expert expert) {
         if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION.name()))
@@ -141,4 +130,22 @@ public class ExpertService {
         orderService.updateSuggestion(order, suggestion);
     }
 
+    public void addSubServiceExpert(Expert expert, List<SubServiceDto> subServiceList, int index) {
+        index--;
+        Map.Entry<String, String> searchSubService = null;
+        SubServiceDto subServiceDto = subServiceList.get(index);
+        SubService subService = subServiceService.findByName(subServiceDto.getSubServiceMap());
+        String nameSubService = subService.getSubServiceMap().keySet().stream().findAny().orElse(null);
+        for (SubService service : expert.getServiceList()) {
+            searchSubService = service.getSubServiceMap().entrySet().stream().filter(s -> s.getKey().equals(nameSubService))
+                    .findAny().orElse(null);
+        }
+        if (searchSubService == null) {
+            expert.getServiceList().add(subService);
+            expertDao.updateServiceList(expert.getServiceList(), expert.getEmail());
+        } else
+            throw new IsNullObjectException("---not add Because this subService exit in expert service list---");
+    }
+
 }
+

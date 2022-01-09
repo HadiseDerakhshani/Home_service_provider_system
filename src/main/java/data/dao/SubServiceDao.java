@@ -1,36 +1,17 @@
 package data.dao;
 
 import data.model.serviceSystem.SubService;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Map;
 
-public class SubServiceDao extends BaseDao {
-    private Session session;
+public interface SubServiceDao extends JpaRepository<SubService, Integer> {
+    @Override
+    SubService save(SubService subService);
 
+    @Override
+    List<SubService> findAll();
 
-    public int save(SubService subService) {
-        if (subService == null)
-            throw new RuntimeException("SubService is null ");
-        else {
-            session = builderSessionFactory().openSession();
-            session.beginTransaction();
-            int id = (int) session.save(subService);
-            session.getTransaction().commit();
-            session.close();
-            return id;
-        }
-    }
-
-
-    public List<SubService> findByName() {
-        session = builderSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from SubService");
-        List<SubService> resultList = query.getResultList();
-        session.getTransaction().commit();
-        session.close();
-        return resultList;
-    }
+    SubService findBySubServiceMap(Map<String, String> subServiceMap);
 }

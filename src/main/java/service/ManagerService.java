@@ -9,7 +9,7 @@ public class ManagerService {
     // private OrderService orderService = new OrderService();
     private SuggestionService suggestionService;
     private ServiceService serviceService = new ServiceService();
-    private SubServiceService subServiceService = new SubServiceService();
+    private SubServiceService subServiceService;
 
 
     /*public void customerConfirmation() {

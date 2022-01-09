@@ -1,30 +1,57 @@
 package service;
 
 import data.dao.SubServiceDao;
+import data.dto.SubServiceDto;
 import data.model.serviceSystem.SubService;
+import exception.IsNullObjectException;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class SubServiceService {
-    SubServiceDao subServiceDao = new SubServiceDao();
+    SubServiceDao subServiceDao;
+
+    public SubServiceService(SubServiceDao subServiceDao) {
+        this.subServiceDao = subServiceDao;
+    }
 
     public void save(SubService subService) {
         subServiceDao.save(subService);
     }
 
-    public SubService createBranchDuty(String info) {
-        String[] split = info.split(",");
+    public SubServiceDto createSubServiceDto(SubService subService) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(subService, SubServiceDto.class);
+    }
+
+    public SubService createSubService(String name, String description, double price) {
         SubService subService = SubService.builder()
-                .price(Double.parseDouble(split[2]))
+                .price(price)
                 .build();
-        subService.getSubServiceMap().put(split[0], split[1]);
+        subService.getSubServiceMap().put(name, description);
         return subService;
     }
 
-    public boolean findByName(String name) {
+    public List<SubServiceDto> findAll() {
+        List<SubService> listSubService = subServiceDao.findAll();
+        if (listSubService != null) {
+            List<SubServiceDto> listSubServiceDto = new ArrayList<>();
+            for (SubService subService : listSubService) {
+                listSubServiceDto.add(createSubServiceDto(subService));
+            }
+            return listSubServiceDto;
+        } else
+            throw new IsNullObjectException(" SubService is null");
+    }
+
+    public SubService findByName(Map<String, String> subServiceMap) {
+        return subServiceDao.findBySubServiceMap(subServiceMap);
+    }
+  /*  public boolean findByName(String name) {
         String[] split = name.split(",");
         List<SubService> list = subServiceDao.findByName();
         Map.Entry<String, String> stringEntry = null;
@@ -35,5 +62,5 @@ public class SubServiceService {
         if (stringEntry != null)
             return true;
         return false;
-    }
+    }*/
 }

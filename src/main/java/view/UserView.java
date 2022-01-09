@@ -6,7 +6,7 @@ import exception.IsNullObjectException;
 import validation.ValidationInfo;
 
 public class UserView extends BaseView {
-
+////manager & user
 
     public void loginMemberUser() {
         isContinue = false;
@@ -47,10 +47,10 @@ public class UserView extends BaseView {
 
         switch (user.getUserRole().name()) {
             case "EXPERT":
-                expertView.MenuExpert(user.getEmail());
+                expertView.menuExpert(user.getEmail());
                 break;
             case "CUSTOMER":
-                //  user = customerService.findByEmail(user.getEmail());
+                customerView.menuCustomer(user.getEmail());
                 break;
             default:
                 //  user = userService.findByEmail(user.getEmail());

@@ -42,7 +42,7 @@ public class ValidationInfo {
     }
 
     public static boolean isValidIndex(int count, int index) {
-        if (index >= 1 && index <= count)
+        if (index >= 1 && index < count)
             return true;
         throw new InValidUserInfoException("----entered is not valid you should enter between 1-" + count + " ----");
     }
@@ -79,4 +79,10 @@ public class ValidationInfo {
         throw new InValidUserInfoException("---- the byte of picture is more than 300 Kilobyte----");
     }
 
+    public static boolean isValidSelect(int count, int index) {
+
+        if (index >= 1 && index < count)
+            return true;
+        throw new InValidUserInfoException("----entered is not valid you should enter between 1-" + count + " ----");
+    }
 }

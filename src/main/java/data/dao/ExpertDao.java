@@ -2,6 +2,7 @@ package data.dao;
 
 
 import data.model.enums.UserStatus;
+import data.model.serviceSystem.SubService;
 import data.model.user.Expert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -44,7 +45,7 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Expert set phonenumber=:newValue where email=:email", nativeQuery = true)
-    void updateLastName(@Param("newValue") String phoneNumber, @Param("email") String email);
+    void updatePhoneNumber(@Param("newValue") String phoneNumber, @Param("email") String email);
 
     @Transactional
     @Modifying
@@ -56,5 +57,8 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
     @Query(value = "update Expert set password=:newValue where email=:email", nativeQuery = true)
     void updatePassword(@Param("newValue") String newValue, @Param("email") String email);
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "update Expert set serviceList=:newValue where email=:email", nativeQuery = true)
+    void updateServiceList(@Param("newValue") List<SubService> newValue, @Param("email") String email);
 }

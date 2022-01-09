@@ -7,6 +7,7 @@ import data.model.order.Address;
 import data.model.order.Order;
 import data.model.order.Suggestion;
 import data.model.user.Customer;
+import exception.IsNullObjectException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -39,13 +40,17 @@ public class OrderService {
     }
 
     public List<OrderDto> findToGetSuggest() {
+
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
                 OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
-        ArrayList<OrderDto> listOrderDto = new ArrayList<>();
-        for (Order order : list) {
-            listOrderDto.add(creatOrderDto(order));
-        }
-        return listOrderDto;
+        if (list != null) {
+            ArrayList<OrderDto> listOrderDto = new ArrayList<>();
+            for (Order order : list) {
+                listOrderDto.add(creatOrderDto(order));
+            }
+            return listOrderDto;
+        } else
+            throw new IsNullObjectException("order is not for given Suggestion");
     }
 
     public Order findByRegisterDate(Date date) {

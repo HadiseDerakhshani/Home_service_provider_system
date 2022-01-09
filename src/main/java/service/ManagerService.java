@@ -1,15 +1,17 @@
 package service;
 
-import data.dto.CustomerDto;
 import data.model.enums.OrderStatus;
 import data.model.order.Order;
 import data.model.user.Expert;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ManagerService {
-   // private CustomerService customerService = new CustomerService();
-    private ExpertService expertService = new ExpertService();
+    // private CustomerService customerService = new CustomerService();
+    private ExpertService expertService;
     private OrderService orderService = new OrderService();
     private SuggestionService suggestionService = new SuggestionService();
     private ServiceService serviceService = new ServiceService();

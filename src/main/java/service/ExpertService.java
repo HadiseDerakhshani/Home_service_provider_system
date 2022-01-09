@@ -2,11 +2,13 @@ package service;
 
 import data.dao.ExpertDao;
 import data.dto.ExpertDto;
-import data.dto.OrderDto;
-import data.model.enums.OrderStatus;
+import data.model.enums.UserRole;
 import data.model.enums.UserStatus;
-import data.model.order.Suggestion;
 import data.model.user.Expert;
+import exception.InValidUserInfoException;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import validation.ValidationInfoExpert;
 
 import java.io.File;
@@ -14,29 +16,43 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class ExpertService {
-    private ExpertDao expertDao = new ExpertDao();
-    private SuggestionService suggestService = new SuggestionService();
-    private OrderService orderService = new OrderService();
+
+    private ExpertDao expertDao;
+
+    @Autowired
+    public ExpertService(ExpertDao expertDao) {
+        this.expertDao = expertDao;
+    }
+
 
     public void save(Expert expert) {
         expert.setUserStatus(UserStatus.WAITING_CONFIRM);
         expertDao.save(expert);
     }
 
-    public Expert createExpert(String info) {
-        String[] split = info.split(",");
-        Expert expert = Expert.builder()
-                .firstName(split[0])
-                .lastName(split[1])
-                .email(split[2])
-                .password(split[3])
-                .phoneNumber(split[4])
-                .userStatus(UserStatus.NEW)
-                .credit(Double.parseDouble(split[5]))
-                .score(Integer.parseInt(split[6]))
-                .build();
-        return expert;
+    public ExpertDto createExpertDto(Expert expert) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(expert, ExpertDto.class);
+    }
+
+    public Expert createExpert(String name, String family, String email, String pass, String phone, double credit, int score) {
+        if (findByEmail(email) == null) {
+            Expert expert = Expert.builder()
+                    .firstName(name)
+                    .lastName(family)
+                    .email(email)
+                    .password(pass)
+                    .phoneNumber(phone)
+                    .userStatus(UserStatus.NEW)
+                    .credit(credit)
+                    .score(score)
+                    .userRole(UserRole.EXPERT)
+                    .build();
+            return expert;
+        } else
+            throw new InValidUserInfoException("Expert is exit for this email");
     }
 
     public Expert addPicture(Expert expert, String imageFileAddress) {
@@ -59,20 +75,8 @@ public class ExpertService {
         return expert;
     }
 
-    public List<ExpertDto> filter(String filter) {
-        String name = null, family = null, email = null, duty = null;
-        boolean check = false;
-        String[] split = filter.split(",");
-        if (!split[0].equals("null"))
-            name = split[0];
-        if (!split[1].equals("null"))
-            family = split[1];
-        if (!split[2].equals("null"))
-            email = split[2];
-        if (!split[2].equals("null"))
-            duty = split[3];
-        List<ExpertDto> listFilter = expertDao.filter(name, family, email, duty);
-        return listFilter;
+    public List<Expert> findByFirstNameOrLastNameOrEmailOrServiceList(String name, String family, String email, List<data.model.serviceSystem.Service> list) {
+        return expertDao.findByFirstNameOrLastNameOrEmailOrServiceList(name, family, email, list);
     }
 
     public boolean checkPassword(Expert expert, String pass) {
@@ -82,13 +86,17 @@ public class ExpertService {
 
     }
 
-    public Expert checkEmail(String email) {
-        Expert expertFind = expertDao.findByEmail(email);
-        expertFind.setUserStatus(UserStatus.WAITING_CONFIRM);
-        return expertFind;
+    public Expert findByEmail(String email) {
+        return expertDao.findByEmail(email);
     }
 
-    public void update(String input, String value, String email) {
+    public Expert findByEmailAndUserStatus(String email, UserStatus status) {
+        return expertDao.findByEmailAndUserStatus(email, status);
+
+
+    }
+
+  /*  public void update(String input, String value, String email) {
         String query = null;
         int filed = 0;
 
@@ -107,17 +115,13 @@ public class ExpertService {
                 case "5" -> query = "update Customer  c set c.phoneNumber=:newValue where c.email=:email";
             }
         expertDao.update(query, value, email, filed);
-    }
+    }*/
 
-    public void addSuggest(int numberOrder, List<OrderDto> list, String input, Expert expert) {
-        int id = list.get(numberOrder - 1).getId();
+   /* public void addSuggest(int numberOrder, List<OrderDto> list, String input, Expert expert) {
+        //int id = list.get(numberOrder - 1).getId();
         Suggestion suggest = suggestService.createSuggest(input, expert);
-        orderService.updateStatus(id, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
-        orderService.updateSuggestion(id, suggest);
-    }
-
-    public ExpertDto showExpert(String email) {
-        return expertDao.selectByEmail(email);
-    }
+        orderService.updateStatus(5, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+        orderService.updateSuggestion(5, suggest);
+    }*/
 
 }

@@ -3,18 +3,20 @@ package data.dao;
 
 import data.model.enums.UserStatus;
 import data.model.user.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @Repository
-public interface CustomerDao extends CrudRepository<Customer, Integer> {
+public interface CustomerDao extends JpaRepository<Customer, Integer> {
     @Override
     Customer save(Customer customer);
 
@@ -31,7 +33,9 @@ public interface CustomerDao extends CrudRepository<Customer, Integer> {
 
     List<Customer> findByUserStatus(UserStatus status);
 
-  Customer findByEmail(String email);
+    Customer findByEmail(String email);
+
+    Customer findByEmailAndUserStatus(String email, UserStatus status);
 
     @Transactional
     @Modifying

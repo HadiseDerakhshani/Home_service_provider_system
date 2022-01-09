@@ -1,8 +1,12 @@
 package service;
 
 import data.dao.CustomerDao;
+import data.dto.CustomerDto;
+import data.model.enums.UserRole;
 import data.model.enums.UserStatus;
 import data.model.user.Customer;
+import exception.InValidUserInfoException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +27,20 @@ public class CustomerService {
     }
 
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit) {
-        Customer customer = Customer.builder()
-                .firstName(name)
-                .lastName(family)
-                .email(email)
-                .password(pass)
-                .phoneNumber(phone)
-                .userStatus(UserStatus.NEW)
-                .credit(credit)
-                .build();
-        return customer;
+        if (findByEmail(email) == null) {
+            Customer customer = Customer.builder()
+                    .firstName(name)
+                    .lastName(family)
+                    .email(email)
+                    .password(pass)
+                    .phoneNumber(phone)
+                    .userStatus(UserStatus.NEW)
+                    .userRole(UserRole.CUSTOMER)
+                    .credit(credit)
+                    .build();
+            return customer;
+        } else
+            throw new InValidUserInfoException("Customer is exit for this email");
     }
 
     public List<Customer> findByUserStatus(UserStatus status) {
@@ -55,11 +63,16 @@ public class CustomerService {
         return false;
     }
 
-    public Customer checkEmail(String email) {
-        Customer customerFind = customerDao.findByEmail(email);
-        if (customerFind.getUserStatus().equals(UserStatus.CONFIRMED.name()))
-            return customerFind;
-        else return null;
+    public Customer findByEmailAndUserStatus(String email, UserStatus status) {
+        return customerDao.findByEmailAndUserStatus(email, status);
     }
 
+    public Customer findByEmail(String email) {
+        return customerDao.findByEmail(email);
+    }
+
+    public CustomerDto createCustomerDto(Customer customer) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(customer, CustomerDto.class);
+    }
 }

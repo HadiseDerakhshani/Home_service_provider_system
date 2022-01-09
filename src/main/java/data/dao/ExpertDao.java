@@ -1,135 +1,62 @@
 package data.dao;
 
-import data.dto.ExpertDto;
+
+import data.model.enums.UserStatus;
 import data.model.user.Expert;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ExpertDao extends BaseDao {
-    private Session session;
+@Service
+@Repository
+public interface ExpertDao extends JpaRepository<Expert, Integer> {
 
-    public int save(Expert expert) {
-        if (expert == null)
-            throw new RuntimeException("Expert is null ");
-        else {
-            session = builderSessionFactory().openSession();
-            session.beginTransaction();
-            int id = (int) session.save(expert);
-            session.getTransaction().commit();
-            session.close();
-            return id;
-        }
+    @Override
+    Expert save(Expert expert);
 
-    }
+    @Override
+    Optional<Expert> findById(Integer id);
 
+    @Override
+    void deleteById(Integer id);
 
-    public List<ExpertDto> filter(String name, String family, String email, String duty) {
-        session = builderSessionFactory().openSession();
-        session.beginTransaction();
+    @Override
+    void delete(Expert expert);
 
-        Criteria criteria = session.createCriteria(Expert.class, "e");
-        criteria.createAlias("e.serviceList", "s");
+    List<Expert> findByFirstNameOrLastNameOrEmailOrServiceList(String name, String family, String email, List<data.model.serviceSystem.Service> list);
 
+    List<Expert> findByUserStatus(UserStatus status);
 
-        if (name != null && name.length() != 0) {
-            criteria.add(Restrictions.eq("e.firstName", name));
-        }
+    Expert findByEmail(String email);
 
-        if (family != null && family.length() != 0) {
-            criteria.add(Restrictions.eq("e.lastName", family));
-        }
+    Expert findByEmailAndUserStatus(String email, UserStatus status);
 
-        if (email != null && email.length() != 0) {
-            criteria.add(Restrictions.eq("e.email", email));
-        }
+    @Transactional
+    @Modifying
+    @Query(value = "update Expert set userStatus=:nawValue where email=:email", nativeQuery = true)
+    void updateStatus(@Param("newValue") UserStatus newValue, @Param("email") String email);
 
-        if (duty != null && duty.length() != 0) {
-            criteria.add(Restrictions.eq("s.name", duty));
-        }
+    @Transactional
+    @Modifying
+    @Query(value = "update Expert set phonenumber=:newValue where email=:email", nativeQuery = true)
+    void updateLastName(@Param("newValue") String phoneNumber, @Param("email") String email);
 
-        criteria.setProjection(Projections.projectionList()
-                .add(Projections.property("e.firstName").as("firstName"))
-                .add(Projections.property("e.lastName").as("lastName"))
-                .add(Projections.property("e.email").as("emil"))
-                .add(Projections.property("e.phoneNumber").as("phoneNumber"))
-                .add(Projections.property("e.dateRegister").as("dateRegister"))
-                .add(Projections.property("e.image").as("image"))
-                .add(Projections.property("e.score").as("score"))
-                .add(Projections.property("e.serviceList").as("serviceList")));
+    @Transactional
+    @Modifying
+    @Query(value = "update Expert set credit=:newValue where email=:email", nativeQuery = true)
+    void updateCredit(@Param("newValue") double newValue, @Param("email") String email);
 
-        criteria.setResultTransformer(Transformers.aliasToBean(ExpertDto.class));
+    @Transactional
+    @Modifying
+    @Query(value = "update Expert set password=:newValue where email=:email", nativeQuery = true)
+    void updatePassword(@Param("newValue") String newValue, @Param("email") String email);
 
-        List<ExpertDto> list = criteria.list();
-        session.getTransaction().commit();
-        session.close();
-
-        return list;
-    }
-
-    public Expert findByEmail(String email) {
-
-        session = builderSessionFactory().openSession();
-        session.beginTransaction();
-
-        Query query = session.createQuery("from Expert e where e.email=:email");
-        query.setParameter("email", email);
-        Expert expert = (Expert) query.uniqueResult();
-
-        session.getTransaction().commit();
-        session.close();
-        return expert;
-    }
-
-    public int update(String querySyntax, String value, String email, int filed) {
-
-        int update;
-        session = builderSessionFactory().openSession();
-        session.beginTransaction();
-
-        Query query = session.createQuery(querySyntax);
-        switch (filed) {
-            case 6 -> query.setParameter("newValue", Double.parseDouble(value));
-            case 7 -> query.setParameter("newValue", Integer.parseInt(value));
-            default -> query.setParameter("newValue", value);
-        }
-        query.setParameter("email", email);
-        update = query.executeUpdate();
-
-        session.getTransaction().commit();
-
-        session.close();
-        return update;
-    }
-
-    public ExpertDto selectByEmail(String email) {
-        session = builderSessionFactory().openSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Expert.class, "c");
-        criteria.add(Restrictions.eq("c.email", email));
-
-        criteria.setProjection(Projections.projectionList()
-                .add(Projections.property("e.firstName").as("firstName"))
-                .add(Projections.property("e.lastName").as("lastName"))
-                .add(Projections.property("e.email").as("emil"))
-                .add(Projections.property("e.phoneNumber").as("phoneNumber"))
-                .add(Projections.property("e.dateRegister").as("dateRegister"))
-                .add(Projections.property("e.image").as("image"))
-                .add(Projections.property("e.score").as("score"))
-                .add(Projections.property("e.serviceList").as("serviceList")));
-        criteria.setResultTransformer(Transformers.aliasToBean(ExpertDto.class));
-        ExpertDto expert = (ExpertDto) criteria.uniqueResult();
-
-
-        session.getTransaction().commit();
-
-        session.close();
-        return expert;
-    }
 
 }

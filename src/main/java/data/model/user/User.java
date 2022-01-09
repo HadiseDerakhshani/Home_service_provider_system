@@ -34,5 +34,5 @@ public class User {
     private Date dateUpdate;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
+    private double credit;
 }

@@ -1,3 +1,4 @@
+/*
 package view;
 
 import data.dto.ExpertDto;
@@ -25,7 +26,7 @@ public class ExpertView {
     private Scanner scanner = new Scanner(System.in);
 
 
-    public void addExpert() {
+  //  public void addExpert() {
         System.out.println("********* Expert information entry form ********");
         Expert expert = null;
         isContinue = false;
@@ -37,7 +38,7 @@ public class ExpertView {
             try {
                 ValidationInfoExpert.isValidInfo(info);
                 String[] split = info.split(",");
-                expert = expertService.createExpert(info);
+              //  expert = expertService.createExpert(info);
                 expert = expertService.addPicture(expert, split[7]);
                 isContinue = true;
                 break;
@@ -84,7 +85,7 @@ public class ExpertView {
             info = scanner.next();
             try {
                 ValidationInfo.isValidEmail(info);
-                Expert expert = expertService.checkEmail(info);
+                Expert expert = expertService.findByEmail(info);
                 if (expert != null)
                     checkPasswordExpert(expert);
                 else {
@@ -231,3 +232,4 @@ public class ExpertView {
         return info;
     }
 }
+*/

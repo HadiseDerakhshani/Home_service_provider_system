@@ -1,5 +1,7 @@
 package view;
 
+import data.dto.OrderDto;
+import data.dto.SuggestionDto;
 import data.model.order.Address;
 import data.model.order.Order;
 import data.model.user.Customer;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import validation.ValidationInfo;
 
 import java.text.ParseException;
+import java.util.List;
 
 
 @Service
@@ -19,12 +22,12 @@ public class CustomerView extends BaseView {
         System.out.println("************ Welcome Customer ************");
         do {
             System.out.println("select Item :\n 1.show Information \n2.register order " +
-                    " \n3.change password \n 4.change phoneNumber \n 5.Increase credit \n6.exit");
-            info = scanner.next();
+                    " \n3.change password \n 4.change phoneNumber \n 5.Increase credit \n6. Select expert \n" +
+                    "7.payment \n8.show suggestion list \n 9.exit");
+            input = scanner.next();
             try {
-                ValidationInfo.isValidLogin(info);
-
-                switch (info) {
+                ValidationInfo.isValidLogin(input);
+                switch (input) {
                     case "1":
                         customerService.findCustomer(customer);
                         break;
@@ -34,23 +37,31 @@ public class CustomerView extends BaseView {
                         break;
                     case "3":
                         System.out.println(" enter new password :");
-                        info = scanner.next();
-                        ValidationInfo.isValidPassword(info);
-                        customerService.changePassword(customer, info);
+                        input = scanner.next();
+                        ValidationInfo.isValidPassword(input);
+                        customerService.changePassword(customer, input);
                         break;
                     case "4":
                         System.out.println(" enter new phoneNumber :");
-                        info = scanner.next();
-                        ValidationInfo.isValidPhoneNumber(info);
-                        customerService.changePhoneNumber(customer, info);
+                        input = scanner.next();
+                        ValidationInfo.isValidPhoneNumber(input);
+                        customerService.changePhoneNumber(customer, input);
                         break;
                     case "5":
                         System.out.println(" enter amount for Increase credit :");
-                        info = scanner.next();
-                        ValidationInfo.isValidNumeric(info);
-                        customerService.IncreaseCredit(customer, Double.parseDouble(info));
+                        input = scanner.next();
+                        ValidationInfo.isValidNumeric(input);
+                        customerService.IncreaseCredit(customer, Double.parseDouble(input));
                         break;
                     case "6":
+                        selectExport(customer);
+                        break;
+                    case "7":
+                        break;
+                    case "8":
+                        break;
+                    case "9":
+                        mainMenu();
                         break;
                 }
                 isContinue = true;
@@ -68,19 +79,19 @@ public class CustomerView extends BaseView {
         do {
             try {
                 System.out.println("enter ProposedPrice : ");
-                info = scanner.next();
-                ValidationInfo.isValidNumeric(info);
-                double price = Double.parseDouble(info);
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                double price = Double.parseDouble(input);
 
                 System.out.println("enter jobDescription : ");
-                info = scanner.next();
-                ValidationInfo.isValidCharacter(info);
-                String description = info;
+                input = scanner.next();
+                ValidationInfo.isValidCharacter(input);
+                String description = input;
 
                 System.out.println("enter date for service like sample: yyyy/mm/dd");
-                info = scanner.next();
-                ValidationInfo.isValidDate(info);
-                String date = info;
+                input = scanner.next();
+                ValidationInfo.isValidDate(input);
+                String date = input;
 
                 order = orderService.createOrder(price, description, date, customer, addAddress());
                 isContinue = true;
@@ -98,19 +109,19 @@ public class CustomerView extends BaseView {
         do {
             try {
                 System.out.println("enter Plaque : ");
-                info = scanner.next();
-                ValidationInfo.isValidNumeric(info);
-                int plaque = Integer.parseInt(info);
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                int plaque = Integer.parseInt(input);
 
                 System.out.println("enter city : ");
-                info = scanner.next();
-                ValidationInfo.isValidCharacter(info);
-                String city = info;
+                input = scanner.next();
+                ValidationInfo.isValidCharacter(input);
+                String city = input;
 
                 System.out.println("enter street : ");
-                info = scanner.next();
-                ValidationInfo.isValidCharacter(info);
-                String street = info;
+                input = scanner.next();
+                ValidationInfo.isValidCharacter(input);
+                String street = input;
                 address = addressService.createAddress(city, street, plaque);
                 isContinue = true;
                 break;
@@ -149,10 +160,10 @@ public class CustomerView extends BaseView {
                 ValidationInfo.isValidNumeric(credit);
                 customer = customerService.createCustomer(name, family, email, pass, phone, Double.parseDouble(credit));
                 System.out.println("Do you want to register an order? \n1.yes \n2.no");
-                info = scanner.next();
-                ValidationInfo.isValidRequestOrder(info);
+                input = scanner.next();
+                ValidationInfo.isValidSelected(input);
 
-                if (info.equals("1"))
+                if (input.equals("1"))
                     registerOrder(customer);
                 customer.getOrderList().add(registerOrder(customer));
 
@@ -166,4 +177,38 @@ public class CustomerView extends BaseView {
         customerService.save(customer);
     }
 
+    public void selectExport(Customer customer) {
+        List<OrderDto> orderList = null;
+        int count = 1;
+        isContinue = false;
+        try {
+            orderList = orderService.findOrderToSelectExpert(customer);
+            orderList.forEach(System.out::println);
+        } catch (IsNullObjectException e) {
+            System.out.println(e.getMessage());
+        }
+        do {
+            try {
+                System.out.println("enter receptionNumber");
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                OrderDto orderDto = orderList.stream().filter(o -> o.getReceptionNumber() == Long.parseLong(input)).findAny().orElse(null);
+                if (orderDto != null) {
+                    List<SuggestionDto> list = customerService.selectSuggestion(orderDto);
+                    for (SuggestionDto suggest : list) {
+                        System.out.println(count++ + " : " + suggest);
+                    }
+                    System.out.println("number Of Suggest :");
+                    input = scanner.next();
+                    ValidationInfo.isValidNumeric(input);
+                    ValidationInfo.isValidSelect(count, Integer.parseInt(input));
+                    suggestionService.updateStatus(Integer.parseInt(input), list);
+                } else
+                    System.out.println("-- order is not for receptionNumber --");
+                isContinue = true;
+            } catch (InValidUserInfoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (isContinue);
+    }
 }

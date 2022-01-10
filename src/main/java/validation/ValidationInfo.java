@@ -93,7 +93,7 @@ public class ValidationInfo {
         throw new InValidUserInfoException("---- Date that entered is not valid ----");
     }
 
-    public static boolean isValidRequestOrder(String input) {
+    public static boolean isValidSelected(String input) {
         if (input.matches("[1-2]+"))
             return true;
         throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");

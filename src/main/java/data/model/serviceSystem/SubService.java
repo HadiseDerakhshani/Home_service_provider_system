@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,11 +20,8 @@ public class SubService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double price;
-
-    @ElementCollection
-    @MapKeyColumn(name = "name")
-    @Column(name = "Description")
-    private Map<String, String> subServiceMap = new HashMap<>();
+    private String name;
+    private String description;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Expert> expertList = new ArrayList<>();
 }

@@ -2,32 +2,37 @@ package service;
 
 import data.dao.ServiceDao;
 import data.model.serviceSystem.Service;
-import data.model.serviceSystem.SubService;
-
-import java.util.List;
+import exception.IsNullObjectException;
 
 @org.springframework.stereotype.Service
 public class ServiceService {
-    ServiceDao serviceDao = new ServiceDao();
+    ServiceDao serviceDao;
 
-    public void save(Service service) {
-        serviceDao.save(service);
+    public ServiceService(ServiceDao serviceDao) {
+        this.serviceDao = serviceDao;
     }
 
-    public Service createMasterDuty(List<SubService> list, String info) {
-        //   String[] split = info.split(",");
-        Service service = Service.builder()
-                .name(info)//
-                .subServiceList(list)
-                .build();
-        return service;
+    public Service save(Service service) {
+        return serviceDao.save(service);
     }
 
-    public boolean findByName(String name) {
-        return serviceDao.findByName(name);
+    public Service createService(String name) {
+        if (findByName(name) == null) {
+            Service service = Service.builder()
+                    .name(name)
+                    .build();
+            return service;
+        } else
+            throw new IsNullObjectException("--- exit service ---");
+
     }
 
-    public List<Service> showAll() {
-        return serviceDao.selectAll();
+    public Service findByName(String name) {
+        return serviceDao.finByName(name);
     }
+
+    public void deleteService(String name) {
+        serviceDao.delete(findByName(name));
+    }
+
 }

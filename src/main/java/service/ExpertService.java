@@ -23,8 +23,8 @@ import validation.ValidationInfo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ExpertService {
@@ -34,6 +34,7 @@ public class ExpertService {
     public OrderService orderService = context.getBean(OrderService.class);
 
     private ExpertDao expertDao;
+    private ModelMapper mapper = new ModelMapper();
 
     @Autowired
     public ExpertService(ExpertDao expertDao) {
@@ -46,7 +47,7 @@ public class ExpertService {
     }
 
     public ExpertDto createExpertDto(Expert expert) {
-        ModelMapper mapper = new ModelMapper();
+
         return mapper.map(expert, ExpertDto.class);
     }
 
@@ -102,11 +103,15 @@ public class ExpertService {
     }
 
     public void changePassword(Expert expert, String newPass) {
-        expertDao.updatePassword(newPass, expert.getEmail());
+        expert.setPassword(newPass);
+        expertDao.save(expert);
+        //   expertDao.updatePassword(newPass, expert.getEmail());
     }
 
     public void changePhoneNumber(Expert expert, String newPhoneNumber) {
-        expertDao.updatePhoneNumber(newPhoneNumber, expert.getEmail());
+        expert.setPhoneNumber(newPhoneNumber);
+        expertDao.save(expert);
+        // expertDao.updatePhoneNumber(newPhoneNumber, expert.getEmail());
     }
 
     public Expert findByEmail(String email) {
@@ -125,30 +130,49 @@ public class ExpertService {
 
     public void addSuggest(Order order, Suggestion suggestion, Expert expert) {
         if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION.name()))
-            orderService.updateStatus(order.getId(), OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+            orderService.updateStatus(order, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
 
         orderService.updateSuggestion(order, suggestion);
     }
 
     public List<SubService> addSubServiceExpert(Expert expert, List<SubServiceDto> subServiceList, int index) {
         index--;
-        Map.Entry<String, String> searchSubService = null;
+
         SubServiceDto subServiceDto = subServiceList.get(index);
-        SubService subService = subServiceService.findByName(subServiceDto.getSubServiceMap());
-        String nameSubService = subService.getSubServiceMap().keySet().stream().findAny().orElse(null);
+        SubService subService = subServiceService.findByName(subServiceDto.getName());
+        SubService findService = null;
+
         for (SubService service : expert.getServiceList()) {
-            searchSubService = service.getSubServiceMap().entrySet().stream().filter(s -> s.getKey().equals(nameSubService))
-                    .findAny().orElse(null);
+            if (service.getName().equals(subService.getName()))
+                findService = service;
         }
-        if (searchSubService == null) {
+        if (findService == null) {
             expert.getServiceList().add(subService);
             return expert.getServiceList();
         } else
             throw new IsNullObjectException("---not add Because this subService exit in expert service list---");
     }
 
-    public void updateServiceList(List<SubService> list, String email) {
-        expertDao.updateServiceList(list, email);
+    public void updateServiceList(List<SubService> list, Expert expert) {
+        expert.setServiceList(list);
+        expertDao.save(expert);
+        //   expertDao.updateServiceList(list, email);
+    }
+
+    public List<ExpertDto> findAll() {
+        List<Expert> list = expertDao.findAll();
+        List<ExpertDto> listDto = new ArrayList<>();
+        if (list != null) {
+            for (Expert expert : list) {
+                listDto.add(createExpertDto(expert));
+            }
+            return listDto;
+        } else
+            throw new IsNullObjectException(" --- list of expert is null ---");
+    }
+
+    public void deleteExpert(String email) {
+        expertDao.delete(expertDao.findByEmail(email));
     }
 }
 

@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +20,6 @@ public class Service {
     private int id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<SubService> subServiceList = new ArrayList<>();
+    private Set<SubService> subServiceList = new HashSet<>();
 
 }

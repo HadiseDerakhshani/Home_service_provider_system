@@ -10,4 +10,8 @@ public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
     Suggestion save(Suggestion suggestion);
 
     boolean exists(Suggestion suggestion);
+
+    Suggestion findByReceptionNumber(long number);
+
+
 }

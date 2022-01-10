@@ -1,13 +1,20 @@
 package data.dao;
 
 import data.model.serviceSystem.Service;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface ServiceDao extends JpaRepository<Service, Integer> {
 
-public class ServiceDao extends BaseDao {
-    private Session session;
+    Service finByName(String name);
+
+    @Override
+    Service save(Service service);
+
+    @Override
+    void delete(Service service);
+    /*private Session session;
 
     public int save(Service service) {
         if (service == null)
@@ -44,5 +51,5 @@ public class ServiceDao extends BaseDao {
         session.getTransaction().commit();
         session.close();
         return list;
-    }
+    }*/
 }

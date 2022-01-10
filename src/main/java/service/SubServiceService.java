@@ -9,9 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SubServiceService {
@@ -31,13 +29,14 @@ public class SubServiceService {
     }
 
     public SubService createSubService(String name, String description, double price) {
-        Map<String, String> subMap = new HashMap<>();
-        subMap.put(name, description);
-        if (findByName(subMap) != null) {
+
+
+        if (findByName(name) != null) {
             SubService subService = SubService.builder()
+                    .name(name)
+                    .description(description)
                     .price(price)
                     .build();
-            subService.getSubServiceMap().put(name, description);
             return subService;
         }
         throw new IsNullObjectException("------- SubService is exited --------");
@@ -55,24 +54,17 @@ public class SubServiceService {
             throw new IsNullObjectException(" SubService is null");
     }
 
-    public SubService findByName(Map<String, String> subServiceMap) {
-        return subServiceDao.findBySubServiceMap(subServiceMap);
+    public SubService findByName(String name) {
+        return subServiceDao.findByName(name);
     }
 
     public void addExpertToList(Expert expert, SubService service) {
         service.getExpertList().add(expert);
-        subServiceDao.updateExpertList(service.getExpertList(), service.getId());
+        subServiceDao.save(service);
+        //  subServiceDao.updateExpertList(service.getExpertList(), service.getId());
     }
-  /*  public boolean findByName(String name) {
-        String[] split = name.split(",");
-        List<SubService> list = subServiceDao.findByName();
-        Map.Entry<String, String> stringEntry = null;
-        for (SubService subService : list) {
-            stringEntry = subService.getSubServiceMap().
-                    entrySet().stream().filter(m -> m.getKey().equals(split[0])).findAny().orElse(null);
-        }
-        if (stringEntry != null)
-            return true;
-        return false;
-    }*/
+
+    public void deleteSubService(String name) {
+        subServiceDao.delete(findByName(name));
+    }
 }

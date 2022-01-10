@@ -15,8 +15,8 @@ public class OrderDto {
 
     private double ProposedPrice;
     private String jobDescription;
-    private Date registerDate;
     private Date doDate;
+    private long receptionNumber;
     private OrderStatus status;
     private Address address;
     private List<Suggestion> suggestion;

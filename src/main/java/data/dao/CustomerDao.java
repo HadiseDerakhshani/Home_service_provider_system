@@ -4,12 +4,8 @@ package data.dao;
 import data.model.enums.UserStatus;
 import data.model.user.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +20,6 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
     Optional<Customer> findById(Integer id);
 
     @Override
-    void deleteById(Integer id);
-
-    @Override
     void delete(Customer customer);
 
     List<Customer> findByFirstNameOrLastNameOrEmail(String name, String family, String email);
@@ -37,7 +30,9 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
     Customer findByEmailAndUserStatus(String email, UserStatus status);
 
-    @Transactional
+    @Override
+    List<Customer> findAll();
+    /* @Transactional
     @Modifying
     @Query(value = "update Customer set userStatus=:nawValue where email=:email", nativeQuery = true)
     void updateStatus(@Param("newValue") UserStatus newValue, @Param("email") String email);
@@ -55,5 +50,5 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Customer set password=:newValue where email=:email", nativeQuery = true)
-    void updatePassword(@Param("newValue") String newValue, @Param("email") String email);
+    void updatePassword(@Param("newValue") String newValue, @Param("email") String email);*/
 }

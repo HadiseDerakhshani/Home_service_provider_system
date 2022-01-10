@@ -1,41 +1,68 @@
 package service;
 
+import config.SpringConfig;
+import data.dao.ManagerDao;
+import data.dto.CustomerDto;
+import data.model.enums.UserStatus;
+import data.model.user.Customer;
+import data.model.user.Manager;
+import exception.IsNullObjectException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ManagerService {
-    // private CustomerService customerService = new CustomerService();
-    private ExpertService expertService;
-    // private OrderService orderService = new OrderService();
-    private SuggestionService suggestionService;
-    private ServiceService serviceService = new ServiceService();
-    private SubServiceService subServiceService;
+    ManagerDao managerDao;
+    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    public SubServiceService subServiceService = context.getBean(SubServiceService.class);
+    public CustomerService customerService = context.getBean(CustomerService.class);
+    public ExpertService expertService = context.getBean(ExpertService.class);
+    public OrderService orderService = context.getBean(OrderService.class);
+
+    public ManagerService(ManagerDao managerDao) {
+        this.managerDao = managerDao;
+    }
+
+    public Manager createManager(String userName, String pass) {
+        Manager manager = Manager.builder()
+                .username(userName)
+                .password(pass).build();
+        if (manager != null)
+            throw new IsNullObjectException("-- Manager is null --");
+        return manager;
+    }
+
+    public void Save(Manager manager) {
+        if (!checkManager(manager)) {
+            managerDao.save(manager);
+        }
+        throw new IsNullObjectException("--- manager is exit ----");
+    }
+
+    public boolean checkManager(Manager manager) {
+        return managerDao.exists(manager);
+    }
 
 
-    /*public void customerConfirmation() {
-     //   List<CustomerDto> byStatus = customerService.findByStatus();
+    public void customerConfirmation() {
+        List<CustomerDto> byStatus = customerService.findByUserStatus(UserStatus.WAITING_CONFIRM);
         List<String> customerListEmail = new ArrayList<>();
         for (CustomerDto customer : byStatus) {
             if (customer.getDateRegister().compareTo(customer.getDateUpdate()) == -1)
                 customerListEmail.add(customer.getEmail());
         }
-      //  customerService.updateStatus(customerListEmail);
-    }*/
+        for (String email : customerListEmail) {
+            Customer customer = customerService.findByEmail(email);
+            customer.setUserStatus(UserStatus.CONFIRMED);
+            customerService.save(customer);
+        }
+    }
 
-    /*public void expertConfirmation() {
-        Map<String, Double> priceMap = new HashMap<>();
-        List<Order> orderList = orderService.findByStatus(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
-        int count = 0;
-        for (Order order : orderList) {
-            Expert expert = order.getSuggestion().get(count).getExpert();
-            double priceExpert = order.getSuggestion().get(count).getProposedPrice();
-            double priceCustomer = order.getProposedPrice();
-            double difficult = (priceExpert - priceCustomer) <= 0 ? 0 : (priceExpert - priceCustomer);
-            priceMap.put(expert.getEmail(), difficult);
-            count++;
-        }*/
+    public void addService() {
 
-    //    Optional<Map.Entry<String, Double>> minDifferentPrice = priceMap.entrySet().stream().min(Map.Entry.<String, Double>comparingByValue());
-    ///expert ba sugest price nazdik customer
-    // }
+    }
 }

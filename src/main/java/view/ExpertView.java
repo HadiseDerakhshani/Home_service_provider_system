@@ -67,11 +67,11 @@ public class ExpertView extends BaseView {
         do {
             System.out.println("select Item :\n 1.show Expert Information \n2.register suggestion " +
                     " \n3.change password \n 4.change phoneNumber \n 5.add subService \n6.exit");
-            info = scanner.next();
+            input = scanner.next();
             try {
-                ValidationInfo.isValidLogin(info);
+                ValidationInfo.isValidLogin(input);
 
-                switch (info) {
+                switch (input) {
                     case "1":
                         expertService.findExpert(expert);
                         break;
@@ -80,27 +80,28 @@ public class ExpertView extends BaseView {
                         break;
                     case "3":
                         System.out.println(" enter new password :");
-                        info = scanner.next();
-                        ValidationInfo.isValidPassword(info);
-                        expertService.changePassword(expert, info);
+                        input = scanner.next();
+                        ValidationInfo.isValidPassword(input);
+                        expertService.changePassword(expert, input);
                         break;
                     case "4":
                         System.out.println(" enter new phoneNumber :");
-                        info = scanner.next();
-                        ValidationInfo.isValidPhoneNumber(info);
-                        expertService.changePhoneNumber(expert, info);
+                        input = scanner.next();
+                        ValidationInfo.isValidPhoneNumber(input);
+                        expertService.changePhoneNumber(expert, input);
                         break;
                     case "5":
                         List<SubService> list = addSubService(expert);
-                        expertService.updateServiceList(list, expert.getEmail());
+                        expertService.updateServiceList(list, expert);
                         break;
                     case "6":
+                        mainMenu();
                         break;
                 }
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException | IsNullObjectException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } while (isContinue);
     }
@@ -117,10 +118,10 @@ public class ExpertView extends BaseView {
             }
             do {
                 System.out.println("enter the number of service for work :");
-                info = scanner.next();
+                input = scanner.next();
                 try {
-                    ValidationInfo.isValidNumeric(info);
-                    int index = Integer.parseInt(info);
+                    ValidationInfo.isValidNumeric(input);
+                    int index = Integer.parseInt(input);
                     ValidationInfo.isValidSelect(count, index);
                     list = expertService.addSubServiceExpert(expert, subServiceDtoList, index);
                     subServiceService.addExpertToList(expert, list.get(list.size() - 1));
@@ -156,24 +157,6 @@ public class ExpertView extends BaseView {
         //   filter.forEach(System.out::println);
     }*/
 
-   /* public void update(String email) {
-        isContinue = false;
-        String value;
-        System.out.println(" select item for update : \n1.firstname \n2.lastname \n3.email \n4.password " +
-                "\n5.phoneNumber \n6.credit \n7.Score \n8.image \n9.listService");
-        info = scanner.next();
-        try {
-
-            ValidationUpdate.isValidUpdateExpert(info);
-            System.out.println("enter new value for update");
-            value = scanner.next();
-            ValidationUpdate.isValidInfo(info, value);
-            // expertService.update(info, value, email);
-            isContinue = true;
-        } catch (InValidUserInfoException e) {
-            e.getMessage();
-        }
-    }*/
 
     public void giveSuggestion(Expert expert) {
 
@@ -186,13 +169,13 @@ public class ExpertView extends BaseView {
 
         do {
             System.out.println("enter number of order for given suggest");
-            info = scanner.next();
+            input = scanner.next();
             try {
-                ValidationInfo.isValidNumeric(info);
-                int index = Integer.parseInt(info);
+                ValidationInfo.isValidNumeric(input);
+                int index = Integer.parseInt(input);
                 ValidationInfo.isValidIndex(count, index);
                 OrderDto orderDto = list.get(index - 1);
-                Order order = orderService.findByRegisterDate(orderDto.getRegisterDate());
+                Order order = orderService.findByReceptionNumber(orderDto.getReceptionNumber());
                 expertService.addSuggest(order, getSuggest(expert), expert);
                 isContinue = true;
                 break;
@@ -211,19 +194,19 @@ public class ExpertView extends BaseView {
 
             try {
                 System.out.println("enter ProposedPrice : ");
-                info = scanner.next();
-                ValidationInfo.isValidNumeric(info);
-                double price = Double.parseDouble(info);
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                double price = Double.parseDouble(input);
 
                 System.out.println("enter durationOfWork : ");
-                info = scanner.next();
-                ValidationInfo.isValidNumeric(info);
-                int timeSpan = Integer.parseInt(info);
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                int timeSpan = Integer.parseInt(input);
 
                 System.out.println("enter startTime : ");
-                info = scanner.next();
-                ValidationInfo.isValidNumeric(info);
-                int timeStart = Integer.parseInt(info);
+                input = scanner.next();
+                ValidationInfo.isValidNumeric(input);
+                int timeStart = Integer.parseInt(input);
                 suggest = suggestionService.createSuggest(price, timeSpan, timeStart, expert);
                 isContinue = true;
                 break;

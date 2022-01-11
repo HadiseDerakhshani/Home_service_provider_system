@@ -98,4 +98,10 @@ public class ValidationInfo {
             return true;
         throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
     }
+
+    public static boolean isValidScore(String input) {
+        if (input.matches("[1-10]+"))
+            return true;
+        throw new InValidUserInfoException("----entered is not valid you should enter number 1-3 ----");
+    }
 }

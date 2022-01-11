@@ -1,6 +1,7 @@
 package data.model.order;
 
 import data.model.enums.OrderStatus;
+import data.model.serviceSystem.SubService;
 import data.model.user.Customer;
 import data.model.user.Expert;
 import lombok.*;
@@ -27,6 +28,9 @@ public class Order {
     private Date registerDate;
     private Date doDate;
     private long receptionNumber;
+    private double PricePaid;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private SubService service;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @ManyToOne(cascade = CascadeType.ALL)

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SubServiceService {
+public class SubServiceService extends BaseService {
     SubServiceDao subServiceDao;
 
     public SubServiceService(SubServiceDao subServiceDao) {
@@ -24,8 +24,7 @@ public class SubServiceService {
     }
 
     public SubServiceDto createSubServiceDto(SubService subService) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(subService, SubServiceDto.class);
+        ModelMapper mapper = new ModelMapper(); return mapper.map(subService, SubServiceDto.class);
     }
 
     public SubService createSubService(String name, String description, double price) {

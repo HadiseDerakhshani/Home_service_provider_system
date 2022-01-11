@@ -3,10 +3,12 @@ package service;
 import data.dao.OrderDao;
 import data.dto.OrderDto;
 import data.model.enums.OrderStatus;
+import data.model.enums.UserStatus;
 import data.model.order.Address;
 import data.model.order.Order;
 import data.model.order.Suggestion;
 import data.model.user.Customer;
+import data.model.user.Expert;
 import exception.IsNullObjectException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderService {
-    ModelMapper mapper = new ModelMapper();
+public class OrderService extends BaseService{
+
     private OrderDao orderDao;
 
     public OrderService(OrderDao orderDao) {
@@ -96,7 +98,7 @@ public class OrderService {
         List<OrderDto> listFind = findAll();
         if (list != null) {
             List<Order> collect = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
-                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION))
+                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION.name()))
                     .collect(Collectors.toList());
             if (collect != null) {
                 for (Order order : collect)
@@ -109,4 +111,36 @@ public class OrderService {
             throw new IsNullObjectException(" --- Order is not exit ---");
     }
 
+
+    public List<OrderDto> findOrderToPayment(Customer customer) {
+        List<Order> list = orderDao.findAll();
+        List<OrderDto> listFind = findAll();
+        if (list != null) {
+            List<Order> collect = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
+                    .filter(o -> o.getStatus().equals(OrderStatus.DONE.name()))
+                    .collect(Collectors.toList());
+            if (collect != null) {
+                for (Order order : collect)
+                    listFind.add(creatOrderDto(order));
+                return listFind;
+            } else
+                throw new IsNullObjectException(" --- Order is not exit ---");
+
+        } else
+            throw new IsNullObjectException(" --- Order is not exit ---");
+    }
+    public void startAndEndOrder( int number,int chose,Expert expert){
+        Order order = orderService.findByReceptionNumber(number);
+        if(order!=null){
+            if(chose==6)
+        order.setStatus(OrderStatus.STARTED);
+            else if(chose==7){
+                order.setStatus(OrderStatus.DONE);
+                expert.setUserStatus(UserStatus.WAITING_CONFIRM);
+                expertService.save(expert);
+            }
+        orderService.save(order);
+        }else
+            throw new IsNullObjectException(" order is not exit");
+    }
 }

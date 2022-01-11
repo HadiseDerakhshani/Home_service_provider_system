@@ -5,9 +5,11 @@ import data.dto.ExpertDto;
 import data.dto.OrderDto;
 import data.model.serviceSystem.Service;
 import data.model.serviceSystem.SubService;
+import data.model.user.Expert;
 import data.model.user.Manager;
 import exception.InValidUserInfoException;
 import exception.IsNullObjectException;
+import org.springframework.data.querydsl.QPageRequest;
 import validation.ValidationInfo;
 
 import java.util.List;
@@ -44,7 +46,8 @@ public class ManagerView extends BaseView {
         do {
             System.out.println("select Item :\n 1.show list Expert \n2.Show list Customer " +
                     " \n3.change userNAme & password \n 4.Confirm customer \n 5.add Service \n" +
-                    "6.show order \n7.addExpert \n8.deleted \n9.exit");
+                    "6.show order \n7.addExpert \n8.deleted \n9.Get paid\n10.exit");
+            /////////////////////////////
             input = scanner.next();
             try {
                 ValidationInfo.isValidLogin(input);
@@ -55,6 +58,7 @@ public class ManagerView extends BaseView {
                         break;
                     case "2":
                         showCustomer();
+                        /////pagination
                         isContinue = true;
                         break;
                     case "3":
@@ -96,24 +100,59 @@ public class ManagerView extends BaseView {
                     break;
 
             } catch (InValidUserInfoException | IsNullObjectException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } while (isContinue);
     }
 
     public void showExpert() {
+        int first=0,number,pageNumber;
+        long total;
+       double remaining;
+        System.out.println();
+        System.out.println("Enter the number of records per page : ");
+        input=scanner.next();
         try {
-            List<ExpertDto> list = expertService.findAll();
+            ValidationInfo.isValidNumeric(input);
+            number=Integer.parseInt(input);
+            total=expertService.totalRecord();
+            if(total > 1 && total >=number && number>1) {
+                remaining=total%number;
+                pageNumber=remaining==0 ? (int)total/number : (int)(total/number)+1;
+                for (int i=0;i<pageNumber;i++){
+                List<ExpertDto> list = expertService.findAll(first,number);
+                list.forEach(System.out::println);
+                System.out.println("select show page \n1.next \n2.previous");
+                input=scanner.next();
+                ValidationInfo.isValidSelected(input);
+                if(input.equals("1") ) {
+                    if (i == (pageNumber - 1))
+                        System.out.println(" next page is not exit");
+                    else
+                        first = first + number;
+                }else if(input.equals("2") ) {
+                         if(i==0)
+                        System.out.println("previous page is not exit");
+                    }else
+                        first=first-number;
+                }
+            }else
+                if(total<=number || number==1){
+                List<ExpertDto> list = expertService.findAll(0,(int)total);
             list.forEach(System.out::println);
-        } catch (IsNullObjectException e) {
+            }
+                isContinue=true;
+        } catch (InValidUserInfoException | IsNullObjectException e) {
             System.out.println(e.getMessage());
         }
+
     }
 
     public void showCustomer() {
         try {
             List<CustomerDto> list = customerService.findAll();
             list.forEach(System.out::println);
+            ////
         } catch (IsNullObjectException e) {
             System.out.println(e.getMessage());
         }
@@ -244,6 +283,20 @@ public class ManagerView extends BaseView {
 
                 }
             } catch (InValidUserInfoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (isContinue);
+    }
+    public void getPaid(){
+        isContinue=false;
+        do {
+            System.out.println("enter receptionNumber of order : ");
+            input=scanner.next();
+            try {
+                ValidationInfo.isValidNumeric(input);
+            //   orderService.startAndEndOrder(Integer.parseInt(input),chose,expert);
+                isContinue=true;
+            } catch (InValidUserInfoException  | IsNullObjectException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);

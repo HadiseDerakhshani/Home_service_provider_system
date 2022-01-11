@@ -5,7 +5,7 @@ import data.model.serviceSystem.Service;
 import exception.IsNullObjectException;
 
 @org.springframework.stereotype.Service
-public class ServiceService {
+public class ServiceService extends BaseService {
     ServiceDao serviceDao;
 
     public ServiceService(ServiceDao serviceDao) {

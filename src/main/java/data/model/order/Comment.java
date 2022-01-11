@@ -20,6 +20,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String commentText;
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @OneToOne(cascade = CascadeType.ALL)

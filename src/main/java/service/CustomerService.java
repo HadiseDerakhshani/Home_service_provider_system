@@ -5,11 +5,14 @@ import data.dao.CustomerDao;
 import data.dto.CustomerDto;
 import data.dto.OrderDto;
 import data.dto.SuggestionDto;
+import data.model.enums.OrderStatus;
 import data.model.enums.SuggestionStatus;
 import data.model.enums.UserRole;
 import data.model.enums.UserStatus;
+import data.model.order.Order;
 import data.model.order.Suggestion;
 import data.model.user.Customer;
+import data.model.user.Expert;
 import exception.InValidUserInfoException;
 import exception.IsNullObjectException;
 import org.modelmapper.ModelMapper;
@@ -19,15 +22,13 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService {
-    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+public class CustomerService extends BaseService{
     private CustomerDao customerDao;
-    private ModelMapper mapper = new ModelMapper();
-    private SuggestionService suggestService = context.getBean(SuggestionService.class);
 
     @Autowired
     public CustomerService(CustomerDao customerDao) {
@@ -111,9 +112,14 @@ public class CustomerService {
         return customerDao.findByEmail(email);
     }
 
-    public void IncreaseCredit(Customer customer, double amount) {
+    public void increaseCredit(Customer customer, double amount) {
         double credit = findByEmail(customer.getEmail()).getCredit();
         customer.setCredit(credit + amount);
+        customerDao.save(customer);
+    }
+    public void decreaseCredit(Customer customer, double amount) {
+        double credit = findByEmail(customer.getEmail()).getCredit();
+        customer.setCredit(credit - amount);
         customerDao.save(customer);
     }
 
@@ -132,7 +138,8 @@ public class CustomerService {
     public List<SuggestionDto> selectSuggestion(OrderDto orderDto) {
         List<Suggestion> suggestion = orderDto.getSuggestion().stream()
                 .filter(s -> s.getStatus().equals(SuggestionStatus.NEW)).collect(Collectors.toList());
-
+        suggestion.stream().sorted(Comparator.comparing(Suggestion::getProposedPrice))
+                .sorted(Comparator.comparing(i->i.getExpert().getScore())).collect(Collectors.toList());
         List<SuggestionDto> suggestDtoList = new ArrayList<>();
         if (suggestion != null) {
             for (Suggestion suggest : suggestion) {
@@ -143,4 +150,16 @@ public class CustomerService {
         } else
             throw new IsNullObjectException("-- list suggest null --");
     }
+    public void payment(Customer customer,OrderDto orderDto,double amount,int score){
+        Order order = orderService.findByReceptionNumber(orderDto.getReceptionNumber());
+        decreaseCredit(customer,amount);
+        Expert expert = order.getExpert();
+        expert.setCredit(expert.getCredit()+(0.80*amount));
+        //////expert
+        expertService.save(expert);
+        order.setStatus(OrderStatus.PAID);
+        order.setPricePaid(amount);
+        orderService.save(order);
+    }
+
 }

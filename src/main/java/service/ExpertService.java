@@ -17,6 +17,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import validation.ValidationInfo;
 
@@ -25,16 +27,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
-public class ExpertService {
-
-    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-    public SubServiceService subServiceService = context.getBean(SubServiceService.class);
-    public OrderService orderService = context.getBean(OrderService.class);
+public class ExpertService extends BaseService{
 
     private ExpertDao expertDao;
-    private ModelMapper mapper = new ModelMapper();
 
     @Autowired
     public ExpertService(ExpertDao expertDao) {
@@ -95,12 +93,6 @@ public class ExpertService {
         return expertDao.findByFirstNameOrLastNameOrEmailOrServiceList(name, family, email, list);
     }
 
-    public boolean checkPassword(Expert expert, String pass) {
-        if (expert.getPassword().equals(pass))
-            return true;
-        return false;
-
-    }
 
     public void changePassword(Expert expert, String newPass) {
         expert.setPassword(newPass);
@@ -159,8 +151,9 @@ public class ExpertService {
         //   expertDao.updateServiceList(list, email);
     }
 
-    public List<ExpertDto> findAll() {
-        List<Expert> list = expertDao.findAll();
+    public List<ExpertDto> findAll(int first,int count) {
+        Page<Expert> pageList = expertDao.findAll(PageRequest.of(first, count));
+        List<Expert> list=pageList.toList() ;
         List<ExpertDto> listDto = new ArrayList<>();
         if (list != null) {
             for (Expert expert : list) {
@@ -170,9 +163,14 @@ public class ExpertService {
         } else
             throw new IsNullObjectException(" --- list of expert is null ---");
     }
+public long totalRecord(){
+        return expertDao.count();
 
+}
     public void deleteExpert(String email) {
         expertDao.delete(expertDao.findByEmail(email));
     }
+    public void givenScoreAndComment(Expert expert){
+      //////////
+    }
 }
-

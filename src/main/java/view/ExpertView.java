@@ -66,7 +66,7 @@ public class ExpertView extends BaseView {
         System.out.println("************ Welcome Expert ************");
         do {
             System.out.println("select Item :\n 1.show Expert Information \n2.register suggestion " +
-                    " \n3.change password \n 4.change phoneNumber \n 5.add subService \n6.exit");
+                    " \n3.change password \n 4.change phoneNumber \n 5.add subService \n6.start order\n7.end order\n8.exit");
             input = scanner.next();
             try {
                 ValidationInfo.isValidLogin(input);
@@ -95,6 +95,12 @@ public class ExpertView extends BaseView {
                         expertService.updateServiceList(list, expert);
                         break;
                     case "6":
+                     startAndEndOrder(6,expert);
+                        break;
+                    case "7":
+                  startAndEndOrder(7,expert);
+                        break;
+                    case "8":
                         mainMenu();
                         break;
                 }
@@ -137,7 +143,6 @@ public class ExpertView extends BaseView {
     }
 
    /* public void filterExpert() {
-
         isContinue = false;
         String info;
         do {
@@ -217,4 +222,19 @@ public class ExpertView extends BaseView {
 
         return suggest;
     }
+    public void startAndEndOrder(int chose,Expert expert){
+        isContinue=false;
+        do {
+            System.out.println("enter receptionNumber of order : ");
+            input=scanner.next();
+            try {
+                ValidationInfo.isValidNumeric(input);
+                orderService.startAndEndOrder(Integer.parseInt(input),chose,expert);
+                isContinue=true;
+            } catch (InValidUserInfoException  | IsNullObjectException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (isContinue);
+    }
+
 }

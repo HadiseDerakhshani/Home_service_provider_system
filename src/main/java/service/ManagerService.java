@@ -3,8 +3,11 @@ package service;
 import config.SpringConfig;
 import data.dao.ManagerDao;
 import data.dto.CustomerDto;
+import data.model.enums.OrderStatus;
 import data.model.enums.UserStatus;
+import data.model.order.Order;
 import data.model.user.Customer;
+import data.model.user.Expert;
 import data.model.user.Manager;
 import exception.IsNullObjectException;
 import org.springframework.context.ApplicationContext;
@@ -15,13 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ManagerService {
+public class ManagerService extends BaseService{
     ManagerDao managerDao;
-    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-    public SubServiceService subServiceService = context.getBean(SubServiceService.class);
-    public CustomerService customerService = context.getBean(CustomerService.class);
-    public ExpertService expertService = context.getBean(ExpertService.class);
-    public OrderService orderService = context.getBean(OrderService.class);
+
 
     public ManagerService(ManagerDao managerDao) {
         this.managerDao = managerDao;
@@ -62,7 +61,17 @@ public class ManagerService {
         }
     }
 
-    public void addService() {
+    public void getPaid(int number,double amount) {
+        Order order = orderService.findByReceptionNumber(number);
 
+        if(order!=null){
+            Expert expert = order.getExpert();
+                order.setStatus(OrderStatus.PAID);
+              order.setPricePaid(amount);
+              expert.setCredit(expert.getCredit()+(0.80*amount));
+                expertService.save(expert);
+            orderService.save(order);
+        }else
+            throw new IsNullObjectException(" order is not exit");
     }
 }

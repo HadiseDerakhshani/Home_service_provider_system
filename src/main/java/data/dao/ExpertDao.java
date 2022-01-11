@@ -26,6 +26,9 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
     Expert findByEmailAndUserStatus(String email, UserStatus status);
 
     @Override
+    long count();
+
+    @Override
     List<Expert> findAll();
 /*   @Transactional
     @Modifying

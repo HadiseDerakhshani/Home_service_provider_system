@@ -1,8 +1,11 @@
 package data.model.user;
 
 
+import data.model.order.Comment;
 import data.model.order.Order;
+import data.model.order.Suggestion;
 import data.model.serviceSystem.SubService;
+import jdk.jshell.SourceCodeAnalysis;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,6 +28,9 @@ public class Expert extends User {
     private List<SubService> serviceList = new ArrayList<>();
     @OneToMany
     private List<Order> orderList = new ArrayList<>();
-
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "expert")
+    private List<Suggestion> suggestList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 
 }

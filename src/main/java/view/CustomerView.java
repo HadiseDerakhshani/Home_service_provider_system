@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import validation.ValidationInfo;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,7 +24,7 @@ public class CustomerView extends BaseView {
         do {
             System.out.println("select Item :\n 1.show Information \n2.register order " +
                     " \n3.change password \n 4.change phoneNumber \n 5.Increase credit \n6. Select expert \n" +
-                    "7.payment \n8.show suggestion list \n 9.exit");
+                    "7.payment \n8.exit");
             input = scanner.next();
             try {
                 ValidationInfo.isValidLogin(input);
@@ -51,16 +52,15 @@ public class CustomerView extends BaseView {
                         System.out.println(" enter amount for Increase credit :");
                         input = scanner.next();
                         ValidationInfo.isValidNumeric(input);
-                        customerService.IncreaseCredit(customer, Double.parseDouble(input));
+                        customerService.increaseCredit(customer, Double.parseDouble(input));
                         break;
                     case "6":
                         selectExport(customer);
                         break;
                     case "7":
+                        findOrderToPayment(customer);
                         break;
                     case "8":
-                        break;
-                    case "9":
                         mainMenu();
                         break;
                 }
@@ -170,7 +170,7 @@ public class CustomerView extends BaseView {
                 isContinue = true;
                 break;
             } catch (InValidUserInfoException e) {
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         } while (isContinue);
 
@@ -178,7 +178,7 @@ public class CustomerView extends BaseView {
     }
 
     public void selectExport(Customer customer) {
-        List<OrderDto> orderList = null;
+        List<OrderDto> orderList = new ArrayList<>();
         int count = 1;
         isContinue = false;
         try {
@@ -211,4 +211,64 @@ public class CustomerView extends BaseView {
             }
         } while (isContinue);
     }
+  public void findOrderToPayment(Customer customer){
+      List<OrderDto> orderList = new ArrayList<>();
+
+      isContinue = false;
+      try {
+          orderList = orderService.findOrderToPayment(customer);
+          orderList.forEach(System.out::println);
+      } catch (IsNullObjectException e) {
+          System.out.println(e.getMessage());
+      }
+      do {
+          try {
+              System.out.println("enter receptionNumber");
+              input = scanner.next();
+              ValidationInfo.isValidNumeric(input);
+              OrderDto orderDto = orderList.stream().filter(o -> o.getReceptionNumber() == Long.parseLong(input))
+                      .findAny().orElse(null);
+              payment(customer,orderDto);
+          } catch (InValidUserInfoException e) {
+              System.out.println(e.getMessage());
+          }
+      }while (isContinue);
+      }
+public void payment(Customer customer,OrderDto orderDto){
+        int score;
+        isContinue=false;
+  do{
+
+      System.out.println("enter amount for payment");
+      input=scanner.next();
+      try {
+          ValidationInfo.isValidNumeric(input);
+          if(customer.getCredit()>=Double.parseDouble(input)){
+              score=getScore();
+              //////score
+              customerService.payment(customer,orderDto,Double.parseDouble(input),score);
+          }else
+              System.out.println(" credit is not enough :");
+          isContinue=true;
+          break;
+      }catch (InValidUserInfoException e){
+          System.out.println(e.getMessage());
+      }
+  }while (isContinue);
+}
+public int getScore(){
+        isContinue=true;
+    do {
+        try {
+            System.out.println("enter score to expert 1-10 :");
+            input=scanner.next();
+            ValidationInfo.isValidScore(input);
+            isContinue=true;
+            break;
+        } catch (InValidUserInfoException e) {
+            System.out.println(e.getMessage());
+        }
+    } while (isContinue);
+return Integer.parseInt(input);
+}
 }

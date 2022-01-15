@@ -4,7 +4,7 @@ import ir.maktab.data.dao.SubServiceDao;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Expert;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -40,7 +40,7 @@ public class SubServiceService {
                     .build();
             return subService;
         }
-        throw new IsNullObjectException("------- SubService is exited --------");
+        throw new ObjectEntityNotFoundException("------- SubService is exited --------");
     }
 
     public List<SubServiceDto> findAll() {
@@ -52,11 +52,11 @@ public class SubServiceService {
             }
             return listSubServiceDto;
         } else
-            throw new IsNullObjectException(" SubService is null");
+            throw new ObjectEntityNotFoundException(" SubService is null");
     }
 
     public SubService findByName(String name) {
-        return subServiceDao.findByName(name);
+        return subServiceDao.findByName(name).get();
     }
 
     public void addExpertToList(Expert expert, SubService service) {

@@ -2,7 +2,7 @@ package ir.maktab.service;
 
 import ir.maktab.data.dao.ServiceDao;
 import ir.maktab.data.model.serviceSystem.Service;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -23,11 +23,11 @@ public class ServiceService {
                     .build();
             return service;
         } else
-            throw new IsNullObjectException("--- exit ir.maktab.service ---");
+            throw new ObjectEntityNotFoundException("--- exit ir.maktab.service ---");
     }
 
     public Service findByName(String name) {
-        return serviceDao.finByName(name);
+        return serviceDao.finByName(name).get();
     }
 
     public void deleteService(String name) {

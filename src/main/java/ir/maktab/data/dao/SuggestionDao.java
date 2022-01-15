@@ -9,20 +9,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
-    @Override
-    Suggestion save(Suggestion suggestion);
 
-    Suggestion findByReceptionNumber(long number);
+   Optional<Suggestion> findByReceptionNumber(long number);
 
     @Transactional
     @Modifying
-    @Query(value = "update Suggestion set receptionNumber=:number where  id=:id", nativeQuery = true)
+    @Query(value = "update Suggestion set receptionNumber=:number where  id=:id")
     void updateReceptionNumber(@Param("id") int id, @Param("number") int number);
 
     @Transactional
     @Modifying
-    @Query(value = "update Suggestion set status=:status where  id=:id", nativeQuery = true)
+    @Query(value = "update Suggestion set status=:status where  id=:id")
     void updateStatus(@Param("id") int id, @Param("status") SuggestionStatus status);
 }

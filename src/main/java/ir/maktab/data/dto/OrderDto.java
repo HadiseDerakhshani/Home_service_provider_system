@@ -17,14 +17,16 @@ public class OrderDto {
 
     private double ProposedPrice;
     private String jobDescription;
+    private Date registerDate;
     private Date doDate;
     private long receptionNumber;
     private double PricePaid;
     private SubServiceDto service;
     private OrderStatus status;
-    private Address address;
-    private ExpertDto expert;
     private CustomerDto customer;
-    private List<Suggestion> suggestion;
+    private ExpertDto expert;
+    private AddressDto address;
+    private List<SuggestionDto> suggestion;
+
 
 }

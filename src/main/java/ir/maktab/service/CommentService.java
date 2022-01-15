@@ -4,7 +4,7 @@ import ir.maktab.data.dao.CommentDao;
 import ir.maktab.data.model.order.Comment;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,6 @@ public class CommentService {
         if (comment != null)
             return comment;
         else
-            throw new IsNullObjectException("-- comment is null --");
+            throw new ObjectEntityNotFoundException("-- comment is null --");
     }
 }

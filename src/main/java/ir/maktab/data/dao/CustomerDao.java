@@ -11,40 +11,35 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
-    Customer save(Customer customer);
-
-    void delete(Customer customer);
 
     List<Customer> findByUserStatus(UserStatus status);
 
-    Customer findByEmail(String email);
-
-    @Override
-    List<Customer> findAll();
+   Optional<Customer> findByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query(value = "update Customer set phoneNumber=:phone where  email=:email", nativeQuery = true)
+    @Query(value = "update Customer set phoneNumber=:phone where  email=:email")
     void updatePhoneNumber(@Param("email") String email, @Param("phone") String phone);
 
     @Transactional
     @Modifying
-    @Query(value = "update Customer set password=:pass where  email=:email", nativeQuery = true)
+    @Query(value = "update Customer set password=:pass where  email=:email")
     void updatePassword(@Param("email") String email, @Param("pass") String pass);
 
     @Transactional
     @Modifying
-    @Query(value = "update Customer set credit=:credit where  email=:email", nativeQuery = true)
+    @Query(value = "update Customer set credit=:credit where  email=:email")
     void updateCredit(@Param("email") String email, @Param("credit") double credit);
 
     @Transactional
     @Modifying
-    @Query(value = "update Customer set userStatus=:status where  email=:email", nativeQuery = true)
+    @Query(value = "update Customer set userStatus=:status where  email=:email")
     void updateStatus(@Param("email") String email, @Param("status") UserStatus status);
 
 }

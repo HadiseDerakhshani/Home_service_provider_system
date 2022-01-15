@@ -7,7 +7,7 @@ import ir.maktab.data.model.serviceSystem.Service;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Manager;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.*;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
@@ -122,7 +122,7 @@ public class ManagerView {
                 isContinue = true;
                 break;
 
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -163,7 +163,7 @@ public class ManagerView {
                 list.forEach(System.out::println);
             }
             isContinue = true;
-        } catch (InValidUserInfoException | IsNullObjectException e) {
+        } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
@@ -205,7 +205,7 @@ public class ManagerView {
                 list.forEach(System.out::println);
             }
             isContinue = true;
-        } catch (IsNullObjectException e) {
+        } catch (ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -253,7 +253,7 @@ public class ManagerView {
                 isContinue = true;
                 break;
 
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -286,7 +286,7 @@ public class ManagerView {
                     isContinue = true;
                     break;
 
-                } catch (InValidUserInfoException | IsNullObjectException e) {
+                } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                     System.out.println(e.getMessage());
                 }
             } while (isContinue);
@@ -298,7 +298,7 @@ public class ManagerView {
         try {
             List<OrderDto> list = orderService.findAll();
             list.forEach(System.out::println);
-        } catch (IsNullObjectException e) {
+        } catch (ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -364,7 +364,7 @@ public class ManagerView {
                 managerService.getPaid(receptionNumber, amount, score);
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);

@@ -6,7 +6,7 @@ import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.*;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
@@ -133,7 +133,7 @@ public class ExpertView {
                 }
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -158,12 +158,12 @@ public class ExpertView {
                     ValidationInfo.isValidSelect(count, index);
                     list = expertService.addSubServiceExpert(expert, subServiceDtoList, index);
                     subServiceService.addExpertToList(expert, list.get(list.size() - 1));
-                } catch (InValidUserInfoException | IsNullObjectException e) {
+                } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                     e.getMessage();
                     isContinue = false;
                 }
             } while (isContinue);
-        } catch (IsNullObjectException e) {
+        } catch (ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
         return list;
@@ -219,7 +219,7 @@ public class ExpertView {
                 suggest = suggestService.createSuggest(price, timeSpan, timeStart, expert);
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 e.getMessage();
             }
         } while (isContinue);
@@ -236,7 +236,7 @@ public class ExpertView {
                 ValidationInfo.isValidNumeric(input);
                 orderService.startAndEndOrder(Integer.parseInt(input), chose, expert);
                 isContinue = true;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);

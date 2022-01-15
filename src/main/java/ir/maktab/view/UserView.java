@@ -2,7 +2,7 @@ package ir.maktab.view;
 
 import ir.maktab.data.model.user.User;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.UserService;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class UserView {
                 checkPasswordUser(userService.findByEmail(input));
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);

@@ -8,7 +8,7 @@ import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Expert;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +59,12 @@ public class SuggestionService {
                 .status(SuggestionStatus.NEW)
                 .expert(expert)
                 .build();
-        if (suggestionDao.findByReceptionNumber(suggestion.getReceptionNumber()) == null) {
+        if (suggestionDao.findByReceptionNumber(suggestion.getReceptionNumber()).isEmpty()) {
             suggestion = save(suggestion);
             updateReceptionNumber(suggestion.getId(), (suggestion.getId() + 1000));
             return suggestion;
         } else
-            throw new IsNullObjectException("---this suggestion exited---");
+            throw new ObjectEntityNotFoundException("---this suggestion exited---");
     }
 
     public void updateReceptionNumber(int id, int number) {
@@ -78,11 +78,11 @@ public class SuggestionService {
     public void update(int index, List<SuggestionDto> list) {
         int count = 0;
         for (SuggestionDto dto : list) {
-            Suggestion suggest = suggestionDao.findByReceptionNumber(dto.getReceptionNumber());
+            Suggestion suggest = suggestionDao.findByReceptionNumber(dto.getReceptionNumber()).get();
             if (count == index - 1) {
                 updateStatus(suggest.getId(), SuggestionStatus.CONFIRMED);
                 Order order = suggest.getOrder();
-                orderService.updateStatus(order, OrderStatus.WAITING_FOR_THE_SPECIALIST_TO_COME_TO_YOUR_PLACE);
+                orderService.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
                 Expert expert = suggest.getExpert();
                 expertService.updateStatus(UserStatus.CONFIRMED, expert);
                 orderService.updateExpert(expert, order);

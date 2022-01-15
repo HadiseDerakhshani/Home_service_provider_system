@@ -7,7 +7,7 @@ import ir.maktab.data.model.order.Address;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.*;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
@@ -96,7 +96,7 @@ public class CustomerView {
                 }
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -128,7 +128,7 @@ public class CustomerView {
                 order = orderService.createOrder(price, description, date, customer, addAddress(), service);
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | ParseException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ParseException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -201,7 +201,7 @@ public class CustomerView {
 
                 isContinue = true;
                 break;
-            } catch (InValidUserInfoException | IsNullObjectException e) {
+            } catch (InValidUserInfoException | ObjectEntityNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         } while (isContinue);
@@ -216,7 +216,7 @@ public class CustomerView {
         try {
             orderList = orderService.findOrderToSelectExpert(customer);
             orderList.forEach(System.out::println);
-        } catch (IsNullObjectException e) {
+        } catch (ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
         do {
@@ -251,7 +251,7 @@ public class CustomerView {
         try {
             orderList = orderService.findOrderToPayment(customer);
             orderList.forEach(System.out::println);
-        } catch (IsNullObjectException e) {
+        } catch (ObjectEntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
         do {

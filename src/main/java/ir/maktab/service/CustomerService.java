@@ -13,7 +13,7 @@ import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +59,13 @@ public class CustomerService {
     }
 
     public CustomerDto createCustomerDto(Customer customer) {
+
         return mapper.map(customer, CustomerDto.class);
     }
 
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit) {
         if (email == null || email.equals(""))
-            throw new IsNullObjectException("-- email is empty --");
+            throw new ObjectEntityNotFoundException("-- email is empty --");
         else {
             Customer customer = Customer.builder()
                     .firstName(name)
@@ -97,7 +98,7 @@ public class CustomerService {
             }
             return listDto;
         } else
-            throw new IsNullObjectException(" --- customer is not by userStatus " + nameStatus + " ---");
+            throw new ObjectEntityNotFoundException(" --- customer is not by userStatus " + nameStatus + " ---");
     }
 
 
@@ -143,7 +144,7 @@ public class CustomerService {
             }
             return listDto;
         } else
-            throw new IsNullObjectException(" --- list of customer is null ---");
+            throw new ObjectEntityNotFoundException(" --- list of customer is null ---");
     }
 
     public List<SuggestionDto> selectSuggestion(OrderDto orderDto) {
@@ -161,7 +162,7 @@ public class CustomerService {
             }
             return suggestDtoList;
         } else
-            throw new IsNullObjectException("-- list suggest null --");
+            throw new ObjectEntityNotFoundException("-- list suggest null --");
     }
 
     public void payment(Customer customer, OrderDto orderDto, double amount, int score, String commentText) {

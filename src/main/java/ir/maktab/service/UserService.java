@@ -5,7 +5,7 @@ import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.User;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,9 +24,9 @@ public class UserService {
 
 
     public User findByEmail(String email) {
-        User user = userDao.findByEmail(email);
+        User user = userDao.findByEmail(email).get();
         if (user == null)
-            throw new IsNullObjectException("user is not exit");
+            throw new ObjectEntityNotFoundException("user is not exit");
         return user;
     }
 
@@ -51,6 +51,6 @@ public class UserService {
             }
             return listDto;
         } else
-            throw new IsNullObjectException("-- user list not found --");
+            throw new ObjectEntityNotFoundException("-- user list not found --");
     }
 }

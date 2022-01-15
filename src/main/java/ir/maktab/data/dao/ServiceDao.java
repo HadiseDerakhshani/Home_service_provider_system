@@ -9,19 +9,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface ServiceDao extends JpaRepository<Service, Integer> {
 
-    Service save(Service service);
 
-    void delete(Service service);
-
-    Service finByName(String name);
+    Optional<Service> finByName(String name);
 
     @Transactional
     @Modifying
-    @Query(value = "update Service set subServiceList=:subServiceList where id=:id", nativeQuery = true)
+    @Query(value = "update Service set subServiceList=:subServiceList where id=:id")
     void updateSubList(@Param("id") int id, @Param("subServiceList") Set<SubService> subServiceList);
 }

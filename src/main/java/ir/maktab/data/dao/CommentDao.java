@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
-    Comment save(Comment comment);
 }

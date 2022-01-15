@@ -11,7 +11,7 @@ import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
@@ -61,7 +61,7 @@ public class ExpertService {
                                double credit, int score, String image) {
 
         if (email == null || email == "")
-            throw new IsNullObjectException("-- email is empty --");
+            throw new ObjectEntityNotFoundException("-- email is empty --");
         else {
             Expert expert = Expert.builder()
                     .firstName(name)
@@ -121,8 +121,9 @@ public class ExpertService {
 
     public void addSuggest(int number, Suggestion suggestion, Expert expert) {
         Order order = orderService.findByReceptionNumber(number);
-        if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION.name()))
-            orderService.updateStatus(order, OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+        if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION))
+            orderService.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
+
         orderService.updateSuggestion(order, suggestion);
     }
 
@@ -142,7 +143,7 @@ public class ExpertService {
             expert.getServiceList().add(subService);
             return expert.getServiceList();
         } else
-            throw new IsNullObjectException("---not add Because this subService exit in expert ir.maktab.service list---");
+            throw new ObjectEntityNotFoundException("---not add Because this subService exit in expert ir.maktab.service list---");
     }
 
     public void updateServiceList(List<SubService> list, Expert expert) {
@@ -175,7 +176,7 @@ public class ExpertService {
             }
             return listDto;
         } else
-            throw new IsNullObjectException(" --- list of expert is null ---");
+            throw new ObjectEntityNotFoundException(" --- list of expert is null ---");
     }
 
     public long totalRecord() {

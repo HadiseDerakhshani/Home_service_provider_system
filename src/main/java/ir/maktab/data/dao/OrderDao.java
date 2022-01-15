@@ -13,20 +13,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderDao extends JpaRepository<Order, Integer> {
-    Order save(Order order);
 
     List<Order> findByStatusOrStatus(OrderStatus statusSelect, OrderStatus statusSuggest);
 
-    Order findByReceptionNumber(long number);
-
-    @Override
-    <S extends Order> long count(Example<S> example);
-
-    @Override
-    List<Order> findAll();
+    Optional<Order> findByReceptionNumber(long number);
 
     @Transactional
     @Modifying

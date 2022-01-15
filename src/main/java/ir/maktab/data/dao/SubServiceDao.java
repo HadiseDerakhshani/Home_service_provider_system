@@ -9,21 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubServiceDao extends JpaRepository<SubService, Integer> {
-
-    SubService save(SubService subService);
-
-
-    List<SubService> findAll();
-
-    SubService findByName(String name);
-
-
-    void delete(SubService subService);
-
+   Optional<SubService> findByName(String name);
     @Transactional
     @Modifying
-    @Query(value = "update SubService set expertList=:expertList where id=:id", nativeQuery = true)
+    @Query(value = "update SubService set expertList=:expertList where id=:id")
     void updateExpertList(@Param("id") int id, @Param("expertList") List<Expert> expertList);
 }

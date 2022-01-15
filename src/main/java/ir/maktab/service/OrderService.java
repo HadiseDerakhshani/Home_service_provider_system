@@ -11,7 +11,7 @@ import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class OrderService {
             Order order = Order.builder()
                     .proposedPrice(price)
                     .jobDescription(description)
-                    .doDate(new SimpleDateFormat("yyyy/mm/dd").parse(date))
+                    .doDate(new SimpleDateFormat("yyyy/mm/dd").parse(date))//Static utils
                     .status(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION)
                     .customer(customer)
                     .address(address)
@@ -64,35 +64,37 @@ public class OrderService {
             order = save(order);
             updateReceptionNumber(order.getId(), order.getId() + 1000);
             return order;
-        } else throw new IsNullObjectException("--- ir.maktab.service is null ---");
+        } else throw new ObjectEntityNotFoundException("--- service is null ---");
     }
 
     public List<OrderDto> findToGetSuggest() {
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
-                OrderStatus.WAITING_FOR_SPECIALIST_SELECTION);
+                OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         if (list != null) {
             ArrayList<OrderDto> listOrderDto = new ArrayList<>();
+            ///stream
             for (Order order : list) {
                 listOrderDto.add(creatOrderDto(order));
             }
             return listOrderDto;
         } else
-            throw new IsNullObjectException("---order is not for given Suggestion---");
+            throw new ObjectEntityNotFoundException("---order is not for given Suggestion---");
     }
 
     public void updateReceptionNumber(int id, int number) {
+        ///number +1000
         orderDao.updateReceptionNumber(id, number);
     }
 
     public Order findByReceptionNumber(long number) {
-        return orderDao.findByReceptionNumber(number);
+        return orderDao.findByReceptionNumber(number).get();
     }
 
     public OrderDto creatOrderDto(Order order) {
 
         OrderDto orderDto = OrderDto.builder()
                 .service(subServiceService.createSubServiceDto(order.getService()))
-                .address(order.getAddress())
+               // .address(order.getAddress())
                 .expert(expertService.createExpertDto(order.getExpert()))
                 .customer(customerService.createCustomerDto(order.getCustomer()))
                 .doDate(order.getDoDate())
@@ -100,7 +102,7 @@ public class OrderService {
                 .ProposedPrice(order.getProposedPrice())
                 .PricePaid(order.getPricePaid())
                 .status(order.getStatus())
-                .suggestion(order.getSuggestion())
+            //    .suggestion(order.getSuggestion())
                 .build();
         return orderDto;
     }
@@ -134,7 +136,7 @@ public class OrderService {
             }
             return listDto;
         } else
-            throw new IsNullObjectException(" --- Order is not exit ---");
+            throw new ObjectEntityNotFoundException(" --- Order is not exit ---");
     }
 
     public List<OrderDto> findOrderToSelectExpert(Customer customer) {
@@ -142,16 +144,16 @@ public class OrderService {
         List<OrderDto> listFind = findAll();
         if (list != null) {
             List<Order> collect = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
-                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_SPECIALIST_SELECTION.name()))
+                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SELECTION.name()))
                     .collect(Collectors.toList());
             if (collect != null) {
                 for (Order order : collect)
                     listFind.add(creatOrderDto(order));
                 return listFind;
             } else
-                throw new IsNullObjectException(" --- Order is not exit ---");
+                throw new ObjectEntityNotFoundException(" --- Order is not exit ---");
         } else
-            throw new IsNullObjectException(" --- Order is not exit ---");
+            throw new ObjectEntityNotFoundException(" --- Order is not exit ---");
     }
 
 
@@ -167,9 +169,9 @@ public class OrderService {
                     listFind.add(creatOrderDto(order));
                 return listFind;
             } else
-                throw new IsNullObjectException(" --- Order is not exit ---");
+                throw new ObjectEntityNotFoundException(" --- Order is not exit ---");
         } else
-            throw new IsNullObjectException(" --- Order is not exit ---");
+            throw new ObjectEntityNotFoundException(" --- Order is not exit ---");
     }
 
     public void startAndEndOrder(int number, int chose, Expert expert) {
@@ -182,6 +184,6 @@ public class OrderService {
                 expertService.updateStatus(UserStatus.WAITING_CONFIRM, expert);
             }
         } else
-            throw new IsNullObjectException(" order is not exit");
+            throw new ObjectEntityNotFoundException(" order is not exit");
     }
 }

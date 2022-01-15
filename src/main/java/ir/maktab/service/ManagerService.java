@@ -7,7 +7,7 @@ import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.data.model.user.Manager;
-import ir.maktab.exception.IsNullObjectException;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -39,7 +39,7 @@ public class ManagerService {
                 .username(userName)
                 .password(pass).build();
         if (manager != null)
-            throw new IsNullObjectException("-- Manager is null --");
+            throw new ObjectEntityNotFoundException("-- Manager is null --");
         return manager;
     }
 
@@ -47,12 +47,12 @@ public class ManagerService {
         if (checkManager(manager) == null) {
             managerDao.save(manager);
         }
-        throw new IsNullObjectException("--- manager is exit ----");
+        throw new ObjectEntityNotFoundException("--- manager is exit ----");
     }
 
     public Manager checkManager(Manager manager) {
 
-        return managerDao.findByUsernameAndPassword(manager.getUsername(), manager.getPassword());
+        return managerDao.findByUsernameAndPassword(manager.getUsername(), manager.getPassword()).get();
     }
 
 
@@ -81,6 +81,6 @@ public class ManagerService {
             expertService.updateCredit((0.80 * amount), expert);
 
         } else
-            throw new IsNullObjectException(" order is not exit");
+            throw new ObjectEntityNotFoundException(" order is not exit");
     }
 }

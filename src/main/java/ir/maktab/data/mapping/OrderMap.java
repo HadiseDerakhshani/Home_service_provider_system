@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderMap {
     private ModelMapper mapper;
-    private Order createOrder(OrderDto orderDto){
-        return mapper.map(orderDto,Order.class);
+
+    private Order createOrder(OrderDto orderDto) {
+        return mapper.map(orderDto, Order.class);
     }
-    private OrderDto createOrderDto(Order order){
-        return mapper.map(order,OrderDto.class);
+
+    private OrderDto createOrderDto(Order order) {
+        return mapper.map(order, OrderDto.class);
     }
 }

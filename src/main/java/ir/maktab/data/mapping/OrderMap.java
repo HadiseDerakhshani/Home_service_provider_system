@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 public class OrderMap {
     private ModelMapper mapper;
 
-    private Order createOrder(OrderDto orderDto) {
+    public Order createOrder(OrderDto orderDto) {
         return mapper.map(orderDto, Order.class);
     }
 
-    private OrderDto createOrderDto(Order order) {
+    public OrderDto createOrderDto(Order order) {
         return mapper.map(order, OrderDto.class);
     }
 }

@@ -1,5 +1,7 @@
+/*
 package ir.maktab.view;
 
+import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.model.user.User;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
@@ -46,15 +48,15 @@ public class UserView {
         } while (isContinue);
     }
 
-    public void checkPasswordUser(User user) {
+    public void checkPasswordUser(UserDto userDto) {
         isContinue = false;
         do {
             System.out.println("enter password");
             input = scanner.next();
             try {
                 ValidationInfo.isValidPassword(input);
-                if (userService.checkPassword(user, input)) {
-                    showMenu(user);
+                if (userService.checkPassword(userDto, input)) {
+                    showMenu(userDto);
                     isContinue = true;
                     break;
                 } else
@@ -65,10 +67,11 @@ public class UserView {
         } while (isContinue);
     }
 
-    public void showMenu(User user) {
-        switch (user.getUserRole().name()) {
-            case "EXPERT" -> expertView.menuExpert(user.getEmail());
-            case "CUSTOMER" -> customerView.menuCustomer(user.getEmail());
+    public void showMenu(UserDto userDto) {
+        switch (userDto.getUserRole().name()) {
+            case "EXPERT" -> expertView.menuExpert(userDto.getEmail());
+            case "CUSTOMER" -> customerView.menuCustomer(userDto.getEmail());
         }
     }
 }
+*/

@@ -18,8 +18,7 @@ import java.util.Optional;
 public interface ExpertDao extends JpaRepository<Expert, Integer> {
 
 
-   Optional <Expert> findByEmail(String email);
-
+    Optional<Expert> findByEmail(String email);
 
 
     @Transactional

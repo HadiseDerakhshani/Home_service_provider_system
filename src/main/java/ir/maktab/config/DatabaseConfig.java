@@ -63,8 +63,9 @@ public class DatabaseConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
+
     @Bean
-   public ModelMapper mapper(){
+    public ModelMapper mapper() {
         return new ModelMapper();
     }
 }

@@ -1,3 +1,4 @@
+/*
 package ir.maktab.view;
 
 import ir.maktab.data.dto.CustomerDto;
@@ -371,3 +372,4 @@ public class ManagerView {
     }
 
 }
+*/

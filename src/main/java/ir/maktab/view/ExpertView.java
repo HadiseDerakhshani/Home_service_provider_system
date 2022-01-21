@@ -1,5 +1,7 @@
+/*
 package ir.maktab.view;
 
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.order.Suggestion;
@@ -90,7 +92,7 @@ public class ExpertView {
     }
 
     public void menuExpert(String email) {
-        Expert expert = expertService.findByEmail(email);
+        ExpertDto expertDto = expertService.findByEmailDto(email);
         isContinue = false;
         System.out.println("************ Welcome Expert ************");
         do {
@@ -243,3 +245,4 @@ public class ExpertView {
     }
 
 }
+*/

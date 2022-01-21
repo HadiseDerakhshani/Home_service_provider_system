@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
 
-   Optional<Suggestion> findByReceptionNumber(long number);
+    Optional<Suggestion> findByReceptionNumber(long number);
 
     @Transactional
     @Modifying

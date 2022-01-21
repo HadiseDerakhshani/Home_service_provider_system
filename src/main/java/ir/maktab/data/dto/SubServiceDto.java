@@ -1,10 +1,7 @@
 package ir.maktab.data.dto;
 
-import ir.maktab.data.model.user.Expert;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
 

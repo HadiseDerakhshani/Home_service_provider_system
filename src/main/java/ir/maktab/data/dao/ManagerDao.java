@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface ManagerDao extends JpaRepository<Manager, Integer> {
 
 
-   Optional<Manager> findByUsernameAndPassword(String name, String pass);
+    Optional<Manager> findByUsernameAndPassword(String name, String pass);
 }

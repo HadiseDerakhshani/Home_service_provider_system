@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
-    static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, SubService service) {
+    static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, String service) {
         return (Specification<User>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (name != null && !name.isEmpty())
@@ -37,6 +37,5 @@ public interface UserDao extends JpaRepository<User, Integer>, JpaSpecificationE
     }
 
 
-
-Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

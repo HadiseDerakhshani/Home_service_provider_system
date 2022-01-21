@@ -1,8 +1,6 @@
 package ir.maktab.data.dto;
 
 import ir.maktab.data.model.enums.OrderStatus;
-import ir.maktab.data.model.order.Address;
-import ir.maktab.data.model.order.Suggestion;
 import lombok.*;
 
 import java.util.Date;

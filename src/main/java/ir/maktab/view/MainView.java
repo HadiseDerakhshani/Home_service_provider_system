@@ -1,3 +1,4 @@
+/*
 package ir.maktab.view;
 
 import ir.maktab.exception.InValidUserInfoException;
@@ -49,3 +50,4 @@ public class MainView {
         } while (isContinue);
     }
 }
+*/

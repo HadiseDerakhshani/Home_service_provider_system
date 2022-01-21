@@ -20,7 +20,7 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
     List<Customer> findByUserStatus(UserStatus status);
 
-   Optional<Customer> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
 
     @Transactional
     @Modifying

@@ -22,12 +22,12 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
     Optional<Customer> findByEmail(String email);
 
-    @Transactional
+   /* @Transactional
     @Modifying
     @Query(value = "update Customer set phoneNumber=:phone where  email=:email")
-    void updatePhoneNumber(@Param("email") String email, @Param("phone") String phone);
+    void updatePhoneNumber(@Param("email") String email, @Param("phone") String phone);*/
 
-    @Transactional
+  /*  @Transactional
     @Modifying
     @Query(value = "update Customer set password=:pass where  email=:email")
     void updatePassword(@Param("email") String email, @Param("pass") String pass);
@@ -40,6 +40,6 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Customer set userStatus=:status where  email=:email")
-    void updateStatus(@Param("email") String email, @Param("status") UserStatus status);
+    void updateStatus(@Param("email") String email, @Param("status") UserStatus status);*/
 
 }

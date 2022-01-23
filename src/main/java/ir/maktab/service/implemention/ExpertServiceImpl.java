@@ -1,10 +1,11 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.ExpertDao;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
+import ir.maktab.data.mapping.SuggestionMap;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.enums.UserStatus;
@@ -13,9 +14,11 @@ import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.ExpertService;
 import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,19 +29,31 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Service
-@RequiredArgsConstructor
+
 public class ExpertServiceImpl implements ExpertService {
+
     private final ExpertMap expertMap;
     private final ExpertDao expertDao;
-    @Lazy
-    private final SubServiceService subServiceService;
-    @Lazy
-    private final OrderService orderService;
-    @Lazy
-    private final SuggestionService suggestionService;
+    private final SuggestionMap suggestionMap;
+    private final SubServiceServiceImpl subServiceServiceImpl;
+
+    private final OrderServiceImpl orderServiceImpl;
+
+    private final SuggestionServiceImpl suggestionServiceImpl;
+@Autowired
+    public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao,@Lazy SubServiceServiceImpl subServiceServiceImpl,
+                             @Lazy OrderServiceImpl orderServiceImpl ,@Lazy SuggestionMap suggestionMap,@Lazy SuggestionServiceImpl suggestionServiceImpl) {
+        this.expertMap = expertMap;
+        this.expertDao = expertDao;
+        this.subServiceServiceImpl = subServiceServiceImpl;
+        this.orderServiceImpl = orderServiceImpl;
+        this.suggestionServiceImpl = suggestionServiceImpl;
+        this.suggestionMap=suggestionMap;
+    }
 
     @Override
     public Expert save(Expert expert) {
@@ -95,27 +110,32 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public void changePassword(ExpertDto expertDto, String newPass) {
-        expertDao.updatePassword(expertMap.createExpert(expertDto).getEmail(), newPass);
+        Expert expert = findByEmail(expertDto.getEmail());
+        expert.setPassword(newPass);
+        expertDao.save(expert);
     }
 
     @Override
     public void changePhoneNumber(ExpertDto expertDto, String newPhoneNumber) {
-
-        expertDao.updatePhoneNumber(expertMap.createExpert(expertDto).getEmail(), newPhoneNumber);
+        Expert expert = findByEmail(expertDto.getEmail());
+        expert.setPhoneNumber(newPhoneNumber);
+        expertDao.save(expert);
     }
 
     @Override
     public Expert findByEmail(String email) {
-        return expertDao.findByEmail(email).get();
+       if(expertDao.findByEmail(email).isPresent())
+    return expertDao.findByEmail(email).get();
+       else
+           throw  new ObjectEntityNotFoundException(" expert is not exit");
     }
 
     @Override
     public void addSuggest(int number, SuggestionDto suggestionDto, ExpertDto expertDto) {
-        Order order = orderService.findByReceptionNumber(number);
+        Order order = orderServiceImpl.findByReceptionNumber(number);
         if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION))
-            orderService.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
-
-        orderService.updateSuggestion(order, suggestionService.findByReceptionNumber(suggestionDto.getReceptionNumber()));
+            orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
+        orderServiceImpl.updateSuggestion(order, suggestionMap.createSuggestion(suggestionDto));
     }
 
     @Override
@@ -124,7 +144,7 @@ public class ExpertServiceImpl implements ExpertService {
 
         SubServiceDto subServiceDto = subServiceDtoList.get(index);
 
-        SubService subService = subServiceService.findByName(subServiceDto.getName());
+        SubService subService = subServiceServiceImpl.findByName(subServiceDto.getName());
         SubServiceDto findService = null;
         findService = expertDto.getServiceList().stream().filter(s -> s.getName().equals(subService.getName()))
                 .findAny().orElse(null);
@@ -139,26 +159,32 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public void updateServiceList(List<SubService> list, ExpertDto expert) {
-
-        expertDao.updateServiceList(expert.getEmail(), list);
+        Expert expertFound = findByEmail(expert.getEmail());
+        expertFound.setServiceList(list);
+        expertDao.save(expertFound);
     }
 
     @Override
     public void updateScore(int score, Expert expert) {
+        Expert expertFound = findByEmail(expert.getEmail());
+        expertFound.setScore(score);
+        expertDao.save(expertFound);
 
-        expertDao.updateScore(expert.getEmail(), score);
     }
 
     @Override
     public void updateStatus(UserStatus status, Expert expert) {
-
-        expertDao.updateStatus(expert.getEmail(), status);
+        Expert expertFound = findByEmail(expert.getEmail());
+        expertFound.setUserStatus(status);
+        expertDao.save(expertFound);
     }
 
     @Override
     public void updateCredit(double amount, Expert expert) {
-        double credit = findByEmail(expert.getEmail()).getCredit();
-        expertDao.updateCredit(expert.getEmail(), credit + amount);
+        Expert expertFound = findByEmail(expert.getEmail());
+        double credit = expertFound.getCredit();
+        expertFound.setCredit(credit + amount);
+        expertDao.save(expertFound);
     }
 
     @Override

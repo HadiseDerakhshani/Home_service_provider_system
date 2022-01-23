@@ -19,7 +19,7 @@ public interface SuggestionService {
 
     public void updateReceptionNumber(Suggestion suggestion);
 
-    public void updateStatus(int id, SuggestionStatus status);
+    public void updateStatus(Suggestion suggestion, SuggestionStatus status);
 
     public void update(int index, List<SuggestionDto> list);
 

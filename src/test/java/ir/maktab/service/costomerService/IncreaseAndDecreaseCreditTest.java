@@ -1,3 +1,4 @@
+/*
 package ir.maktab.service.costomerService;
 
 import ir.maktab.data.model.user.Customer;
@@ -30,7 +31,8 @@ public class IncreaseAndDecreaseCreditTest extends BaseTest {
         Assertions.assertEquals(customerUpdated.getCredit(), result);
     }
 
-   /* @DisplayName("new amount to DecreaseCredit method")
+   */
+/* @DisplayName("new amount to DecreaseCredit method")
     @Test
     void givenAmount_WhenDecreaseCredit_ThenTrueResponseReturn() {
         double amount = customer.getCredit() - (customer.getCredit() / 3);
@@ -38,5 +40,7 @@ public class IncreaseAndDecreaseCreditTest extends BaseTest {
         customerService.decreaseCredit(customer, amount);
         Customer customerUpdated = customerService.findByEmail(customer.getEmail());
         Assertions.assertEquals(customerUpdated.getCredit(), result);
-    }*/
+    }*//*
+
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package ir.maktab.service.costomerService;
 
 import ir.maktab.data.model.user.Customer;
@@ -44,3 +45,4 @@ public class CreateCustomerTest extends BaseTest {
         Assertions.assertEquals("-- email is empty --", runtimeException.getMessage());
     }
 }
+*/

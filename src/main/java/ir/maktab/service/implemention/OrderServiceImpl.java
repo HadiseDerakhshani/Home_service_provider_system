@@ -1,4 +1,4 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.OrderDao;
 import ir.maktab.data.dto.OrderDto;
@@ -13,9 +13,12 @@ import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.CustomerService;
+import ir.maktab.service.OrderService;
 import ir.maktab.utils.DateUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -26,22 +29,33 @@ import java.util.stream.Collectors;
 
 @Getter
 @Service
-@RequiredArgsConstructor
+
 public class OrderServiceImpl implements OrderService {
+
     private final OrderMap orderMap;
+
     private final OrderDao orderDao;
-    @Lazy
-    private final SubServiceService subServiceService;
-    @Lazy
-    private final ExpertService expertService;
-    @Lazy
-    private final CustomerService customerService;
+
+    private final SubServiceServiceImpl subServiceServiceImpl;
+
+    private final ExpertServiceImpl expertServiceImpl;
+
+    private final CustomerServiceImpl customerServiceImpl;
+@Autowired
+    public OrderServiceImpl(@Lazy OrderMap orderMap, OrderDao orderDao,@Lazy SubServiceServiceImpl subServiceServiceImpl,
+                            @Lazy ExpertServiceImpl expertServiceImpl,@Lazy CustomerServiceImpl customerServiceImpl) {
+        this.orderMap = orderMap;
+        this.orderDao = orderDao;
+        this.subServiceServiceImpl = subServiceServiceImpl;
+        this.expertServiceImpl = expertServiceImpl;
+        this.customerServiceImpl = customerServiceImpl;
+    }
 
     @Override
     public Order createOrder(double price, String description, String date, Customer customer,
                              Address address, SubServiceDto service) throws ParseException {
 
-        SubService subService = subServiceService.findByName(service.getName());
+        SubService subService = subServiceServiceImpl.findByName(service.getName());
         if (subService != null) {
             Order order = Order.builder()
                     .proposedPrice(price)
@@ -76,8 +90,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateReceptionNumber(Order order) {
-        ///unic fild make search
-        orderDao.updateReceptionNumber(order.getId(), 1000 + order.getId());
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
+        orderFound.setReceptionNumber(1000 + order.getId());
+        orderDao.save(orderFound);
     }
 
     @Override
@@ -87,26 +102,29 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateStatus(Order order, OrderStatus status) {
-
-        orderDao.updateStatus(order.getId(), status);
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
+  orderFound.setStatus(status);
+        orderDao.save(orderFound);
     }
 
     @Override
     public void updatePricePaid(Order order, double amount) {
-
-        orderDao.updatePricePaid(order.getId(), amount);
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
+orderFound.setPricePaid(amount);
+        orderDao.save(orderFound);
     }
 
     @Override
     public void updateSuggestion(Order order, Suggestion suggest) {
-
-        orderDao.updateSuggestion(order.getId(), order.getSuggestion());
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
+      orderFound.getSuggestion().add(suggest);
+        orderDao.save(orderFound);
     }
 
     @Override
     public void updateExpert(Expert expert, Order order) {
-
-        orderDao.updateExpert(order.getId(), expert);
+        order.setExpert(expert);
+        orderDao.save(order);
     }
 
     @Override
@@ -166,7 +184,7 @@ public class OrderServiceImpl implements OrderService {
                 updateStatus(order, OrderStatus.STARTED);
             else if (chose == 7) {
                 updateStatus(order, OrderStatus.DONE);
-                expertService.updateStatus(UserStatus.WAITING_CONFIRM, expert);
+                expertServiceImpl.updateStatus(UserStatus.WAITING_CONFIRM, expert);
             }
         } else
             throw new ObjectEntityNotFoundException(" order is not exit");

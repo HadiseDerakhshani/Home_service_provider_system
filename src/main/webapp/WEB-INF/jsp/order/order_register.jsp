@@ -4,20 +4,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>order Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
 
 </head>
 <body >
-<div class="cantainer" >
-    <h1>WELCOME TO SERVICES HOME </h1>
-<div >
-    <a href="<c:url value="/customer"/>" class="btn btn-outline-primary">Customer</a>
 
-</div>
-
+    <form:form cssClass="p-3 m-3"  modelAttribute="order" action="/order/registerOrder" method="post">
+    <%--<table class="table table-bordered table-striped text-dark">
+        <tr>
+            <td>
+                <form:label path="firstName">First Name :</form:label>
+            </td>
+            <td>
+                <form:input path="" name="firstName"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:errors path="firstName" cssClass="text-danger"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:button name="register">Register</form:button>
+            </td>
+        </tr>
+    </table>--%>
+    </form:form>
 </div>
 
 

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>success Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
@@ -12,11 +12,13 @@
 </head>
 <body >
 <div class="cantainer" >
-    <h1>WELCOME TO SERVICES HOME </h1>
-<div >
-    <a href="<c:url value="/customer"/>" class="btn btn-outline-primary">Customer</a>
-
-</div>
+    <h1> success register customer </h1>
+    <div class="btn-group mt-5 mx-5">
+        <a href="<c:url value="/order"/>" class="btn btn-outline-primary active">yes</a>
+<%--
+        <a href="<c:url value="/login"/>" class="btn btn-outline-primary active">Login</a>
+--%>
+    </div>
 
 </div>
 

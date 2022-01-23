@@ -16,10 +16,10 @@ import java.util.Set;
 public interface ServiceDao extends JpaRepository<Service, Integer> {
 
 
-    Optional<Service> finByName(String name);
+    Optional<Service> findByName(String name);
 
-    @Transactional
+   /* @Transactional
     @Modifying
     @Query(value = "update Service set subServiceList=:subServiceList where id=:id")
-    void updateSubList(@Param("id") int id, @Param("subServiceList") Set<SubService> subServiceList);
+    void updateSubList(@Param("id") int id, @Param("subServiceList") Set<SubService> subServiceList);*/
 }

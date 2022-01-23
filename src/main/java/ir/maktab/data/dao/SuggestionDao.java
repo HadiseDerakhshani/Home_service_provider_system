@@ -16,7 +16,7 @@ public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
 
     Optional<Suggestion> findByReceptionNumber(long number);
 
-    @Transactional
+   /* @Transactional
     @Modifying
     @Query(value = "update Suggestion set receptionNumber=:number where  id=:id")
     void updateReceptionNumber(@Param("id") int id, @Param("number") int number);
@@ -24,5 +24,5 @@ public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Suggestion set status=:status where  id=:id")
-    void updateStatus(@Param("id") int id, @Param("status") SuggestionStatus status);
+    void updateStatus(@Param("id") int id, @Param("status") SuggestionStatus status);*/
 }

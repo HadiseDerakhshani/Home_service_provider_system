@@ -12,7 +12,7 @@ import java.util.List;
 public interface CustomerService {
 
 
-    public Customer save(Customer customer);
+    public Customer save(CustomerDto customerDto);
 
 
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit);

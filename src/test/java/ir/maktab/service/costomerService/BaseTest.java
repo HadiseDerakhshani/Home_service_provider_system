@@ -1,3 +1,4 @@
+/*
 package ir.maktab.service.costomerService;
 
 import ir.maktab.config.SpringConfig;
@@ -27,3 +28,4 @@ public class BaseTest {
 
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package ir.maktab.service.costomerService;
 
 import ir.maktab.data.model.user.Customer;
@@ -38,3 +39,4 @@ public class SaveTest extends BaseTest {
     }
 
 }
+*/

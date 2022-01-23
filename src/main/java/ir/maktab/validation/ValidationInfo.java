@@ -7,9 +7,9 @@ public class ValidationInfo {
     public static boolean isValidInfo(String input) {
         String check = "";
         String[] split = input.split(",");
-        if (!isValidCharacter(split[0])) {
+        if (!isValidAlphabet(split[0])) {
             check += " firstName";
-        } else if (!isValidCharacter(split[1])) {
+        } else if (!isValidAlphabet(split[1])) {
             check += " lastName";
 
         } else if (!isValidEmail(split[2])) {
@@ -29,7 +29,7 @@ public class ValidationInfo {
         else return true;
     }
 
-    public static boolean isValidCharacter(String input) {
+    public static boolean isValidAlphabet(String input) {
         if (input.matches("^[a-zA-Z]+$"))
             return true;
         throw new InValidUserInfoException("----entered is not valid you should enter alphabet----");

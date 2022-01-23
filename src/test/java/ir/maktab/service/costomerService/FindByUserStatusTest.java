@@ -1,3 +1,4 @@
+/*
 package ir.maktab.service.costomerService;
 
 import ir.maktab.data.dto.CustomerDto;
@@ -53,3 +54,4 @@ public class FindByUserStatusTest extends BaseTest {
                 " ---", runtimeException.getMessage());
     }
 }
+*/

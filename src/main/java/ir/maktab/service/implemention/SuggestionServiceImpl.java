@@ -1,4 +1,4 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.SuggestionDao;
 import ir.maktab.data.dto.SuggestionDto;
@@ -11,8 +11,10 @@ import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.SuggestionService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +22,26 @@ import java.util.List;
 
 @Getter
 @Service
-@RequiredArgsConstructor
+
 public class SuggestionServiceImpl implements SuggestionService {
+
     private final SuggestionMap suggestionMap;
+
     private final ExpertMap expertMap;
     private final SuggestionDao suggestionDao;
-    @Lazy
-    private final ExpertService expertService;
-    @Lazy
-    private final OrderService orderService;
+
+    private final ExpertServiceImpl expertServiceImpl;
+
+    private final OrderServiceImpl orderServiceImpl;
+@Autowired
+    public SuggestionServiceImpl(@Lazy SuggestionMap suggestionMap,@Lazy ExpertMap expertMap, SuggestionDao suggestionDao,
+                                 @Lazy  ExpertServiceImpl expertServiceImpl,@Lazy OrderServiceImpl orderServiceImpl) {
+        this.suggestionMap = suggestionMap;
+        this.expertMap = expertMap;
+        this.suggestionDao = suggestionDao;
+        this.expertServiceImpl = expertServiceImpl;
+        this.orderServiceImpl = orderServiceImpl;
+    }
 
     @Override
     public Suggestion save(Suggestion suggestion) {
@@ -60,28 +73,32 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
     public void updateReceptionNumber(Suggestion suggestion) {
-        suggestionDao.updateReceptionNumber(suggestion.getId(), (suggestion.getId() + 1000));
+    suggestion.setReceptionNumber((suggestion.getId() + 1000));
+        suggestionDao.save(suggestion);
     }
 
     @Override
-    public void updateStatus(int id, SuggestionStatus status) {
-        suggestionDao.updateStatus(id, status);
+    public void updateStatus(Suggestion suggestion, SuggestionStatus status) {
+      suggestion.setStatus(status);
+    suggestionDao.save(suggestion);
     }
 
     @Override
     public void update(int index, List<SuggestionDto> list) {
         int count = 0;
         for (SuggestionDto dto : list) {
-            Suggestion suggest = suggestionDao.findByReceptionNumber(dto.getReceptionNumber()).get();
+          //  Suggestion suggest = suggestionDao.findByReceptionNumber(dto.getReceptionNumber()).get();
+          Suggestion suggest = suggestionMap.createSuggestion(dto);
+
             if (count == index - 1) {
-                updateStatus(suggest.getId(), SuggestionStatus.CONFIRMED);
+                updateStatus(suggest, SuggestionStatus.CONFIRMED);
                 Order order = suggest.getOrder();
-                orderService.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
+                orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
                 Expert expert = suggest.getExpert();
-                expertService.updateStatus(UserStatus.CONFIRMED, expert);
-                orderService.updateExpert(expert, order);
+                expertServiceImpl.updateStatus(UserStatus.CONFIRMED, expert);
+                orderServiceImpl.updateExpert(expert, order);
             } else
-                updateStatus(suggest.getId(), SuggestionStatus.REJECT);
+                updateStatus(suggest, SuggestionStatus.REJECT);
             count++;
         }
 

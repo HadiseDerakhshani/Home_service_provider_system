@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Builder
@@ -13,9 +17,16 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class SuggestionDto {
+    @CreationTimestamp
     private Date dateRegisterSuggest;
-    private double ProposedPrice;
+    @Pattern(regexp ="[0-9]+$", message = "invalid proposedPrice")
+    private double proposedPrice;
+
+    @Pattern(regexp ="[0-9]+$", message = "invalid durationOfWork")
     private int durationOfWork;
+
+    @Min(value = 6 ,message = "min of start time is 6")
+    @Max(value = 24,message = "max of start time is 24")
     private int startTime;
     private long receptionNumber;
     private SuggestionStatus status;

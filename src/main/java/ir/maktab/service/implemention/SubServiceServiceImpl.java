@@ -1,4 +1,4 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.SubServiceDao;
 import ir.maktab.data.dto.ExpertDto;
@@ -7,8 +7,11 @@ import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.SubServiceService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +19,20 @@ import java.util.List;
 
 @Getter
 @Service
-@RequiredArgsConstructor
+
 public class SubServiceServiceImpl implements SubServiceService {
+
     private final SubServiceMap subServiceMap;
+
     private final ExpertMap expertMap;
     private final SubServiceDao subServiceDao;
+@Autowired
+    public SubServiceServiceImpl(@Lazy SubServiceMap subServiceMap,@Lazy ExpertMap expertMap,
+                                 SubServiceDao subServiceDao) {
+        this.subServiceMap = subServiceMap;
+        this.expertMap = expertMap;
+        this.subServiceDao = subServiceDao;
+    }
 
     @Override
     public void save(SubService subService) {
@@ -62,7 +74,8 @@ public class SubServiceServiceImpl implements SubServiceService {
     @Override
     public void addExpertToList(ExpertDto expertDto, SubService service) {
         service.getExpertList().add(expertMap.createExpert(expertDto));
-        subServiceDao.updateExpertList(service.getId(), service.getExpertList());
+
+        subServiceDao.save(service);
     }
 
     @Override

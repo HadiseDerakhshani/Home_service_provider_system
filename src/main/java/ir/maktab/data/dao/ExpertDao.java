@@ -20,7 +20,7 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
 
     Optional<Expert> findByEmail(String email);
 
-
+/*
     @Transactional
     @Modifying
     @Query(value = "update Expert set credit=:credit where  email=:email")
@@ -49,5 +49,5 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Expert set serviceList=:serviceList where email=:email")
-    void updateServiceList(@Param("email") String email, @Param("serviceList") List<SubService> serviceList);
+    void updateServiceList(@Param("email") String email, @Param("serviceList") List<SubService> serviceList);*/
 }

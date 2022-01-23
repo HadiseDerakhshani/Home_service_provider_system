@@ -1,4 +1,4 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.CustomerDao;
 import ir.maktab.data.dto.CustomerDto;
@@ -13,8 +13,10 @@ import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,24 +27,37 @@ import java.util.List;
 
 @Getter
 @Service
-@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerDao customerDao;
-    @Lazy
-    private final SuggestionService suggestService;
-    @Lazy
-    private final OrderService orderService;
-    @Lazy
-    private final ExpertService expertService;
-    @Lazy
-    private final CommentService commentService;
+
+    private final SuggestionServiceImpl suggestServiceImpl;
+
+    private final OrderServiceImpl orderServiceImpl;
+
+    private final ExpertServiceImpl expertServiceImpl;
+
+    private final CommentServiceImpl commentServiceImpl;
+
     private final CustomerMap customerMap;
+@Autowired
+    public CustomerServiceImpl(CustomerDao customerDao,@Lazy SuggestionServiceImpl suggestServiceImpl,
+                               @Lazy  OrderServiceImpl orderServiceImpl,@Lazy ExpertServiceImpl expertServiceImpl,
+                               @Lazy CommentServiceImpl commentServiceImpl,@Lazy CustomerMap customerMap) {
+        this.customerDao = customerDao;
+        this.suggestServiceImpl = suggestServiceImpl;
+        this.orderServiceImpl = orderServiceImpl;
+        this.expertServiceImpl = expertServiceImpl;
+        this.commentServiceImpl = commentServiceImpl;
+        this.customerMap = customerMap;
+    }
 
     @Override
-    public Customer save(Customer customer) {
-        if (findByEmail(customer.getEmail()) == null) {
+    public Customer save(CustomerDto customerDto) {
+        if (findByEmail(customerDto.getEmail()) == null) {
+            Customer customer = customerMap.createCustomer(customerDto);
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
+            customer.setUserRole(UserRole.CUSTOMER);
             return customerDao.save(customer);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
@@ -91,18 +106,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changePassword(CustomerDto customer, String newPass) {
-        customerDao.updatePassword(customer.getEmail(), newPass);
+        Customer customerFound = findByEmail(customer.getEmail());
+        customerFound.setPassword(newPass);
+        customerDao.save(customerFound);
+
     }
 
     @Override
     public void updateStatus(String email, UserStatus status) {
-        customerDao.updateStatus(email, status);
+        Customer customerFound = findByEmail(email);
+        customerFound.setUserStatus(status);
+        customerDao.save(customerFound);
+
     }
 
     @Override
     public void changePhoneNumber(CustomerDto customer, String newPhoneNumber) {
+        Customer customerFound = findByEmail(customer.getEmail());
+        customerFound.setPhoneNumber(newPhoneNumber);
+        customerDao.save(customerFound);
 
-        customerDao.updatePhoneNumber(customer.getEmail(), newPhoneNumber);
     }
 
     @Override
@@ -112,14 +135,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void increaseCredit(Customer customer, double amount) {
-        double credit = findByEmail(customer.getEmail()).getCredit();
-        customerDao.updateCredit(customer.getEmail(), credit + amount);
+        Customer customerFound = findByEmail(customer.getEmail());
+        double credit = customerFound.getCredit();
+        customerFound.setCredit(credit + amount);
+        customerDao.save(customerFound);
     }
 
     @Override
     public void decreaseCredit(CustomerDto customer, double amount) {
-        double credit = findByEmail(customer.getEmail()).getCredit();
-        customerDao.updateCredit(customer.getEmail(), credit - amount);
+        Customer customerFound = findByEmail(customer.getEmail());
+        double credit = customerFound.getCredit();
+        customerFound.setCredit(credit - amount);
+        customerDao.save(customerFound);
     }
 
     @Override
@@ -160,16 +187,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void payment(CustomerDto customerDto, OrderDto orderDto, double amount, int score, String commentText) {
 
-        Order order = orderService.findByReceptionNumber(orderDto.getReceptionNumber());
+        Order order = orderServiceImpl.findByReceptionNumber(orderDto.getReceptionNumber());
         decreaseCredit(customerDto, amount);
         Expert expert = order.getExpert();
-        expertService.updateCredit((0.80 * amount), expert);
-        expertService.updateScore(score, expert);
-        orderService.updateStatus(order, OrderStatus.PAID);
-        orderService.updatePricePaid(order, amount);
+        expertServiceImpl.updateCredit((0.80 * amount), expert);
+        expertServiceImpl.updateScore(score, expert);
+        orderServiceImpl.updateStatus(order, OrderStatus.PAID);
+        orderServiceImpl.updatePricePaid(order, amount);
 
         if (commentText != null)
-            commentService.createComment(expert, customerMap.createCustomer(customerDto), commentText);
+            commentServiceImpl.createComment(expert, customerMap.createCustomer(customerDto), commentText);
     }
 
     @Override

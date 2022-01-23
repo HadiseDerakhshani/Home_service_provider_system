@@ -21,7 +21,7 @@ public interface OrderDao extends JpaRepository<Order, Integer> {
 
     Optional<Order> findByReceptionNumber(long number);
 
-    @Transactional
+  /*  @Transactional
     @Modifying
     @Query(value = "update Order set status=:status where id=:id", nativeQuery = true)
     void updateStatus(@Param("id") int id, @Param("status") OrderStatus status);
@@ -44,6 +44,6 @@ public interface OrderDao extends JpaRepository<Order, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Order set receptionNumber=:number where  id=:id", nativeQuery = true)
-    void updateReceptionNumber(@Param("id") int id, @Param("number") int number);
+    void updateReceptionNumber(@Param("id") int id, @Param("number") int number);*/
 }
 

@@ -1,10 +1,11 @@
-package ir.maktab.service;
+package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.CommentDao;
 import ir.maktab.data.model.order.Comment;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.ObjectEntityNotFoundException;
+import ir.maktab.service.CommentService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

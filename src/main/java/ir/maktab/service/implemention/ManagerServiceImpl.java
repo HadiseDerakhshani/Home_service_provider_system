@@ -11,7 +11,6 @@ import ir.maktab.data.model.user.Manager;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ManagerService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -32,9 +31,10 @@ public class ManagerServiceImpl implements ManagerService {
     private final ManagerDao managerDao;
 
     private final ManagerMap managerMap;
-@Autowired
-    public ManagerServiceImpl(@Lazy CustomerServiceImpl customerServiceImpl,@Lazy OrderServiceImpl orderServiceImpl,
-                              @Lazy ExpertServiceImpl expertServiceImpl, ManagerDao managerDao,@Lazy ManagerMap managerMap) {
+
+    @Autowired
+    public ManagerServiceImpl(@Lazy CustomerServiceImpl customerServiceImpl, @Lazy OrderServiceImpl orderServiceImpl,
+                              @Lazy ExpertServiceImpl expertServiceImpl, ManagerDao managerDao, @Lazy ManagerMap managerMap) {
         this.customerServiceImpl = customerServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.expertServiceImpl = expertServiceImpl;

@@ -9,7 +9,6 @@ import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.SubServiceService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,9 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     private final ExpertMap expertMap;
     private final SubServiceDao subServiceDao;
-@Autowired
-    public SubServiceServiceImpl(@Lazy SubServiceMap subServiceMap,@Lazy ExpertMap expertMap,
+
+    @Autowired
+    public SubServiceServiceImpl(@Lazy SubServiceMap subServiceMap, @Lazy ExpertMap expertMap,
                                  SubServiceDao subServiceDao) {
         this.subServiceMap = subServiceMap;
         this.expertMap = expertMap;

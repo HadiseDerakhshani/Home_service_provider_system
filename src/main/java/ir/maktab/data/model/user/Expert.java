@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @Entity
 public class Expert extends User {
-
+    @Lob
     private byte[] image;
     private int score;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList", fetch = FetchType.EAGER)

@@ -13,12 +13,12 @@ import java.util.List;
 public interface ExpertService {
 
 
-    public Expert save(Expert expert);
+    public Expert save(ExpertDto expert);
 
     public Expert createExpert(String name, String family, String email, String pass, String phone,
                                double credit, int score, String image);
 
-    public Expert addPicture(Expert expert, String imageFileAddress);
+    public ExpertDto addPicture(ExpertDto expert, String path);
 
 
     public void changePassword(ExpertDto expertDto, String newPass);

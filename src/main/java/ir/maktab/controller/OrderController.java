@@ -24,9 +24,10 @@ public class OrderController {
 
         return new ModelAndView("order/order_register", "order", new OrderDto());
     }
+
     @PostMapping("/order/registerOrder")
-    public String registerOrder(@Valid @ModelAttribute("order")OrderDto orderDto, BindingResult br){
-        if(br.hasErrors())
+    public String registerOrder(@Valid @ModelAttribute("order") OrderDto orderDto, BindingResult br) {
+        if (br.hasErrors())
             return "order/order_register";
         else
             return "customer/success_register";

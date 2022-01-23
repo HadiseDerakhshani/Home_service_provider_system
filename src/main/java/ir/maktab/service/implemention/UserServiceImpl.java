@@ -9,7 +9,6 @@ import ir.maktab.data.model.user.User;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.UserService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,9 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     private final UserMap userMap;
-@Autowired
-    public UserServiceImpl(UserDao userDao,@Lazy UserMap userMap) {
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao, @Lazy UserMap userMap) {
         this.userDao = userDao;
         this.userMap = userMap;
     }
@@ -35,10 +35,11 @@ public class UserServiceImpl implements UserService {
     public UserDto findByEmail(String email) {
         if (userDao.findByEmail(email).isPresent())
             throw new ObjectEntityNotFoundException("user is not exit");
-        else
-        { User user = userDao.findByEmail(email).get();
+        else {
+            User user = userDao.findByEmail(email).get();
 
-        return userMap.createUserDto(user);}
+            return userMap.createUserDto(user);
+        }
     }
 
     @Override

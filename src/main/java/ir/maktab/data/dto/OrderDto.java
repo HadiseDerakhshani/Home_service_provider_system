@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Data
 public class OrderDto {
-    @Pattern(regexp ="[0-9]+$", message = "invalid proposedPrice")
+    @Pattern(regexp = "[0-9]+$", message = "invalid proposedPrice")
     private double proposedPrice;
     private String jobDescription;
     @CreationTimestamp
@@ -25,14 +25,14 @@ public class OrderDto {
     @Temporal(TemporalType.DATE)
     private Date doDate;
     private long receptionNumber;
-    @Pattern(regexp ="[0-9]+$", message = "invalid proposedPrice")
+    @Pattern(regexp = "[0-9]+$", message = "invalid proposedPrice")
     private double PricePaid;
     private SubServiceDto service;
     private OrderStatus status;
     private CustomerDto customer;
     private ExpertDto expert;
     private AddressDto address;
-    private List<SuggestionDto> suggestion=new ArrayList<>();
+    private List<SuggestionDto> suggestion = new ArrayList<>();
 
 
 }

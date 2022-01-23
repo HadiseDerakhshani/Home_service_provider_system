@@ -1,4 +1,4 @@
-body,html{
+body, html {
     height: 100%;
     width: 100%;
     background-color: salmon;
@@ -6,7 +6,8 @@ body,html{
     justify-content: center;
     align-items: center;
 }
-*{
+
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;

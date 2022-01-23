@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 
@@ -19,7 +18,7 @@ public class ManagerDto {
     private String username;
 
 
-    @Pattern(regexp ="^[A-Za-z0-9._%+@|!&*=/-]{8,}$", message = "invalid password")
+    @Pattern(regexp = "^[A-Za-z0-9._%+@|!&*=/-]{8,}$", message = "invalid password")
     private String password;
 
 }

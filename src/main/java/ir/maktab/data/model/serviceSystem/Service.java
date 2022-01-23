@@ -18,7 +18,7 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<SubService> subServiceList = new HashSet<>();

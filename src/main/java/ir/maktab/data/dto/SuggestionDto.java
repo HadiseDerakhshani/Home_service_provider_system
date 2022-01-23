@@ -19,14 +19,14 @@ import java.util.Date;
 public class SuggestionDto {
     @CreationTimestamp
     private Date dateRegisterSuggest;
-    @Pattern(regexp ="[0-9]+$", message = "invalid proposedPrice")
+    @Pattern(regexp = "[0-9]+$", message = "invalid proposedPrice")
     private double proposedPrice;
 
-    @Pattern(regexp ="[0-9]+$", message = "invalid durationOfWork")
+    @Pattern(regexp = "[0-9]+$", message = "invalid durationOfWork")
     private int durationOfWork;
 
-    @Min(value = 6 ,message = "min of start time is 6")
-    @Max(value = 24,message = "max of start time is 24")
+    @Min(value = 6, message = "min of start time is 6")
+    @Max(value = 24, message = "max of start time is 24")
     private int startTime;
     private long receptionNumber;
     private SuggestionStatus status;

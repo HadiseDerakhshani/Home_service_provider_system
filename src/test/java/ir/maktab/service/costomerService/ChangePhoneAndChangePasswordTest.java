@@ -32,7 +32,7 @@ public class ChangePhoneAndChangePasswordTest extends BaseTest {
     }*//*
 
 
-   */
+ */
 /* @DisplayName("change password")
     @Test
     void givenNewPassword_WhenChangePassword_ThenTrueExceptionResponseReturn() {

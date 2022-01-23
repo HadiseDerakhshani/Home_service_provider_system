@@ -13,9 +13,8 @@ import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
-import ir.maktab.service.*;
+import ir.maktab.service.CustomerService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -40,10 +39,11 @@ public class CustomerServiceImpl implements CustomerService {
     private final CommentServiceImpl commentServiceImpl;
 
     private final CustomerMap customerMap;
-@Autowired
-    public CustomerServiceImpl(CustomerDao customerDao,@Lazy SuggestionServiceImpl suggestServiceImpl,
-                               @Lazy  OrderServiceImpl orderServiceImpl,@Lazy ExpertServiceImpl expertServiceImpl,
-                               @Lazy CommentServiceImpl commentServiceImpl,@Lazy CustomerMap customerMap) {
+
+    @Autowired
+    public CustomerServiceImpl(CustomerDao customerDao, @Lazy SuggestionServiceImpl suggestServiceImpl,
+                               @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
+                               @Lazy CommentServiceImpl commentServiceImpl, @Lazy CustomerMap customerMap) {
         this.customerDao = customerDao;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;

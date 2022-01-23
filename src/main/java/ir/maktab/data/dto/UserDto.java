@@ -2,7 +2,6 @@ package ir.maktab.data.dto;
 
 import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.enums.UserStatus;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -27,10 +26,10 @@ public class UserDto {
     @NotBlank(message = "email is blank")
     private String email;
 
-    @Pattern(regexp ="^[A-Za-z0-9._%+@|!&*=/-]{8,}$", message = "invalid password")
+    @Pattern(regexp = "^[A-Za-z0-9._%+@|!&*=/-]{8,}$", message = "invalid password")
     private String password;
 
-    @Pattern(regexp ="^(\\+98|0)?9\\d{9}$", message = "invalid phoneNumber")
+    @Pattern(regexp = "^(\\+98|0)?9\\d{9}$", message = "invalid phoneNumber")
     private String phoneNumber;
 
     private UserStatus userStatus;
@@ -42,7 +41,7 @@ public class UserDto {
     private UserRole userRole;
 
 
-   // @Pattern(regexp ="[0-9]+$", message = "invalid credit")
+    // @Pattern(regexp ="[0-9]+$", message = "invalid credit")
     private double credit;
 
 }

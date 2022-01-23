@@ -15,9 +15,7 @@ import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ExpertService;
-import ir.maktab.validation.ValidationInfo;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -29,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Service
@@ -44,21 +41,24 @@ public class ExpertServiceImpl implements ExpertService {
     private final OrderServiceImpl orderServiceImpl;
 
     private final SuggestionServiceImpl suggestionServiceImpl;
-@Autowired
-    public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao,@Lazy SubServiceServiceImpl subServiceServiceImpl,
-                             @Lazy OrderServiceImpl orderServiceImpl ,@Lazy SuggestionMap suggestionMap,@Lazy SuggestionServiceImpl suggestionServiceImpl) {
+
+    @Autowired
+    public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
+                             @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap, @Lazy SuggestionServiceImpl suggestionServiceImpl) {
         this.expertMap = expertMap;
         this.expertDao = expertDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.suggestionServiceImpl = suggestionServiceImpl;
-        this.suggestionMap=suggestionMap;
+        this.suggestionMap = suggestionMap;
     }
 
     @Override
-    public Expert save(Expert expert) {
-        if (findByEmail(expert.getEmail()) == null) {
+    public Expert save(ExpertDto expertDto) {
+        if (findByEmail(expertDto.getEmail()) == null) {
+            Expert expert = expertMap.createExpert(expertDto);
             expert.setUserStatus(UserStatus.WAITING_CONFIRM);
+            expert.setUserRole(UserRole.EXPERT);
             return expertDao.save(expert);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
@@ -69,7 +69,7 @@ public class ExpertServiceImpl implements ExpertService {
     public Expert createExpert(String name, String family, String email, String pass, String phone,
                                double credit, int score, String image) {
 
-        if (email == null || email == "")
+        if (email == null || email.equals(""))
             throw new ObjectEntityNotFoundException("-- email is empty --");
         else {
             Expert expert = Expert.builder()
@@ -83,20 +83,18 @@ public class ExpertServiceImpl implements ExpertService {
                     .score(score)
                     .userRole(UserRole.EXPERT)
                     .build();
-            return addPicture(expert, image);
-
+            //  return addPicture(expert, image);
+            return expert;
         }
     }
 
     @Override
-    public Expert addPicture(Expert expert, String imageFileAddress) {
+    public ExpertDto addPicture(ExpertDto expert, String path) {
 
-        File file = new File(imageFileAddress);
+        File file = new File(path);
         byte[] imageFile = new byte[(int) file.length()];
-        System.out.println(imageFile.length);
-        try {
 
-            ValidationInfo.isValidByte(imageFile.length);
+        try {
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(imageFile);
             fileInputStream.close();
@@ -124,10 +122,10 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public Expert findByEmail(String email) {
-       if(expertDao.findByEmail(email).isPresent())
-    return expertDao.findByEmail(email).get();
-       else
-           throw  new ObjectEntityNotFoundException(" expert is not exit");
+        if (expertDao.findByEmail(email).isPresent())
+            return expertDao.findByEmail(email).get();
+        else
+            throw new ObjectEntityNotFoundException(" expert is not exit");
     }
 
     @Override

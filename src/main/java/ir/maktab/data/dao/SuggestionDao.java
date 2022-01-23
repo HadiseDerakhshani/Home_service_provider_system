@@ -1,13 +1,8 @@
 package ir.maktab.data.dao;
 
-import ir.maktab.data.model.enums.SuggestionStatus;
 import ir.maktab.data.model.order.Suggestion;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

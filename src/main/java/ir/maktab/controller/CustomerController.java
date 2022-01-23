@@ -1,7 +1,6 @@
 package ir.maktab.controller;
 
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.OrderDto;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,15 +26,14 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/register")
-    public String register(@Valid @ModelAttribute("customer")CustomerDto customerDto, BindingResult br, Model model){
-        if(br.hasErrors())
-           return "customer/customer_register";
-            else{
-                customerService.save(customerDto);
-         return "customer/success_register";
-            }
+    public String register(@Valid @ModelAttribute("customer") CustomerDto customerDto, BindingResult br, Model model) {
+        if (br.hasErrors())
+            return "customer/customer_register";
+        else {
+            customerService.save(customerDto);
+            return "customer/success_register";
+        }
     }
-
 
 
 }

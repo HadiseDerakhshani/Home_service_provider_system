@@ -13,11 +13,9 @@ import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.ObjectEntityNotFoundException;
-import ir.maktab.service.CustomerService;
 import ir.maktab.service.OrderService;
 import ir.maktab.utils.DateUtils;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -41,9 +39,10 @@ public class OrderServiceImpl implements OrderService {
     private final ExpertServiceImpl expertServiceImpl;
 
     private final CustomerServiceImpl customerServiceImpl;
-@Autowired
-    public OrderServiceImpl(@Lazy OrderMap orderMap, OrderDao orderDao,@Lazy SubServiceServiceImpl subServiceServiceImpl,
-                            @Lazy ExpertServiceImpl expertServiceImpl,@Lazy CustomerServiceImpl customerServiceImpl) {
+
+    @Autowired
+    public OrderServiceImpl(@Lazy OrderMap orderMap, OrderDao orderDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
+                            @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl) {
         this.orderMap = orderMap;
         this.orderDao = orderDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
@@ -103,21 +102,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateStatus(Order order, OrderStatus status) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
-  orderFound.setStatus(status);
+        orderFound.setStatus(status);
         orderDao.save(orderFound);
     }
 
     @Override
     public void updatePricePaid(Order order, double amount) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
-orderFound.setPricePaid(amount);
+        orderFound.setPricePaid(amount);
         orderDao.save(orderFound);
     }
 
     @Override
     public void updateSuggestion(Order order, Suggestion suggest) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
-      orderFound.getSuggestion().add(suggest);
+        orderFound.getSuggestion().add(suggest);
         orderDao.save(orderFound);
     }
 

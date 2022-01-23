@@ -7,7 +7,6 @@ import ir.maktab.data.model.serviceSystem.Service;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ServiceService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
@@ -18,8 +17,9 @@ public class ServiceServiceImpl implements ServiceService {
     private final ServiceDao serviceDao;
 
     private final ServiceMap serviceMap;
-@Autowired
-    public ServiceServiceImpl(ServiceDao serviceDao,@Lazy ServiceMap serviceMap) {
+
+    @Autowired
+    public ServiceServiceImpl(ServiceDao serviceDao, @Lazy ServiceMap serviceMap) {
         this.serviceDao = serviceDao;
         this.serviceMap = serviceMap;
     }
@@ -42,10 +42,10 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Service findByName(String name) {
-        if(serviceDao.findByName(name).isPresent())
-    return serviceDao.findByName(name).get();
+        if (serviceDao.findByName(name).isPresent())
+            return serviceDao.findByName(name).get();
         else
-            throw  new ObjectEntityNotFoundException("Service not found");
+            throw new ObjectEntityNotFoundException("Service not found");
     }
 
     @Override

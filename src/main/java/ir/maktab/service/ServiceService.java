@@ -3,6 +3,8 @@ package ir.maktab.service;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.model.serviceSystem.Service;
 
+import java.util.List;
+
 
 public interface ServiceService {
 
@@ -16,4 +18,5 @@ public interface ServiceService {
     public void deleteService(String name);
 
     public void update(ServiceDto serviceDto);
+    public List<ServiceDto> findAll();
 }

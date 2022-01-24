@@ -11,6 +11,7 @@
 </head>
 <body>
 <div>
+    <h1 style="color:red">${message}</h1>
     <form:form cssClass="p-3 m-3" modelAttribute="customer" action="/customer/register" method="post">
         <table class="table table-bordered table-striped text-dark">
             <tr>

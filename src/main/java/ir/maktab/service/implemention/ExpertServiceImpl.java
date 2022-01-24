@@ -5,6 +5,7 @@ import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
+import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.mapping.SuggestionMap;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.enums.UserRole;
@@ -35,7 +36,10 @@ public class ExpertServiceImpl implements ExpertService {
 
     private final ExpertMap expertMap;
     private final ExpertDao expertDao;
+    private final SubServiceMap subServiceMap;
+
     private final SuggestionMap suggestionMap;
+
     private final SubServiceServiceImpl subServiceServiceImpl;
 
     private final OrderServiceImpl orderServiceImpl;
@@ -44,13 +48,15 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Autowired
     public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
-                             @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap, @Lazy SuggestionServiceImpl suggestionServiceImpl) {
+                             @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap,
+                             @Lazy SuggestionServiceImpl suggestionServiceImpl,@Lazy SubServiceMap subServiceMap) {
         this.expertMap = expertMap;
         this.expertDao = expertDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.suggestionServiceImpl = suggestionServiceImpl;
         this.suggestionMap = suggestionMap;
+        this.subServiceMap=subServiceMap;
     }
 
     @Override
@@ -65,7 +71,7 @@ public class ExpertServiceImpl implements ExpertService {
 
     }
 
-    @Override
+   /* @Override
     public Expert createExpert(String name, String family, String email, String pass, String phone,
                                double credit, int score, String image) {
 
@@ -87,7 +93,7 @@ public class ExpertServiceImpl implements ExpertService {
             return expert;
         }
     }
-
+*/
     @Override
     public ExpertDto addPicture(ExpertDto expert, String path) {
 
@@ -142,7 +148,7 @@ public class ExpertServiceImpl implements ExpertService {
 
         SubServiceDto subServiceDto = subServiceDtoList.get(index);
 
-        SubService subService = subServiceServiceImpl.findByName(subServiceDto.getName());
+        SubService subService = subServiceMap.createSubService(subServiceServiceImpl.findByName(subServiceDto.getName()));
         SubServiceDto findService = null;
         findService = expertDto.getServiceList().stream().filter(s -> s.getName().equals(subService.getName()))
                 .findAny().orElse(null);

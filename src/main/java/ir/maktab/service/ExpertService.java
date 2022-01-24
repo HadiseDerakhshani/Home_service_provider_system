@@ -15,8 +15,8 @@ public interface ExpertService {
 
     public Expert save(ExpertDto expert);
 
-    public Expert createExpert(String name, String family, String email, String pass, String phone,
-                               double credit, int score, String image);
+  /*  public Expert createExpert(String name, String family, String email, String pass, String phone,
+                               double credit, int score, String image);*/
 
     public ExpertDto addPicture(ExpertDto expert, String path);
 

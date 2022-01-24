@@ -7,6 +7,7 @@ import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.user.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CustomerService {
@@ -15,7 +16,9 @@ public interface CustomerService {
     public Customer save(CustomerDto customerDto);
 
 
+/*
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit);
+*/
 
 
     public List<CustomerDto> findByUserStatus(UserStatus status);
@@ -29,7 +32,7 @@ public interface CustomerService {
 
     public void changePhoneNumber(CustomerDto customer, String newPhoneNumber);
 
-    public Customer findByEmail(String email);
+    public Optional<Customer> findByEmail(String email);
 
     public void increaseCredit(Customer customer, double amount);
 

@@ -17,7 +17,7 @@
 <body>
 <div>
     <form:form cssClass="p-1 my-5 mx-5" modelAttribute="expert"
-               enctype="multipart/form-data" action="/expert/register" method="post">
+               enctype="multipart/form-data" action="/expert/initializer" method="post">
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>

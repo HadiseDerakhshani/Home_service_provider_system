@@ -12,11 +12,10 @@
 <body>
 <div class="cantainer">
     <h1> success register customer </h1>
+    <h1 style="color: darkcyan">${message}</h1>
     <div class="btn-group mt-5 mx-5">
-        <a href="<c:url value="/order"/>" class="btn btn-outline-primary active">yes</a>
-        <%--
-                <a href="<c:url value="/login"/>" class="btn btn-outline-primary active">Login</a>
-        --%>
+        <a href="<c:url value="/order"/>" class="btn btn-outline-primary" >Order</a>
+        <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
     </div>
 
 </div>

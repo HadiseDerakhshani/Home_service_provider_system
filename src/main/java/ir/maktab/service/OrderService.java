@@ -16,9 +16,10 @@ import java.util.List;
 public interface OrderService {
 
 
-    public Order createOrder(double price, String description, String date, Customer customer,
-                             Address address, SubServiceDto service) throws ParseException;
+ /*   public Order createOrder(double price, String description, String date, Customer customer,
+                             Address address, SubServiceDto service) throws ParseException;*/
 
+    public OrderDto save(OrderDto orderDto);
     public List<OrderDto> findSuggest();
 
     public void updateReceptionNumber(Order order);

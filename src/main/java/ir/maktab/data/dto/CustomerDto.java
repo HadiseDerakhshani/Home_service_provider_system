@@ -14,6 +14,6 @@ import java.util.List;
 @Data
 public class CustomerDto extends UserDto {
 
-    private List<OrderDto> orderList = new ArrayList<>();
+  private List<OrderDto> orderList = new ArrayList<>();
 
 }

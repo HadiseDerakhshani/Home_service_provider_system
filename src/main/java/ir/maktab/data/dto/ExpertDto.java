@@ -16,7 +16,6 @@ import java.util.List;
 public class ExpertDto extends UserDto {
     @Lob
     private byte[] image;
-    //@Pattern(regexp ="^[1-9]?$|10", message = "Score is not between 1-10")
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();
     private List<OrderDto> orderList = new ArrayList<>();

@@ -26,12 +26,13 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/register")
-    public String register(@Valid @ModelAttribute("customer") CustomerDto customerDto, BindingResult br, Model model) {
+    public ModelAndView register(@Valid @ModelAttribute("customer") CustomerDto customerDto, BindingResult br, Model model) {
         if (br.hasErrors())
-            return "customer/customer_register";
+        return new ModelAndView("customer/customer_register", "message", "form is not full");
         else {
             customerService.save(customerDto);
-            return "customer/success_register";
+            return new ModelAndView("customer/success_register", "customer", customerDto);
+
         }
     }
 

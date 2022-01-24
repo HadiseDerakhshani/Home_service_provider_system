@@ -19,7 +19,6 @@ import java.util.Date;
 public class SuggestionDto {
     @CreationTimestamp
     private Date dateRegisterSuggest;
-    @Pattern(regexp = "[0-9]+$", message = "invalid proposedPrice")
     private double proposedPrice;
 
     @Pattern(regexp = "[0-9]+$", message = "invalid durationOfWork")

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Service
@@ -54,16 +55,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(CustomerDto customerDto) {
-        if (findByEmail(customerDto.getEmail()) == null) {
+      if(!findByEmail(customerDto.getEmail()).isPresent() ){
             Customer customer = customerMap.createCustomer(customerDto);
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
             customer.setUserRole(UserRole.CUSTOMER);
+           // customer.setOrderList(customerDto.getOrderList());
             return customerDao.save(customer);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
     }
 
-    @Override
+   /* @Override
     public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit) {
         if (email == null || email.equals(""))
             throw new ObjectEntityNotFoundException("-- email is empty --");
@@ -81,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
             return customer;
         }
 
-    }
+    }*/
 
     @Override
     public List<CustomerDto> findByUserStatus(UserStatus status) {
@@ -106,7 +108,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changePassword(CustomerDto customer, String newPass) {
-        Customer customerFound = findByEmail(customer.getEmail());
+        Customer customerFound = findByEmail(customer.getEmail()).get();
         customerFound.setPassword(newPass);
         customerDao.save(customerFound);
 
@@ -114,7 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateStatus(String email, UserStatus status) {
-        Customer customerFound = findByEmail(email);
+        Customer customerFound = findByEmail(email).get();
         customerFound.setUserStatus(status);
         customerDao.save(customerFound);
 
@@ -122,20 +124,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changePhoneNumber(CustomerDto customer, String newPhoneNumber) {
-        Customer customerFound = findByEmail(customer.getEmail());
+        Customer customerFound = findByEmail(customer.getEmail()).get();
         customerFound.setPhoneNumber(newPhoneNumber);
         customerDao.save(customerFound);
 
     }
 
     @Override
-    public Customer findByEmail(String email) {
-        return customerDao.findByEmail(email).get();
+    public Optional<Customer> findByEmail(String email) {
+
+        return customerDao.findByEmail(email);
+
     }
 
     @Override
     public void increaseCredit(Customer customer, double amount) {
-        Customer customerFound = findByEmail(customer.getEmail());
+        Customer customerFound = findByEmail(customer.getEmail()).get();
         double credit = customerFound.getCredit();
         customerFound.setCredit(credit + amount);
         customerDao.save(customerFound);
@@ -143,7 +147,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void decreaseCredit(CustomerDto customer, double amount) {
-        Customer customerFound = findByEmail(customer.getEmail());
+        Customer customerFound = findByEmail(customer.getEmail()).get();
         double credit = customerFound.getCredit();
         customerFound.setCredit(credit - amount);
         customerDao.save(customerFound);

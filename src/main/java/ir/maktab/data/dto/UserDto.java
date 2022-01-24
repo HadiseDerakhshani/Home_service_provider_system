@@ -40,8 +40,6 @@ public class UserDto {
 
     private UserRole userRole;
 
-
-    // @Pattern(regexp ="[0-9]+$", message = "invalid credit")
     private double credit;
 
 }

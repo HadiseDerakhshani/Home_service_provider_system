@@ -67,8 +67,8 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
-    public SubService findByName(String name) {
-        return subServiceDao.findByName(name).get();
+    public SubServiceDto findByName(String name) {
+        return subServiceMap.createSubServiceDto(subServiceDao.findByName(name).get());
     }
 
     @Override
@@ -80,6 +80,6 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public void deleteSubService(String name) {
-        subServiceDao.delete(findByName(name));
+        subServiceDao.delete(subServiceMap.createSubService(findByName(name)));
     }
 }

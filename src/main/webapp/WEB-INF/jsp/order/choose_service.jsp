@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>order Page</title>
+    <title>Choose Service Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
@@ -11,39 +11,16 @@
 </head>
 <body>
 
-<form:form cssClass="p-3 m-3" modelAttribute="order" action="/order/registerOrder" method="post">
-
-    <table class="table table-bordered table-striped text-dark">
-        <tr>
-            <td>
+<form:form cssClass="p-3 m-3" modelAttribute="serviceDtoList" action="/order/selectService" method="post">
                     <select name="nameService">
-            <c:forEach items="${serviceList}" var="list">
-                <option value="${list.name}">${list.name}, ${list.price} T ,(${list.description})</option>
+            <c:forEach items="${serviceDtoList}" var="list">
+                <option value="${list.name}">${list.name}</option>
             </c:forEach>
         </select>
         <br/><br/>
-      <%-- // <input type="submit" value="Submit" />--%>
-            </td>
-            <td>
-               <%-- <form:input path="" cssClass="text-danger"/>--%>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-           <%--     <form:errors path="firstName" cssClass="text-danger"/>--%>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <form:button name="register">Register</form:button>
-            </td>
-        </tr>
-    </table>
-</form:form>--%>
+     <input type="submit" value="Submit" />
+
+</form:form>
 </div>
 
 

@@ -10,6 +10,9 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @org.springframework.stereotype.Service
 
@@ -59,4 +62,9 @@ public class ServiceServiceImpl implements ServiceService {
         serviceDao.save(service);
     }
 
+    @Override
+    public List<ServiceDto> findAll() {
+        List<Service> serviceList = serviceDao.findAll();
+       return serviceList.stream().map(serviceMap::createServiceDto).collect(Collectors.toList());
+    }
 }

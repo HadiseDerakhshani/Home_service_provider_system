@@ -4,6 +4,7 @@ import ir.maktab.data.dao.OrderDao;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.mapping.OrderMap;
+import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Address;
@@ -33,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMap orderMap;
 
     private final OrderDao orderDao;
+    private final SubServiceMap subServiceMap;
 
     private final SubServiceServiceImpl subServiceServiceImpl;
 
@@ -42,19 +44,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     public OrderServiceImpl(@Lazy OrderMap orderMap, OrderDao orderDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
-                            @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl) {
+                            @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl,
+                            @Lazy SubServiceMap subServiceMap) {
         this.orderMap = orderMap;
         this.orderDao = orderDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.customerServiceImpl = customerServiceImpl;
+        this.subServiceMap=subServiceMap;
     }
 
-    @Override
+  /*  @Override
     public Order createOrder(double price, String description, String date, Customer customer,
                              Address address, SubServiceDto service) throws ParseException {
 
-        SubService subService = subServiceServiceImpl.findByName(service.getName());
+        SubService subService = subServiceMap.createSubService(subServiceServiceImpl.findByName(service.getName()));
         if (subService != null) {
             Order order = Order.builder()
                     .proposedPrice(price)
@@ -71,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
             return order;
         } else throw new ObjectEntityNotFoundException("--- service is null ---");
     }
-
+*/
     @Override
     public List<OrderDto> findSuggest() {
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
@@ -187,5 +191,9 @@ public class OrderServiceImpl implements OrderService {
             }
         } else
             throw new ObjectEntityNotFoundException(" order is not exit");
+    }
+    public OrderDto save(OrderDto orderDto){
+        Order save = orderDao.save(orderMap.createOrder(orderDto));
+return orderMap.createOrderDto(save);
     }
 }

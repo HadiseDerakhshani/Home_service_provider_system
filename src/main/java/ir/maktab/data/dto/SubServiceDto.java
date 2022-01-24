@@ -14,10 +14,10 @@ import java.util.List;
 @Builder
 @Data
 public class SubServiceDto {
-    @Pattern(regexp = "[0-9]+$", message = "invalid credit")
+
     private double price;
     @Pattern(regexp = "^[a-zA-Z]+$", message = "SubService is not alphabet")
     private String name;
     private String description;
-    private List<ExpertDto> expertList = new ArrayList<>();
+  private List<ExpertDto> expertList = new ArrayList<>();
 }

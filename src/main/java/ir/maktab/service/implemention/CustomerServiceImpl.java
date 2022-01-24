@@ -55,35 +55,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(CustomerDto customerDto) {
-      if(!findByEmail(customerDto.getEmail()).isPresent() ){
+        if (!findByEmail(customerDto.getEmail()).isPresent()) {
             Customer customer = customerMap.createCustomer(customerDto);
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
             customer.setUserRole(UserRole.CUSTOMER);
-           // customer.setOrderList(customerDto.getOrderList());
+            // customer.setOrderList(customerDto.getOrderList());
             return customerDao.save(customer);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
     }
 
-   /* @Override
-    public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit) {
-        if (email == null || email.equals(""))
-            throw new ObjectEntityNotFoundException("-- email is empty --");
-        else {
-            Customer customer = Customer.builder()
-                    .firstName(name)
-                    .lastName(family)
-                    .email(email)
-                    .password(pass)
-                    .phoneNumber(phone)
-                    .userStatus(UserStatus.NEW)
-                    .userRole(UserRole.CUSTOMER)
-                    .credit(credit)
-                    .build();
-            return customer;
-        }
-
-    }*/
 
     @Override
     public List<CustomerDto> findByUserStatus(UserStatus status) {

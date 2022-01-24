@@ -14,36 +14,77 @@
 <form:form cssClass="p-3 m-3" modelAttribute="order" action="/order/registerOrder" method="post">
 
     <table class="table table-bordered table-striped text-dark">
+            <%-- <tr>
+                 <td>
+                         <select name="nameService">
+                 <c:forEach items="${serviceList}" var="list">
+                     <option value="${list.name}">${list.name}, ${list.price} T ,(${list.description})</option>
+                 </c:forEach>
+             </select>
+                 </td>
+             </tr>--%>
         <tr>
             <td>
-                    <select name="nameService">
-            <c:forEach items="${serviceList}" var="list">
-                <option value="${list.name}">${list.name}, ${list.price} T ,(${list.description})</option>
-            </c:forEach>
-        </select>
-        <br/><br/>
-      <%-- // <input type="submit" value="Submit" />--%>
+                <form:label path="proposedPrice">Proposed Price :</form:label>
             </td>
             <td>
-               <%-- <form:input path="" cssClass="text-danger"/>--%>
+                <form:input path="proposedPrice" name="proposedPrice"/>
             </td>
         </tr>
         <tr>
             <td>
             </td>
             <td>
-           <%--     <form:errors path="firstName" cssClass="text-danger"/>--%>
+                <form:errors path="proposedPrice" cssClass="text-danger"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="jobDescription">Proposed Price :</form:label>
+            </td>
+            <td>
+                <form:input path="jobDescription" name="jobDescription"/>
             </td>
         </tr>
         <tr>
             <td>
             </td>
             <td>
-                <form:button name="register">Register</form:button>
+                <form:errors path="jobDescription" cssClass="text-danger"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="doDate">Do Date :</form:label>
+            </td>
+            <td>
+                <form:input path="doDate" name="doDate"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:errors path="doDate" cssClass="text-danger"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="address">Address :</form:label>
+            </td>
+            <td>
+                <form:input path="address" name="address"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:errors path="doDate" cssClass="text-danger"/>
             </td>
         </tr>
     </table>
-</form:form>--%>
+</form:form>
 </div>
 
 

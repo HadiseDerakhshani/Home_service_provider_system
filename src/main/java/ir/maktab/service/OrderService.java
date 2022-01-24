@@ -1,25 +1,20 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.enums.OrderStatus;
-import ir.maktab.data.model.order.Address;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 
-import java.text.ParseException;
 import java.util.List;
 
 
 public interface OrderService {
 
 
- /*   public Order createOrder(double price, String description, String date, Customer customer,
-                             Address address, SubServiceDto service) throws ParseException;*/
-
     public OrderDto save(OrderDto orderDto);
+
     public List<OrderDto> findSuggest();
 
     public void updateReceptionNumber(Order order);

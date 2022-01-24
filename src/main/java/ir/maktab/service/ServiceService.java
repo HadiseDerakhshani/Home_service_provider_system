@@ -18,5 +18,6 @@ public interface ServiceService {
     public void deleteService(String name);
 
     public void update(ServiceDto serviceDto);
+
     public List<ServiceDto> findAll();
 }

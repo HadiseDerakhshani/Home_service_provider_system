@@ -1,4 +1,4 @@
-package ir.maktab.controller;
+package ir.maktab.web;
 
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+
 @Component
 @Controller
 @RequiredArgsConstructor
@@ -31,12 +32,15 @@ public class OrderController {
     @Lazy
     private final SubServiceServiceImpl subServiceService;
     @Lazy
-     private final ServiceServiceImpl service;
+    private final ServiceServiceImpl service;
+
     @GetMapping("/order")
-    public ModelAndView showRegisterOrder(Model model) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String showRegisterOrder(Model model, @ModelAttribute("customer") CustomerDto customerDto) {
+
         List<ServiceDto> serviceDtoList = service.findAll();
-        return new ModelAndView("/order/choose_service", "serviceDtoList",serviceDtoList);
+        model.addAttribute("serviceDtoList", serviceDtoList);
+        return "/order/choose_service";
+        // return new ModelAndView("/order/choose_service", "serviceDtoList",serviceDtoList);
     }
 
     @PostMapping("/order/registerOrder")
@@ -46,18 +50,18 @@ public class OrderController {
 
         if (br.hasErrors())
             return new ModelAndView("order/order_register");
-        else{
+        else {
             OrderDto saveOrder = orderService.save(orderDto);
-          customerDto.getOrderList().add(saveOrder);
-           customerService.save(customerDto);
-            return new ModelAndView("customer/success_register","message",
+            customerDto.getOrderList().add(saveOrder);
+            customerService.save(customerDto);
+            return new ModelAndView("customer/success_register", "message",
                     "success register order for customer");
         }
     }
+
     @PostMapping("/order/selectService")
-    public ModelAndView selectService( @ModelAttribute("nameService") String nameService) {
+    public ModelAndView selectService(@ModelAttribute("nameService") String nameService) {
 
-
-       return null;
+        return new ModelAndView("order/order_register", "order", new OrderDto());
     }
 }

@@ -65,6 +65,6 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<ServiceDto> findAll() {
         List<Service> serviceList = serviceDao.findAll();
-       return serviceList.stream().map(serviceMap::createServiceDto).collect(Collectors.toList());
+        return serviceList.stream().map(serviceMap::createServiceDto).collect(Collectors.toList());
     }
 }

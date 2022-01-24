@@ -20,7 +20,7 @@ public class Service {
     private int id;
     @Column(nullable = false, unique = true)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubService> subServiceList = new HashSet<>();
 
 }

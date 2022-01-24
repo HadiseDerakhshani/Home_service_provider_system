@@ -10,17 +10,17 @@
 
 </head>
 <body>
+<form action="/order/selectService" method="post">
+    <select name="nameService">
+        <c:forEach items="${serviceDtoList}" var="list">
+            <option value="${list.name}">${list.name}</option>
+        </c:forEach>
+    </select>
+    <br/><br/>
+    <input type="submit" value="Submit"/>
+</form>
 
-<form:form cssClass="p-3 m-3" modelAttribute="serviceDtoList" action="/order/selectService" method="post">
-                    <select name="nameService">
-            <c:forEach items="${serviceDtoList}" var="list">
-                <option value="${list.name}">${list.name}</option>
-            </c:forEach>
-        </select>
-        <br/><br/>
-     <input type="submit" value="Submit" />
 
-</form:form>
 </div>
 
 

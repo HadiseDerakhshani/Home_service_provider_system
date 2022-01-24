@@ -15,14 +15,7 @@ public interface CustomerService {
 
     public Customer save(CustomerDto customerDto);
 
-
-/*
-    public Customer createCustomer(String name, String family, String email, String pass, String phone, double credit);
-*/
-
-
     public List<CustomerDto> findByUserStatus(UserStatus status);
-
 
     public void deleteCustomer(String email);
 

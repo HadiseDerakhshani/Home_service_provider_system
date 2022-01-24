@@ -2,26 +2,21 @@ package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.OrderDao;
 import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.enums.UserStatus;
-import ir.maktab.data.model.order.Address;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
-import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.OrderService;
-import ir.maktab.utils.DateUtils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,31 +46,10 @@ public class OrderServiceImpl implements OrderService {
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.customerServiceImpl = customerServiceImpl;
-        this.subServiceMap=subServiceMap;
+        this.subServiceMap = subServiceMap;
     }
 
-  /*  @Override
-    public Order createOrder(double price, String description, String date, Customer customer,
-                             Address address, SubServiceDto service) throws ParseException {
 
-        SubService subService = subServiceMap.createSubService(subServiceServiceImpl.findByName(service.getName()));
-        if (subService != null) {
-            Order order = Order.builder()
-                    .proposedPrice(price)
-                    .jobDescription(description)
-                    .doDate(DateUtils.dateUtils(date))
-                    .status(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION)
-                    .customer(customer)
-                    .address(address)
-                    .service(subService)
-                    .build();
-            order = orderDao.save(order);
-            updateReceptionNumber(order);
-            ///////unic fild make
-            return order;
-        } else throw new ObjectEntityNotFoundException("--- service is null ---");
-    }
-*/
     @Override
     public List<OrderDto> findSuggest() {
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
@@ -192,8 +166,9 @@ public class OrderServiceImpl implements OrderService {
         } else
             throw new ObjectEntityNotFoundException(" order is not exit");
     }
-    public OrderDto save(OrderDto orderDto){
+
+    public OrderDto save(OrderDto orderDto) {
         Order save = orderDao.save(orderMap.createOrder(orderDto));
-return orderMap.createOrderDto(save);
+        return orderMap.createOrderDto(save);
     }
 }

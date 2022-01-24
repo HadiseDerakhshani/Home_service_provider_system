@@ -49,14 +49,14 @@ public class ExpertServiceImpl implements ExpertService {
     @Autowired
     public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                              @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap,
-                             @Lazy SuggestionServiceImpl suggestionServiceImpl,@Lazy SubServiceMap subServiceMap) {
+                             @Lazy SuggestionServiceImpl suggestionServiceImpl, @Lazy SubServiceMap subServiceMap) {
         this.expertMap = expertMap;
         this.expertDao = expertDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.suggestionServiceImpl = suggestionServiceImpl;
         this.suggestionMap = suggestionMap;
-        this.subServiceMap=subServiceMap;
+        this.subServiceMap = subServiceMap;
     }
 
     @Override
@@ -71,29 +71,7 @@ public class ExpertServiceImpl implements ExpertService {
 
     }
 
-   /* @Override
-    public Expert createExpert(String name, String family, String email, String pass, String phone,
-                               double credit, int score, String image) {
 
-        if (email == null || email.equals(""))
-            throw new ObjectEntityNotFoundException("-- email is empty --");
-        else {
-            Expert expert = Expert.builder()
-                    .firstName(name)
-                    .lastName(family)
-                    .email(email)
-                    .password(pass)
-                    .phoneNumber(phone)
-                    .userStatus(UserStatus.NEW)
-                    .credit(credit)
-                    .score(score)
-                    .userRole(UserRole.EXPERT)
-                    .build();
-            //  return addPicture(expert, image);
-            return expert;
-        }
-    }
-*/
     @Override
     public ExpertDto addPicture(ExpertDto expert, String path) {
 

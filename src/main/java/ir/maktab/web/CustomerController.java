@@ -1,4 +1,4 @@
-package ir.maktab.controller;
+package ir.maktab.web;
 
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.service.implemention.CustomerServiceImpl;
@@ -28,7 +28,7 @@ public class CustomerController {
     @PostMapping("/customer/register")
     public ModelAndView register(@Valid @ModelAttribute("customer") CustomerDto customerDto, BindingResult br, Model model) {
         if (br.hasErrors())
-        return new ModelAndView("customer/customer_register", "message", "form is not full");
+            return new ModelAndView("customer/customer_register", "message", "form is not full");
         else {
             customerService.save(customerDto);
             return new ModelAndView("customer/success_register", "customer", customerDto);

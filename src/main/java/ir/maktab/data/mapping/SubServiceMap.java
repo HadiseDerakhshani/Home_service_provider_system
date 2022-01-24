@@ -20,14 +20,14 @@ public class SubServiceMap {
     }
 
     public SubServiceDto createSubServiceDto(SubService subService) {
-        SubServiceDto serviceDto=SubServiceDto.builder()
+        SubServiceDto serviceDto = SubServiceDto.builder()
                 .name(subService.getName())
                 .description(subService.getDescription())
                 .build();
-        ExpertMap expertMap=new ExpertMap();
+        ExpertMap expertMap = new ExpertMap();
         List<ExpertDto> collect = subService.getExpertList().stream().map(expertMap::createExpertDto).collect(Collectors.toList());
-       serviceDto.setExpertList(collect);
-       return serviceDto;
+        serviceDto.setExpertList(collect);
+        return serviceDto;
         // return mapper.map(subService, SubServiceDto.class);
     }
 }

@@ -16,8 +16,8 @@
 </head>
 <body>
 <div>
-    <form:form cssClass="p-1 my-5 mx-5" modelAttribute="expert"
-               enctype="multipart/form-data" action="/expert/initializer" method="post">
+    <form:form cssClass="p-1 my-5 mx-5" modelAttribute="expert" enctype="multipart/form-data"
+               action="/expert/initializer" method="post">
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>
@@ -114,8 +114,7 @@
                     <label>Upload Profile Image :</label>
                 </td>
                 <td>
-
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="image" name="image" type="file">
                 </td>
             </tr>
             <tr>
@@ -128,6 +127,7 @@
         </table>
     </form:form>
 </div>
+
 <%--<script>
     const imageFile = document.getElementById("image");
 

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -28,6 +30,7 @@ public class SuggestionDto {
     @Max(value = 24, message = "max of start time is 24")
     private int startTime;
     private long receptionNumber;
+    @Enumerated(EnumType.STRING)
     private SuggestionStatus status;
     private ExpertDto expert;
     private OrderDto order;

@@ -20,8 +20,8 @@ import java.util.List;
 @Data
 @Entity
 public class Expert extends User {
-    @Lob
-  //  @Column(columnDefinition = "BLOB", length = 300000)
+
+   @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
     private int score;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList")

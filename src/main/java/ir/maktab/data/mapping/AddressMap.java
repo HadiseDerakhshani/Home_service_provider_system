@@ -2,10 +2,11 @@ package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.AddressDto;
 import ir.maktab.data.model.order.Address;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
+@Data
 @Component
 @RequiredArgsConstructor
 public class AddressMap {

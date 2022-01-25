@@ -1,5 +1,6 @@
 package ir.maktab.data.dto;
 
+import jdk.jfr.ContentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,8 @@ import java.util.List;
 @SuperBuilder
 @Data
 public class ExpertDto extends UserDto {
-
+    @Lob
+    @Max(300000)
     private byte[] image;
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();

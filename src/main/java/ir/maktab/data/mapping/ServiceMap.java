@@ -3,13 +3,14 @@ package ir.maktab.data.mapping;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.serviceSystem.Service;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@Data
 @Component
 @RequiredArgsConstructor
 public class ServiceMap {

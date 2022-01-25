@@ -8,6 +8,8 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 public class UserDto {
+
     @Pattern(regexp = "^[a-zA-Z]+$", message = "firstName is not alphabet")
     private String firstName;
 
@@ -31,13 +34,13 @@ public class UserDto {
 
     @Pattern(regexp = "^(\\+98|0)?9\\d{9}$", message = "invalid phoneNumber")
     private String phoneNumber;
-
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
     @CreationTimestamp
     private Date dateRegister;
     @UpdateTimestamp
     private Date dateUpdate;
-
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     private double credit;

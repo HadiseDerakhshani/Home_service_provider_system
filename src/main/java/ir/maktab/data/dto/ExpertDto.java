@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @SuperBuilder
 @Data
 public class ExpertDto extends UserDto {
-    @Lob
+
     private byte[] image;
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();

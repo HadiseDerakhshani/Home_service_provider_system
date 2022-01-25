@@ -94,27 +94,12 @@
                     <form:errors path="phoneNumber" cssClass="text-danger"/>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <form:label path="credit">Credit :</form:label>
-                </td>
-                <td>
-                    <form:input path="credit" name="credit"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="credit" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
+           <tr>
                 <td>
                     <label>Upload Profile Image :</label>
                 </td>
                 <td>
-                    <input type="file" id="image" name="image" type="file">
+                    <input type="file" id="image" name="image">
                 </td>
             </tr>
             <tr>
@@ -127,18 +112,6 @@
         </table>
     </form:form>
 </div>
-
-<%--<script>
-    const imageFile = document.getElementById("image");
-
-    imageFile.onchange = function () {
-        const maxAllowedSize = 100 * 1024;
-        if (this.files[0].size > maxAllowedSize) {
-            alert("Image File is too big!");
-            this.value = "";
-        }
-    }
-</script>--%>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

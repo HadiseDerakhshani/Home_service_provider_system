@@ -27,7 +27,7 @@ public class DatabaseConfig {
     private Environment environment;
 
     @Bean
-    DriverManagerDataSource dataSource() {
+  public   DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("connection.driver_class"));
         dataSource.setUrl(environment.getProperty("connection.url"));
@@ -38,7 +38,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
@@ -47,8 +47,8 @@ public class DatabaseConfig {
 
         return entityManagerFactoryBean;
     }
-
-    private Properties hibernateProperties() {
+@Bean
+    public Properties hibernateProperties() {
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
         jpaProperties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
@@ -58,7 +58,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+  public  JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;

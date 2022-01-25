@@ -1,4 +1,4 @@
-package ir.maktab.config.configuration;
+package ir.maktab.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,8 +16,7 @@ public class AppConfiguration {
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver getResolver() {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-        //set max upload size per file is 20mb
-        commonsMultipartResolver.setMaxUploadSizePerFile(20 * 1024 * 1024);
+        commonsMultipartResolver.setMaxUploadSizePerFile(300 * 1024 * 1024);
         return commonsMultipartResolver;
     }
 }

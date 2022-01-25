@@ -1,7 +1,6 @@
 package ir.maktab.config;
 
 
-import ir.maktab.config.configuration.AppConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;

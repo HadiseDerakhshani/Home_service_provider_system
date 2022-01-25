@@ -1,5 +1,6 @@
 package ir.maktab.web;
 
+import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.service.implemention.ExpertServiceImpl;
@@ -7,14 +8,14 @@ import ir.maktab.service.implemention.SubServiceServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -30,23 +31,24 @@ public class ExpertController {
     }
 
     @PostMapping(value = "/expert/initializer")
-    public String initializer(@RequestParam("image") CommonsMultipartFile image, @Valid @ModelAttribute("expert") ExpertDto expertDto,
+    public String initializer(@RequestParam("image") CommonsMultipartFile image,@Validated @ModelAttribute("expert") ExpertDto expertDto,
                               BindingResult br) {
-        if (br.hasErrors()) {
-            return "expert/expert_register";
 
-        } else {
-            ExpertDto dto = expertService.addPicture(expertDto, image.getStorageDescription());
        /* List<SubServiceDto> list ;
            if(subServiceService.findAll().size()!=0) {
                list = subServiceService.findAll();
                list.forEach(System.out::println);
-               model.addAttribute("serviceList", list);
+               model.addAttribute("serviceList", list);*/
 
-           }*/
-            expertService.save(expertDto);
+        expertDto.setImage(image.getBytes());
+          expertService.save(expertDto);
             return "services/service_selected";
-        }
+
+    }
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
     @PostMapping(value = "/expert/register")

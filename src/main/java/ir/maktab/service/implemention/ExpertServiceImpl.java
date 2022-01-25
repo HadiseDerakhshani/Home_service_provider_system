@@ -72,23 +72,7 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
 
-    @Override
-    public ExpertDto addPicture(ExpertDto expert, String path) {
 
-        File file = new File(path);
-        byte[] imageFile = new byte[(int) file.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            fileInputStream.read(imageFile);
-            fileInputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        expert.setImage(imageFile);
-        return expert;
-    }
 
     @Override
     public void changePassword(ExpertDto expertDto, String newPass) {

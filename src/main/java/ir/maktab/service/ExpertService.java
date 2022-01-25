@@ -15,8 +15,6 @@ public interface ExpertService {
 
     public Expert save(ExpertDto expert);
 
-    public ExpertDto addPicture(ExpertDto expert, String path);
-
     public void changePassword(ExpertDto expertDto, String newPass);
 
     public void changePhoneNumber(ExpertDto expertDto, String newPhoneNumber);

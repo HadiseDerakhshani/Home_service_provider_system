@@ -28,11 +28,6 @@ public class ExpertMap {
         this.orderMap = orderMap;
         this.commentMap = commentMap;
     }
-    /*
-    *  private List<SubServiceDto> serviceList = new ArrayList<>();
-    private List<OrderDto> orderList = new ArrayList<>();
-    private List<SuggestionDto> suggestList = new ArrayList<>();
-    private List<CommentDto> commentList = new ArrayList<>();*/
 
     public Expert createExpert(ExpertDto expertDto) {
         Expert expert=Expert.builder()

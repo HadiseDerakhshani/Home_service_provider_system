@@ -8,6 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,7 @@ public class OrderDto {
     @CreationTimestamp
     private Date registerDate;
     @Temporal(TemporalType.DATE)
+    @Pattern(regexp = "yyyy/mm/dd")
     private Date doDate;
     private long receptionNumber;
     private double PricePaid;

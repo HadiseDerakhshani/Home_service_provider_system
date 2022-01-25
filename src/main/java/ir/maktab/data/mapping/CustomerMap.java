@@ -6,15 +6,23 @@ import ir.maktab.data.model.user.Customer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 @Data
 @Component
-@RequiredArgsConstructor
+
 public class CustomerMap {
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
+    private final OrderMap orderMap;
+@Autowired
+    public CustomerMap(ModelMapper mapper,@Lazy OrderMap orderMap) {
+        this.mapper = mapper;
+        this.orderMap = orderMap;
+    }
 
     public Customer createCustomer(CustomerDto customerDto) {
 
@@ -26,7 +34,7 @@ public class CustomerMap {
                 .credit(customerDto.getCredit())
                 .email(customerDto.getEmail())
                 .build();
-        OrderMap orderMap = new OrderMap();
+
         if(customerDto.getOrderList().size()!=0){
         List<Order> collect = customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList());
         customer.setOrderList(collect);

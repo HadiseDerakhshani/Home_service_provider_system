@@ -3,6 +3,8 @@ package ir.maktab.web;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.ServiceDto;
+import ir.maktab.data.dto.SubServiceDto;
+import ir.maktab.data.model.serviceSystem.Service;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
@@ -13,13 +15,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Controller
@@ -35,16 +36,15 @@ public class OrderController {
     private final ServiceServiceImpl service;
 
     @GetMapping("/order")
-    public String showRegisterOrder(Model model, @ModelAttribute("customer") CustomerDto customerDto) {
+    public ModelAndView showRegisterOrder() {
 
         List<ServiceDto> serviceDtoList = service.findAll();
-        model.addAttribute("serviceDtoList", serviceDtoList);
-        return "/order/choose_service";
-        // return new ModelAndView("/order/choose_service", "serviceDtoList",serviceDtoList);
+
+        return new ModelAndView("/order/choose_service", "serviceDtoList",serviceDtoList);
     }
 
     @PostMapping("/order/registerOrder")
-    public ModelAndView registerOrder(@Valid @ModelAttribute("order") OrderDto orderDto,
+    public ModelAndView registerOrder(@Valid @ModelAttribute("order") OrderDto orderDto,@RequestParam("name")String name,
                                       @ModelAttribute("customer") CustomerDto customerDto, BindingResult br) {
 
 
@@ -59,9 +59,12 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/order/selectService")
-    public ModelAndView selectService(@ModelAttribute("nameService") String nameService) {
-
-        return new ModelAndView("order/order_register", "order", new OrderDto());
+    @PostMapping("/order/selectService/{name}")
+    public String selectService(@PathVariable String name,Model model) {
+        ServiceDto serviceDto = service.findByName(name);
+        Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();
+        model.addAttribute("subServiceList",subServiceList);
+        model.addAttribute("order", new OrderDto());
+        return "order/order_register";
     }
 }

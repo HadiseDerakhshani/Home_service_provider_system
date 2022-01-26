@@ -13,7 +13,7 @@ public interface ServiceService {
 
     public Service createService(String name);
 
-    public Service findByName(String name);
+    public ServiceDto findByName(String name);
 
     public void deleteService(String name);
 

@@ -10,18 +10,19 @@
 
 </head>
 <body>
-<form action="/order/selectService" method="post">
-    <select name="nameService">
-        <c:forEach items="${serviceDtoList}" var="list">
-            <option value="${list.name}">${list.name}</option>
-        </c:forEach>
-    </select>
-    <br/><br/>
-    <input type="submit" value="Submit"/>
-</form>
 
 
-</div>
+<table border="2" width="70%" cellpadding="2">
+    <tr><th>Service</th></tr>
+    <c:forEach var="list" items="${serviceDtoList}">
+        <tr>
+            <td>${list.name}</td>
+            <td><a href="/order/selectService/${list.name}">Select</a></td>
+        </tr>
+    </c:forEach>
+</table>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

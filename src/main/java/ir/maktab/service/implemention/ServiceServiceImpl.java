@@ -44,16 +44,17 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public Service findByName(String name) {
+    public ServiceDto findByName(String name) {
         if (serviceDao.findByName(name).isPresent())
-            return serviceDao.findByName(name).get();
+            return serviceMap.createServiceDto(serviceDao.findByName(name).get());
         else
             throw new ObjectEntityNotFoundException("Service not found");
     }
 
     @Override
     public void deleteService(String name) {
-        serviceDao.delete(findByName(name));
+
+        serviceDao.delete(serviceMap.createService(findByName(name)));
     }
 
     @Override

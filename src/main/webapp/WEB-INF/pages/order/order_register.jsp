@@ -6,7 +6,7 @@
     <title>order Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/css/order.css"/>">
 
 </head>
 <body>
@@ -14,15 +14,15 @@
 <form:form cssClass="p-3 m-3" modelAttribute="order" action="/order/registerOrder" method="post">
 
     <table class="table table-bordered table-striped text-dark">
-            <%-- <tr>
+          <tr>
                  <td>
-                         <select name="nameService">
-                 <c:forEach items="${serviceList}" var="list">
-                     <option value="${list.name}">${list.name}, ${list.price} T ,(${list.description})</option>
+                     <select name="name">
+                 <c:forEach items="${subServiceList}" var="list">
+                     <option value="${list.name}" >${list.name} , ${list.price} T ,(${list.description}) </option>
                  </c:forEach>
              </select>
                  </td>
-             </tr>--%>
+             </tr>
         <tr>
             <td>
                 <form:label path="proposedPrice">Proposed Price :</form:label>

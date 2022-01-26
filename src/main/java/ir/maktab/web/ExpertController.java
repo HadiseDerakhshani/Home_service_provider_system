@@ -31,8 +31,8 @@ public class ExpertController {
     }
 
     @PostMapping(value = "/expert/initializer")
-    public String initializer(@RequestParam("image") CommonsMultipartFile image,@Validated @ModelAttribute("expert") ExpertDto expertDto,
-                              BindingResult br) {
+    public String initializer(@RequestParam("image") CommonsMultipartFile image,@Validated @ModelAttribute("expert")
+            ExpertDto expertDto) {
 
        /* List<SubServiceDto> list ;
            if(subServiceService.findAll().size()!=0) {

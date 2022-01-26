@@ -1,16 +1,18 @@
 package ir.maktab.web;
 
+import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -26,14 +28,14 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/register")
-    public ModelAndView register(@Valid @ModelAttribute("customer") CustomerDto customerDto, BindingResult br, Model model) {
-        if (br.hasErrors())
-            return new ModelAndView("customer/customer_register", "message", "form is not full");
-        else {
+    public ModelAndView register(@Validated @ModelAttribute("customer") CustomerDto customerDto) {
             customerService.save(customerDto);
             return new ModelAndView("customer/success_register", "customer", customerDto);
-
-        }
+    }
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
 

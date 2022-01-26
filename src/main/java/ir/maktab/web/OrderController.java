@@ -1,5 +1,6 @@
 package ir.maktab.web;
 
+import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.ServiceDto;
@@ -14,10 +15,13 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -44,22 +48,23 @@ public class OrderController {
     }
 
     @PostMapping("/order/registerOrder")
-    public ModelAndView registerOrder(@Valid @ModelAttribute("order") OrderDto orderDto,@RequestParam("name")String name,
-                                      @ModelAttribute("customer") CustomerDto customerDto, BindingResult br) {
-
-
-        if (br.hasErrors())
-            return new ModelAndView("order/order_register");
-        else {
-            OrderDto saveOrder = orderService.save(orderDto);
+    public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto, @RequestParam("name")String name,
+                                      @ModelAttribute("customer") CustomerDto customerDto) {
+       //TODO
+       /* SubServiceDto serviceDto = subServiceService.findByName(name);
+        orderDto.setService(serviceDto);*/
+        OrderDto saveOrder = orderService.save(orderDto);
             customerDto.getOrderList().add(saveOrder);
             customerService.save(customerDto);
             return new ModelAndView("customer/success_register", "message",
                     "success register order for customer");
-        }
     }
-
-    @PostMapping("/order/selectService/{name}")
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());
+    }
+    @GetMapping("/order/selectService/{name}")
     public String selectService(@PathVariable String name,Model model) {
         ServiceDto serviceDto = service.findByName(name);
         Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();

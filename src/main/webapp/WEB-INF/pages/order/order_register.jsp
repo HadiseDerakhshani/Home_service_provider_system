@@ -83,6 +83,13 @@
                 <form:errors path="doDate" cssClass="text-danger"/>
             </td>
         </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:button name="register">Register</form:button>
+            </td>
+        </tr>
     </table>
 </form:form>
 </div>

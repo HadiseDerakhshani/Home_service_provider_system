@@ -21,12 +21,12 @@ import java.util.List;
 @Entity
 public class Expert extends User {
 
-   @Column(columnDefinition = "BLOB", length = 300000)
+  @Lob
     private byte[] image;
     private int score;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList")
     private List<SubService> serviceList = new ArrayList<>();
-    @OneToMany()
+    @OneToMany(mappedBy = "expert")
     private List<Order> orderList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "expert")
     private List<Suggestion> suggestList = new ArrayList<>();

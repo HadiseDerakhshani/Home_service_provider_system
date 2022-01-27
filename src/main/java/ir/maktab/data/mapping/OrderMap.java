@@ -5,11 +5,13 @@ import ir.maktab.data.model.order.Order;
 import ir.maktab.utils.DateUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.stream.Collectors;
 
 @Data
@@ -33,27 +35,23 @@ public class OrderMap {
         this.customerMap=customerMap;
     }
 
-    public Order createOrder(OrderDto orderDto) {
+    @SneakyThrows
+    public Order createOrder(OrderDto orderDto)  {
     Order order=Order.builder()
             .address(addressMap.createAddress(orderDto.getAddress()))
-            .doDate(orderDto.getDoDate())
-          .service(subServiceMap.createSubService(orderDto.getService()))
+            .doDate(DateUtils.dateUtils(orderDto.getDoDate()))
+            .service(subServiceMap.createSubService(orderDto.getService()))
+            .jobDescription(orderDto.getJobDescription())
+            .proposedPrice(orderDto.getProposedPrice())
+            .pricePaid(orderDto.getPricePaid())
             .status(orderDto.getStatus())
+            .receptionNumber(orderDto.getReceptionNumber())
             .customer(customerMap.createCustomer(orderDto.getCustomer()))
            .build();
-    if(orderDto.getJobDescription()!=null){
-        order.setJobDescription(orderDto.getJobDescription());
-    }
-        if(orderDto.getProposedPrice()!=0){
-            order.setProposedPrice(orderDto.getProposedPrice());
-        }
-        if(orderDto.getPricePaid()!=0){
-            order.setPricePaid(orderDto.getPricePaid());
-        }
 
-        if(orderDto.getReceptionNumber()!=0){
+      /*  if(orderDto.getReceptionNumber()!=0){
             order.setReceptionNumber(orderDto.getReceptionNumber());
-        }
+        }*/
         if(orderDto.getExpert()!=null){
             order.setExpert(expertMap.createExpert(orderDto.getExpert()));
         }
@@ -65,6 +63,30 @@ public class OrderMap {
     }
 
     public OrderDto createOrderDto(Order order) {
-        return mapper.map(order, OrderDto.class);
+      OrderDto orderDto=OrderDto.builder()
+                .address(addressMap.createAddressDto(order.getAddress()))
+                .doDate(String.valueOf(order.getDoDate()))
+                .service(subServiceMap.createSubServiceDto(order.getService()))
+              .jobDescription(order.getJobDescription())
+              .PricePaid(order.getPricePaid())
+              .proposedPrice(order.getProposedPrice())
+                .status(order.getStatus())
+              .receptionNumber(order.getReceptionNumber())
+                .customer(customerMap.createCustomerDto(order.getCustomer()))
+                .build();
+
+        /*if(order.getReceptionNumber()!=0){
+            orderDto.setReceptionNumber(orderDto.getReceptionNumber());
+        }*/
+        if(order.getExpert()!=null){
+            orderDto.setExpert(expertMap.createExpertDto(order.getExpert()));
+        }
+        if(order.getSuggestion().size()!=0){
+            orderDto.setSuggestion(order.getSuggestion().stream().map(suggestionMap::createSuggestionDto)
+                    .collect(Collectors.toList()));
+        }
+
+        return orderDto;
+
     }
 }

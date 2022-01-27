@@ -48,8 +48,8 @@ public class OrderController {
     public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto, @RequestParam("name")String name,
                                       @ModelAttribute("customer") CustomerDto customerDto,@ModelAttribute("order") AddressDto addressDto) {
 
-       /* SubServiceDto serviceDto = subServiceService.findByName(name);
-        orderDto.setService(serviceDto);*/
+        SubServiceDto serviceDto = subServiceService.findByName(name);
+        orderDto.setService(serviceDto);
 
         //TODO
       addressService.save(addressDto);

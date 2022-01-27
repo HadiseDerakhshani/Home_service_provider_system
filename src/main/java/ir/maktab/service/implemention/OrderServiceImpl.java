@@ -66,10 +66,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateReceptionNumber(Order order) {
-        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
-        orderFound.setReceptionNumber(1000 + order.getId());
-        orderDao.save(orderFound);
+    public Order updateReceptionNumber(Order order) {
+
+        order.setReceptionNumber(1000 + order.getId());
+       return order;
     }
 
     @Override
@@ -169,6 +169,7 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDto save(OrderDto orderDto) {
         Order save = orderDao.save(orderMap.createOrder(orderDto));
-        return orderMap.createOrderDto(save);
+        Order order = updateReceptionNumber(save);
+        return orderMap.createOrderDto(order);
     }
 }

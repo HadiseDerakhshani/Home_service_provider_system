@@ -17,7 +17,7 @@ public interface OrderService {
 
     public List<OrderDto> findSuggest();
 
-    public void updateReceptionNumber(Order order);
+    public Order updateReceptionNumber(Order order);
 
     public Order findByReceptionNumber(long number);
 

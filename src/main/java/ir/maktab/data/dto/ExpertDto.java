@@ -18,8 +18,7 @@ import java.util.List;
 @SuperBuilder
 @Data
 public class ExpertDto extends UserDto {
-    @Lob
-    @Max(300000)
+
     private byte[] image;
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();

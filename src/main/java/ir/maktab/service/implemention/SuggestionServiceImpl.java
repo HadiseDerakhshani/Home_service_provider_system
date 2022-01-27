@@ -53,7 +53,7 @@ public class SuggestionServiceImpl implements SuggestionService {
         return suggestionDao.findByReceptionNumber(number).get();
     }
 
-    @Override
+   /* @Override
     public Suggestion createSuggest(double price, int timeSpan, int time, Expert expert) {
 
         Suggestion suggestion = Suggestion.builder()
@@ -69,7 +69,7 @@ public class SuggestionServiceImpl implements SuggestionService {
             return suggestion;
         } else
             throw new ObjectEntityNotFoundException("---this suggestion exited---");
-    }
+    }*/
 
     @Override
     public void updateReceptionNumber(Suggestion suggestion) {

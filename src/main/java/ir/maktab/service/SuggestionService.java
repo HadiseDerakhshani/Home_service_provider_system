@@ -15,7 +15,6 @@ public interface SuggestionService {
 
     public Suggestion findByReceptionNumber(long number);
 
-    public Suggestion createSuggest(double price, int timeSpan, int time, Expert expert);
 
     public void updateReceptionNumber(Suggestion suggestion);
 

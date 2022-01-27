@@ -10,7 +10,12 @@
 
 </head>
 <body>
+<c:if test="${sessionScope.customer == null}">
+   <h2 style="color: red"> customer not login</h2>
+    <a href="<c:url value="/customer/register"/>" class="btn btn-outline-primary">customer login</a>
+    <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main menu</a>
 
+</c:if>
 <form:form cssClass="p-3 m-3" modelAttribute="order" action="/order/registerOrder" method="post">
 
     <table class="table table-bordered table-striped text-dark">

@@ -55,7 +55,6 @@ public class OrderController {
 
         SubServiceDto serviceDto = subServiceService.findByName(name);
         orderDto.setService(serviceDto);
-
       orderDto.setStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION);
         OrderDto saveOrder = orderService.save(orderDto);
           customerService.updateOrder(customerDto,saveOrder);

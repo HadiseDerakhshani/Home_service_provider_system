@@ -2,6 +2,7 @@ package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,25 +25,19 @@ public class ExpertController {
     private final SubServiceServiceImpl subServiceService;
 
     @GetMapping("/expert")
-    public ModelAndView showRegisterPage() {
-
-        return new ModelAndView("expert/expert_register", "expert", new ExpertDto());
+    public String showRegisterPage(Model model) {
+        List<SubServiceDto> subServiceDtoList = subServiceService.findAll();
+        model.addAttribute("serviceList",subServiceDtoList);
+        model.addAttribute("expert", new ExpertDto());
+        return "expert/expert_register";
     }
 
     @PostMapping(value = "/expert/initializer")
     public String initializer(@RequestParam("image") CommonsMultipartFile image,@Validated @ModelAttribute("expert")
             ExpertDto expertDto) {
-
-       /* List<SubServiceDto> list ;
-           if(subServiceService.findAll().size()!=0) {
-               list = subServiceService.findAll();
-               list.forEach(System.out::println);
-               model.addAttribute("serviceList", list);*/
-
-        expertDto.setPhoto(image.getBytes());
-          expertService.save(expertDto);
-            return "services/service_selected";
-
+               expertDto.setPhoto(image.getBytes());
+               expertService.save(expertDto);
+               return "services/service_selected";
     }
     @ExceptionHandler(value = BindException.class)
     public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {

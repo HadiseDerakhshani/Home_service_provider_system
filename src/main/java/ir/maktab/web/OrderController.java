@@ -1,15 +1,9 @@
 package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
-import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.ServiceDto;
-import ir.maktab.data.dto.SubServiceDto;
+import ir.maktab.data.dto.*;
 import ir.maktab.data.model.serviceSystem.Service;
-import ir.maktab.service.implemention.CustomerServiceImpl;
-import ir.maktab.service.implemention.OrderServiceImpl;
-import ir.maktab.service.implemention.ServiceServiceImpl;
-import ir.maktab.service.implemention.SubServiceServiceImpl;
+import ir.maktab.service.implemention.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -25,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Controller
@@ -38,6 +33,8 @@ public class OrderController {
     private final SubServiceServiceImpl subServiceService;
     @Lazy
     private final ServiceServiceImpl service;
+    @Lazy
+    private final AddressServiceImpl addressService;
 
     @GetMapping("/order")
     public ModelAndView showRegisterOrder() {
@@ -49,10 +46,14 @@ public class OrderController {
 
     @PostMapping("/order/registerOrder")
     public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto, @RequestParam("name")String name,
-                                      @ModelAttribute("customer") CustomerDto customerDto) {
-       //TODO
+                                      @ModelAttribute("customer") CustomerDto customerDto,@ModelAttribute("order") AddressDto addressDto) {
+
        /* SubServiceDto serviceDto = subServiceService.findByName(name);
         orderDto.setService(serviceDto);*/
+
+        //TODO
+      addressService.save(addressDto);
+      orderDto.setAddress(addressDto);
         OrderDto saveOrder = orderService.save(orderDto);
             customerDto.getOrderList().add(saveOrder);
             customerService.save(customerDto);
@@ -70,6 +71,7 @@ public class OrderController {
         Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();
         model.addAttribute("subServiceList",subServiceList);
         model.addAttribute("order", new OrderDto());
+        model.addAttribute("address",new AddressDto());
         return "order/order_register";
     }
 }

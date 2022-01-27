@@ -30,6 +30,7 @@ public class SubServiceMap {
     public SubServiceDto createSubServiceDto(SubService subService) {
         SubServiceDto serviceDto = SubServiceDto.builder()
                 .name(subService.getName())
+                .price(subService.getPrice())
                 .description(subService.getDescription())
                 .build();
         if (subService.getExpertList().size() != 0) {

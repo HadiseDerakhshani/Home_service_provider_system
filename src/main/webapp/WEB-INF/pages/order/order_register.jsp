@@ -18,7 +18,9 @@
                  <td>
                      <select name="name">
                  <c:forEach items="${subServiceList}" var="list">
+
                      <option value="${list.name}" >${list.name} , ${list.price} T ,(${list.description}) </option>
+
                  </c:forEach>
              </select>
                  </td>
@@ -40,7 +42,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="jobDescription">Proposed Price :</form:label>
+                <form:label path="jobDescription">jobDescription :</form:label>
             </td>
             <td>
                 <form:input path="jobDescription" name="jobDescription"/>
@@ -70,19 +72,54 @@
         </tr>
         <tr>
             <td>
-                <form:label path="address">Address :</form:label>
+                <form:form cssClass="p-3 m-3" modelAttribute="address" action="/order/registerOrder" method="post">
+                    <form:label path="city">city :</form:label>
             </td>
             <td>
-                <form:input path="address" name="address"/>
+                <form:input path="city" name="city"/>
             </td>
         </tr>
         <tr>
             <td>
             </td>
             <td>
-                <form:errors path="doDate" cssClass="text-danger"/>
+                <form:errors path="city" cssClass="text-danger"/>
+
             </td>
         </tr>
+        <tr>
+            <td>
+                <form:label path="street">street :</form:label>
+            </td>
+            <td>
+                <form:input path="street" name="street"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:errors path="street" cssClass="text-danger"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="plaque">plaque :</form:label>
+            </td>
+            <td>
+                <form:input path="plaque" name="plaque"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <form:errors path="plaque" cssClass="text-danger"/>
+
+            </td>
+        </tr>
+
         <tr>
             <td>
             </td>
@@ -91,6 +128,7 @@
             </td>
         </tr>
     </table>
+                </form:form>
 </form:form>
 </div>
 

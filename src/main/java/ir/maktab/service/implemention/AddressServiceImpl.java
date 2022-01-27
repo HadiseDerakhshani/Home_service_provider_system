@@ -1,10 +1,13 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.AddressDao;
+import ir.maktab.data.dto.AddressDto;
+import ir.maktab.data.mapping.AddressMap;
 import ir.maktab.data.model.order.Address;
 import ir.maktab.service.AddressService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Getter
@@ -13,10 +16,13 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
 
     private final AddressDao addressDao;
+    @Lazy
+    private final AddressMap addressMap;
 
     @Override
-    public void save(Address address) {
-        addressDao.save(address);
+    public AddressDto save(AddressDto address) {
+
+        return addressMap.createAddressDto(addressDao.save(addressMap.createAddress(address)));
     }
 
     @Override

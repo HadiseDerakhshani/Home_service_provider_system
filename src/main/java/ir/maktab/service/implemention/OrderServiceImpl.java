@@ -1,6 +1,7 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.OrderDao;
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.mapping.SubServiceMap;
@@ -99,9 +100,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateExpert(Expert expert, Order order) {
-        order.setExpert(expert);
-        orderDao.save(order);
+    public void updateExpert(ExpertDto expert, OrderDto order) {
+
+        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        orderFound.setExpert(expertServiceImpl.findByEmail(expert.getEmail()));
+        orderDao.save(orderFound);
     }
 
     @Override
@@ -126,9 +129,7 @@ public class OrderServiceImpl implements OrderService {
                     .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SELECTION.name()))
                     .collect(Collectors.toList());
             if (orderList != null) {
-                for (Order order : orderList)
-                    listFind.add(orderMap.createOrderDto(order));
-                return listFind;
+                return listFind=orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
             } else
                 throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
         } else

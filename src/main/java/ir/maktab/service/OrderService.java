@@ -1,5 +1,6 @@
 package ir.maktab.service;
 
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.order.Order;
@@ -27,7 +28,7 @@ public interface OrderService {
 
     public void updateSuggestion(Order order, Suggestion suggest);
 
-    public void updateExpert(Expert expert, Order order);
+    public void updateExpert(ExpertDto expert, OrderDto orderr);
 
     public List<OrderDto> findAll();
 

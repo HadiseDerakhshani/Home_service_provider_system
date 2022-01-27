@@ -96,7 +96,7 @@ public class SuggestionServiceImpl implements SuggestionService {
                 orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
                 Expert expert = suggest.getExpert();
                 expertServiceImpl.updateStatus(UserStatus.CONFIRMED, expert);
-                orderServiceImpl.updateExpert(expert, order);
+              //  orderServiceImpl.updateExpert(expert, order);
             } else
                 updateStatus(suggest, SuggestionStatus.REJECT);
             count++;

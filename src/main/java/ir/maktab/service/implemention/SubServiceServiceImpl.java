@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Service
@@ -40,10 +41,8 @@ public class SubServiceServiceImpl implements SubServiceService {
     public List<SubServiceDto> findAll() {
         List<SubService> listSubService = subServiceDao.findAll();
         if (listSubService != null) {
-            List<SubServiceDto> listSubServiceDto = new ArrayList<>();
-            for (SubService subService : listSubService) {
-                listSubServiceDto.add(subServiceMap.createSubServiceDto(subService));
-            }
+            List<SubServiceDto> listSubServiceDto = listSubService.stream().map(subServiceMap::createSubServiceDto)
+                    .collect(Collectors.toList());
             return listSubServiceDto;
         } else
             throw new ObjectEntityNotFoundException(" SubService is null");
@@ -55,14 +54,19 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
-    public void addExpertToList(ExpertDto expertDto, SubService service) {
-        service.getExpertList().add(expertMap.createExpert(expertDto));
+    public SubService find(String name) {
+        return subServiceDao.findByName(name).get();
+    }
 
-        subServiceDao.save(service);
+    @Override
+    public void addExpertToList(ExpertDto expertDto, SubServiceDto service) {
+        SubService subService = find(service.getName());
+        subService.getExpertList().add(expertMap.createExpert(expertDto));
+        subServiceDao.save(subService);
     }
 
     @Override
     public void deleteSubService(String name) {
-        subServiceDao.delete(subServiceMap.createSubService(findByName(name)));
+        subServiceDao.delete(find(name));
     }
 }

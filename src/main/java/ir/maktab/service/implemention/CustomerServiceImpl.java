@@ -5,6 +5,7 @@ import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.CustomerMap;
+import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.enums.UserStatus;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Service
@@ -40,17 +42,19 @@ public class CustomerServiceImpl implements CustomerService {
     private final CommentServiceImpl commentServiceImpl;
 
     private final CustomerMap customerMap;
+    private final OrderMap orderMap;
 
     @Autowired
     public CustomerServiceImpl(CustomerDao customerDao, @Lazy SuggestionServiceImpl suggestServiceImpl,
                                @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
-                               @Lazy CommentServiceImpl commentServiceImpl, @Lazy CustomerMap customerMap) {
+                               @Lazy CommentServiceImpl commentServiceImpl,@Lazy OrderMap orderMap, @Lazy CustomerMap customerMap) {
         this.customerDao = customerDao;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.commentServiceImpl = commentServiceImpl;
         this.customerMap = customerMap;
+        this.orderMap=orderMap;
     }
 
     @Override
@@ -93,6 +97,15 @@ public class CustomerServiceImpl implements CustomerService {
         customerFound.setPassword(newPass);
         customerDao.save(customerFound);
 
+    }
+
+    @Override
+    public void updateOrder(CustomerDto customerDto,OrderDto orderDto) {
+        Customer customerFound = findByEmail(customerDto.getEmail()).get();
+        customerDto.getOrderList().add(orderDto);
+        customerFound.setOrderList( customerDto.getOrderList().stream().map(orderMap::createOrder)
+                .collect(Collectors.toList()));
+      customerDao.save(customerFound);
     }
 
     @Override

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
+@SessionAttributes({"customer"})
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {

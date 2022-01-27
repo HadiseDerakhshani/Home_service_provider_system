@@ -47,6 +47,26 @@ public class SuggestionMap {
     }
 
     public SuggestionDto createSuggestionDto(Suggestion suggestion) {
-        return mapper.map(suggestion, SuggestionDto.class);
+        SuggestionDto suggest=SuggestionDto.builder()
+                .durationOfWork(suggestion.getDurationOfWork())
+                .startTime(suggestion.getStartTime())
+                .status(suggestion.getStatus())
+                .proposedPrice(suggestion.getProposedPrice())
+                .receptionNumber(suggestion.getReceptionNumber())
+                .build();
+        /*if(suggestionDto.getProposedPrice()!=0){
+            suggestion.setProposedPrice(suggestionDto.getProposedPrice());
+        }
+        if(suggestionDto.getReceptionNumber()!=0){
+            suggestion.setReceptionNumber(suggestionDto.getReceptionNumber());
+        }*/
+        if(suggestion.getExpert()!=null){
+            suggest.setExpert(expertMap.createExpertDto(suggestion.getExpert()));
+        }
+        if (suggestion.getOrder()!=null){
+            suggest.setOrder(orderMap.createOrderDto(suggestion.getOrder()));
+        }
+
+        return suggest;
     }
 }

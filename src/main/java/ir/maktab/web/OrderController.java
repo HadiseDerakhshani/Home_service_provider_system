@@ -1,9 +1,12 @@
 package ir.maktab.web;
 
+import ir.maktab.config.DatabaseConfig;
 import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.*;
+import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.serviceSystem.Service;
 import ir.maktab.service.implemention.*;
+import ir.maktab.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,23 +49,17 @@ public class OrderController {
     }
 
     @PostMapping("/order/registerOrder")
-    public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto, @RequestParam("name")String name,
-                                   @RequestParam("city")String city,@RequestParam("street")String street,@RequestParam("plaque")String plaque) {
+    public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto,
+                                      @SessionAttribute("customer")CustomerDto customerDto,
+                                      @RequestParam("name")String name){
 
         SubServiceDto serviceDto = subServiceService.findByName(name);
         orderDto.setService(serviceDto);
 
-        AddressDto addressDto= AddressDto.builder()
-                .city(city)
-                .plaque(Integer.parseInt(plaque))
-                .street(street).build();
-        System.out.println(addressDto);
-      addressService.save(addressDto);
-      orderDto.setAddress(addressDto);
+      orderDto.setStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION);
         OrderDto saveOrder = orderService.save(orderDto);
-            /*customerDto.getOrderList().add(saveOrder);
-            customerService.save(customerDto);*/
-            return new ModelAndView("customer/success_register", "message",
+          customerService.updateOrder(customerDto,saveOrder);
+            return new ModelAndView("order/success_register", "message",
                     "success register order for customer");
     }
     @ExceptionHandler(value = BindException.class)

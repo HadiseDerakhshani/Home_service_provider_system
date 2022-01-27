@@ -34,13 +34,13 @@ public class UserDto {
 
     @Pattern(regexp = "^(\\+98|0)?9\\d{9}$", message = "invalid phoneNumber")
     private String phoneNumber;
-    @Enumerated(EnumType.STRING)
+
     private UserStatus userStatus;
-    @CreationTimestamp
+
     private Date dateRegister;
-    @UpdateTimestamp
+
     private Date dateUpdate;
-    @Enumerated(EnumType.STRING)
+
     private UserRole userRole;
 
     private double credit;

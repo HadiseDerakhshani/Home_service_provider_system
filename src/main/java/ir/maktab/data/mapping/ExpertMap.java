@@ -39,19 +39,19 @@ public class ExpertMap {
                 .phoneNumber(expertDto.getPhoneNumber())
                 .credit(expertDto.getCredit())
                 .build();
-       if(expertDto.getServiceList().size()!=0){
+       if(expertDto.getServiceList()!=null){
            expert.setServiceList(expertDto.getServiceList().stream().map(subServiceMap::createSubService)
                    .collect(Collectors.toList()));
        }
-        if(expertDto.getOrderList().size()!=0){
+        if(expertDto.getOrderList()!=null){
             expert.setOrderList(expertDto.getOrderList().stream().map(orderMap::createOrder)
                     .collect(Collectors.toList()));
         }
-        if(expertDto.getSuggestList().size()!=0){
+        if(expertDto.getSuggestList()!=null){
             expert.setSuggestList(expertDto.getSuggestList().stream().map(suggestionMap::createSuggestion)
                     .collect(Collectors.toList()));
         }
-        if(expertDto.getCommentList().size()!=0){
+        if(expertDto.getCommentList()!=null){
             expert.setCommentList(expertDto.getCommentList().stream().map(commentMap::createComment)
                     .collect(Collectors.toList()));
         }
@@ -59,7 +59,30 @@ public class ExpertMap {
     }
 
     public ExpertDto createExpertDto(Expert expert) {
-
-        return mapper.map(expert, ExpertDto.class);
+        ExpertDto expertDto=ExpertDto.builder()
+                .firstName(expert.getFirstName())
+                .lastName(expert.getLastName())
+                .email(expert.getEmail())
+                .password(expert.getPassword())
+                .phoneNumber(expert.getPhoneNumber())
+                .credit(expert.getCredit())
+                .build();
+        if(expert.getServiceList()!=null){
+            expertDto.setServiceList(expert.getServiceList().stream().map(subServiceMap::createSubServiceDto)
+                    .collect(Collectors.toList()));
+        }
+        if(expert.getOrderList()!=null){
+            expertDto.setOrderList(expert.getOrderList().stream().map(orderMap::createOrderDto)
+                    .collect(Collectors.toList()));
+        }
+        if(expert.getSuggestList()!=null){
+            expertDto.setSuggestList(expert.getSuggestList().stream().map(suggestionMap::createSuggestionDto)
+                    .collect(Collectors.toList()));
+        }
+        if(expertDto.getCommentList()!=null){
+            expertDto.setCommentList(expert.getCommentList().stream().map(commentMap::createCommentDto)
+                    .collect(Collectors.toList()));
+        }
+        return expertDto;
     }
 }

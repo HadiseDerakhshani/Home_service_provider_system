@@ -35,10 +35,11 @@ public class OrderMap {
         this.customerMap=customerMap;
     }
 
-    @SneakyThrows
-    public Order createOrder(OrderDto orderDto)  {
+   // @SneakyThrows
+    public Order createOrder(OrderDto orderDto) {
     Order order=Order.builder()
-            .doDate(DateUtils.dateUtils(orderDto.getDoDate()))
+          //  .doDate(DateUtils.dateUtils(orderDto.getDoDate()))
+            .doDate(orderDto.getDoDate())
             .jobDescription(orderDto.getJobDescription())
             .proposedPrice(orderDto.getProposedPrice())
             .pricePaid(orderDto.getPricePaid())
@@ -61,7 +62,7 @@ public class OrderMap {
         if(orderDto.getService()!=null){
             order.setService(subServiceMap.createSubService(orderDto.getService()));
         }
-        if(orderDto.getSuggestion().size()!=0){
+        if(orderDto.getSuggestion()!=null){
             order.setSuggestion(orderDto.getSuggestion().stream().map(suggestionMap::createSuggestion)
                     .collect(Collectors.toList()));
         }
@@ -70,7 +71,7 @@ public class OrderMap {
 
     public OrderDto createOrderDto(Order order) {
       OrderDto orderDto=OrderDto.builder()
-                .doDate(String.valueOf(order.getDoDate()))
+                .doDate(order.getDoDate())
               .jobDescription(order.getJobDescription())
               .PricePaid(order.getPricePaid())
               .proposedPrice(order.getProposedPrice())
@@ -93,7 +94,7 @@ public class OrderMap {
         if(order.getService()!=null){
             orderDto.setService(subServiceMap.createSubServiceDto(order.getService()));
         }
-        if(order.getSuggestion().size()!=0){
+        if(order.getSuggestion()!=null){
             orderDto.setSuggestion(order.getSuggestion().stream().map(suggestionMap::createSuggestionDto)
                     .collect(Collectors.toList()));
         }

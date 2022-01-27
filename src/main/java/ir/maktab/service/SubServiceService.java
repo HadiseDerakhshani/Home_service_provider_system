@@ -10,10 +10,6 @@ import java.util.List;
 public interface SubServiceService {
 
 
-    public void save(SubService subService);
-
-    public SubService createSubService(String name, String description, double price);
-
     public List<SubServiceDto> findAll();
 
     public SubServiceDto findByName(String name);

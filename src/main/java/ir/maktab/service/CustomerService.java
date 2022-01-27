@@ -20,6 +20,7 @@ public interface CustomerService {
     public void deleteCustomer(String email);
 
     public void changePassword(CustomerDto customer, String newPass);
+    public void updateOrder(CustomerDto customerDto,OrderDto orderDto);
 
     public void updateStatus(String email, UserStatus status);
 

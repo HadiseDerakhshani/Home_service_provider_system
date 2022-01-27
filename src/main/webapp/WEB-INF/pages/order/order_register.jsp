@@ -30,7 +30,7 @@
                 <form:label path="proposedPrice">Proposed Price :</form:label>
             </td>
             <td>
-                <form:input path="proposedPrice" name="proposedPrice"/>
+                <form:input path="proposedPrice" name="proposedPrice" />
             </td>
         </tr>
         <tr>
@@ -45,7 +45,7 @@
                 <form:label path="jobDescription">jobDescription :</form:label>
             </td>
             <td>
-                <form:input path="jobDescription" name="jobDescription"/>
+                <form:input path="jobDescription" name="jobDescription"  placeholder="Description for work"/>
             </td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
                 <form:label path="doDate">Do Date :</form:label>
             </td>
             <td>
-                <form:input path="doDate" name="doDate"/>
+                <form:input path="doDate" name="doDate" placeholder="yyyy/mm/dd"/>
             </td>
         </tr>
         <tr>
@@ -72,31 +72,51 @@
         </tr>
 
         <table class="table table-bordered table-striped text-dark">
-        <tr>
-            <td>
-             city :
-            </td>
-            <td>
-                <input type="text" name="city" value=""></input>
-            </td>
-        </tr>
-        <tr>
-            <td>
-               street :
-            </td>
-            <td>
-                <input type="text" name="street" value=""></input>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                plaque :
-            </td>
-            <td>
-                <input type="text" name="plaque" value=""></input>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <form:label path="address.city"> City :</form:label>
+                </td>
+                <td>
+                    <form:input path="address.city" name="address.city"  placeholder="Enter your city"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <form:errors path="address.city" cssClass="text-danger"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="address.street">Street :</form:label>
+                </td>
+                <td>
+                    <form:input path="address.street" name="address.street"  placeholder="Enter your street"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <form:errors path="address.street" cssClass="text-danger"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="address.plaque">Plaque :</form:label>
+                </td>
+                <td>
+                    <form:input path="address.plaque" name="address.plaque"  placeholder=" Enter your plaque"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <form:errors path="jobDescription" cssClass="text-danger"/>
+                </td>
+            </tr>
 
         <tr>
             <td>

@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 public class ExpertDto extends UserDto {
 
-    private byte[] image;
+    private byte[] photo;
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();
     private List<OrderDto> orderList = new ArrayList<>();

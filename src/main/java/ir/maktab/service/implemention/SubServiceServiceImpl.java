@@ -34,24 +34,7 @@ public class SubServiceServiceImpl implements SubServiceService {
         this.subServiceDao = subServiceDao;
     }
 
-    @Override
-    public void save(SubService subService) {
-        subServiceDao.save(subService);
-    }
 
-    @Override
-    public SubService createSubService(String name, String description, double price) {
-
-        if (findByName(name) == null) {
-            SubService subService = SubService.builder()
-                    .name(name)
-                    .description(description)
-                    .price(price)
-                    .build();
-            return subService;
-        }
-        throw new ObjectEntityNotFoundException("------- SubService is exited --------");
-    }
 
     @Override
     public List<SubServiceDto> findAll() {

@@ -36,7 +36,7 @@ public class CustomerMap {
                 .email(customerDto.getEmail())
                 .build();
 
-        if(customerDto.getOrderList().size()!=0) {
+        if(customerDto.getOrderList()!=null) {
         List<Order> collect = customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList());
         customer.setOrderList(collect);
         }
@@ -44,6 +44,19 @@ public class CustomerMap {
     }
 
     public CustomerDto createCustomerDto(Customer customer) {
-        return mapper.map(customer, CustomerDto.class);
+        CustomerDto customerDto = CustomerDto.builder()
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .password(customer.getPassword())
+                .phoneNumber(customer.getPhoneNumber())
+                .credit(customer.getCredit())
+                .email(customer.getEmail())
+                .build();
+
+        if(customer.getOrderList()!=null) {
+            customerDto.setOrderList(customer.getOrderList().stream().map(orderMap::createOrderDto)
+                    .collect(Collectors.toList()));
+        }
+    return customerDto;
     }
 }

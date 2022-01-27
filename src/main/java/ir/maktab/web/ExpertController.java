@@ -9,14 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +38,7 @@ public class ExpertController {
                list.forEach(System.out::println);
                model.addAttribute("serviceList", list);*/
 
-        expertDto.setImage(image.getBytes());
+        expertDto.setPhoto(image.getBytes());
           expertService.save(expertDto);
             return "services/service_selected";
 

@@ -32,7 +32,7 @@ public class ServiceMap {
         ServiceDto serviceDto = ServiceDto.builder()
                 .name(service.getName())
                 .build();
-      if(service.getSubServiceList().size()!=0){
+      if(service.getSubServiceList()!=null){
           serviceDto.setSubServiceList( service.getSubServiceList().stream().map(subServiceMap::createSubServiceDto)
                 .collect(Collectors.toSet()));
     }

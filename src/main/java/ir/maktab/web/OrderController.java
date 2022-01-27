@@ -46,17 +46,21 @@ public class OrderController {
 
     @PostMapping("/order/registerOrder")
     public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto, @RequestParam("name")String name,
-                                      @ModelAttribute("customer") CustomerDto customerDto,@ModelAttribute("order") AddressDto addressDto) {
+                                   @RequestParam("city")String city,@RequestParam("street")String street,@RequestParam("plaque")String plaque) {
 
         SubServiceDto serviceDto = subServiceService.findByName(name);
         orderDto.setService(serviceDto);
 
-        //TODO
+        AddressDto addressDto= AddressDto.builder()
+                .city(city)
+                .plaque(Integer.parseInt(plaque))
+                .street(street).build();
+        System.out.println(addressDto);
       addressService.save(addressDto);
       orderDto.setAddress(addressDto);
         OrderDto saveOrder = orderService.save(orderDto);
-            customerDto.getOrderList().add(saveOrder);
-            customerService.save(customerDto);
+            /*customerDto.getOrderList().add(saveOrder);
+            customerService.save(customerDto);*/
             return new ModelAndView("customer/success_register", "message",
                     "success register order for customer");
     }
@@ -71,7 +75,6 @@ public class OrderController {
         Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();
         model.addAttribute("subServiceList",subServiceList);
         model.addAttribute("order", new OrderDto());
-        model.addAttribute("address",new AddressDto());
         return "order/order_register";
     }
 }

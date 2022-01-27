@@ -27,13 +27,15 @@ public class SuggestionMap {
                 .durationOfWork(suggestionDto.getDurationOfWork())
                 .startTime(suggestionDto.getStartTime())
                 .status(suggestionDto.getStatus())
+                .ProposedPrice(suggestionDto.getProposedPrice())
+                .receptionNumber(suggestionDto.getReceptionNumber())
                 .build();
-        if(suggestionDto.getProposedPrice()!=0){
+        /*if(suggestionDto.getProposedPrice()!=0){
             suggestion.setProposedPrice(suggestionDto.getProposedPrice());
         }
         if(suggestionDto.getReceptionNumber()!=0){
             suggestion.setReceptionNumber(suggestionDto.getReceptionNumber());
-        }
+        }*/
         if(suggestionDto.getExpert()!=null){
             suggestion.setExpert(expertMap.createExpert(suggestionDto.getExpert()));
         }
@@ -41,7 +43,7 @@ public class SuggestionMap {
             suggestion.setOrder(orderMap.createOrder(suggestionDto.getOrder()));
         }
 
-        return mapper.map(suggestionDto, Suggestion.class);
+        return  suggestion;
     }
 
     public SuggestionDto createSuggestionDto(Suggestion suggestion) {

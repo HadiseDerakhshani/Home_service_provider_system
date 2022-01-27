@@ -70,53 +70,31 @@
                 <form:errors path="doDate" cssClass="text-danger"/>
             </td>
         </tr>
-        <tr>
-            <td>
-                <form:form cssClass="p-3 m-3" modelAttribute="address" action="/order/registerOrder" method="post">
-                    <form:label path="city">city :</form:label>
-            </td>
-            <td>
-                <form:input path="city" name="city"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <form:errors path="city" cssClass="text-danger"/>
 
+        <table class="table table-bordered table-striped text-dark">
+        <tr>
+            <td>
+             city :
+            </td>
+            <td>
+                <input type="text" name="city" value=""></input>
             </td>
         </tr>
         <tr>
             <td>
-                <form:label path="street">street :</form:label>
+               street :
             </td>
             <td>
-                <form:input path="street" name="street"/>
+                <input type="text" name="street" value=""></input>
             </td>
         </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <form:errors path="street" cssClass="text-danger"/>
 
-            </td>
-        </tr>
         <tr>
             <td>
-                <form:label path="plaque">plaque :</form:label>
+                plaque :
             </td>
             <td>
-                <form:input path="plaque" name="plaque"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <form:errors path="plaque" cssClass="text-danger"/>
-
+                <input type="text" name="plaque" value=""></input>
             </td>
         </tr>
 
@@ -128,9 +106,10 @@
             </td>
         </tr>
     </table>
-                </form:form>
+        </table>
+
 </form:form>
-</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

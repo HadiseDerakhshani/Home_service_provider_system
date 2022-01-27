@@ -22,7 +22,7 @@ public class SubService {
     private double price;
     private String name;
     private String description;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Expert> expertList = new ArrayList<>();
 
 }

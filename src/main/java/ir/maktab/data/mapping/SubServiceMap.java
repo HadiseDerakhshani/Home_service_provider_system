@@ -24,7 +24,17 @@ public class SubServiceMap {
     }
 
     public SubService createSubService(SubServiceDto subServiceDto) {
-        return mapper.map(subServiceDto, SubService.class);
+        SubService service= SubService.builder()
+                .name(subServiceDto.getName())
+                .price(subServiceDto.getPrice())
+                .description(subServiceDto.getDescription())
+                .build();
+        if (subServiceDto.getExpertList().size() != 0) {
+            service.setExpertList(subServiceDto.getExpertList().stream().map(expertMap::createExpert)
+                    .collect(Collectors.toList()));
+        }
+        return service;
+
     }
 
     public SubServiceDto createSubServiceDto(SubService subService) {

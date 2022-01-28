@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h2 style="color: floralwhite">please  select service for order</h2>
+<h2 style="color: floralwhite">please select service for order</h2>
 <table border="5" width="70%" cellpadding="2">
 
     <c:forEach var="list" items="${serviceDtoList}">
@@ -21,8 +21,6 @@
         </tr>
     </c:forEach>
 </table>
-
-
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

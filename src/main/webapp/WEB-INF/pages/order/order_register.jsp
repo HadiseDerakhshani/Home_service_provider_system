@@ -11,7 +11,7 @@
 </head>
 <body>
 <c:if test="${sessionScope.customer == null}">
-   <h2 style="color: red"> customer not login</h2>
+    <h2 style="color: red"> customer not login</h2>
     <a href="<c:url value="/customer/register"/>" class="btn btn-outline-primary">customer login</a>
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main menu</a>
 
@@ -19,23 +19,23 @@
 <form:form cssClass="p-3 m-3" modelAttribute="order" action="/order/registerOrder" method="post">
 
     <table class="table table-bordered table-striped text-dark">
-          <tr>
-                 <td>
-                     <select name="name">
-                 <c:forEach items="${subServiceList}" var="list">
+        <tr>
+            <td>
+                <select name="name">
+                    <c:forEach items="${subServiceList}" var="list">
 
-                     <option value="${list.name}" >${list.name} , ${list.price} T ,(${list.description}) </option>
+                        <option value="${list.name}">${list.name} , ${list.price} T ,(${list.description})</option>
 
-                 </c:forEach>
-             </select>
-                 </td>
-             </tr>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
         <tr>
             <td>
                 <form:label path="proposedPrice">Proposed Price :</form:label>
             </td>
             <td>
-                <form:input path="proposedPrice" name="proposedPrice" />
+                <form:input path="proposedPrice" name="proposedPrice"/>
             </td>
         </tr>
         <tr>
@@ -50,7 +50,7 @@
                 <form:label path="jobDescription">jobDescription :</form:label>
             </td>
             <td>
-                <form:input path="jobDescription" name="jobDescription"  placeholder="Description for work"/>
+                <form:input path="jobDescription" name="jobDescription" placeholder="Description for work"/>
             </td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
                     <form:label path="address.city"> City :</form:label>
                 </td>
                 <td>
-                    <form:input path="address.city" name="address.city"  placeholder="Enter your city"/>
+                    <form:input path="address.city" name="address.city" placeholder="Enter your city"/>
                 </td>
             </tr>
             <tr>
@@ -97,7 +97,7 @@
                     <form:label path="address.street">Street :</form:label>
                 </td>
                 <td>
-                    <form:input path="address.street" name="address.street"  placeholder="Enter your street"/>
+                    <form:input path="address.street" name="address.street" placeholder="Enter your street"/>
                 </td>
             </tr>
             <tr>
@@ -112,7 +112,7 @@
                     <form:label path="address.plaque">Plaque :</form:label>
                 </td>
                 <td>
-                    <form:input path="address.plaque" name="address.plaque"  placeholder=" Enter your plaque"/>
+                    <form:input path="address.plaque" name="address.plaque" placeholder=" Enter your plaque"/>
                 </td>
             </tr>
             <tr>
@@ -123,18 +123,17 @@
                 </td>
             </tr>
 
-        <tr>
-            <td>
-            </td>
-            <td>
-                <form:button name="register">Register</form:button>
-            </td>
-        </tr>
-    </table>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <form:button name="register">Register</form:button>
+                </td>
+            </tr>
         </table>
+    </table>
 
 </form:form>
-
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

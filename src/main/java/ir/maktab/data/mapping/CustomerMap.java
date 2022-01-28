@@ -4,23 +4,23 @@ import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.user.Customer;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Data
 @Component
 
 public class CustomerMap {
     private final ModelMapper mapper;
     private final OrderMap orderMap;
-@Autowired
-    public CustomerMap(ModelMapper mapper,@Lazy OrderMap orderMap) {
+
+    @Autowired
+    public CustomerMap(ModelMapper mapper, @Lazy OrderMap orderMap) {
         this.mapper = mapper;
         this.orderMap = orderMap;
     }
@@ -36,9 +36,9 @@ public class CustomerMap {
                 .email(customerDto.getEmail())
                 .build();
 
-        if(customerDto.getOrderList()!=null) {
-        List<Order> collect = customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList());
-        customer.setOrderList(collect);
+        if (customerDto.getOrderList() != null) {
+            List<Order> collect = customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList());
+            customer.setOrderList(collect);
         }
         return customer;
     }
@@ -53,10 +53,10 @@ public class CustomerMap {
                 .email(customer.getEmail())
                 .build();
 
-        if(customer.getOrderList()!=null) {
+        if (customer.getOrderList() != null) {
             customerDto.setOrderList(customer.getOrderList().stream().map(orderMap::createOrderDto)
                     .collect(Collectors.toList()));
         }
-    return customerDto;
+        return customerDto;
     }
 }

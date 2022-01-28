@@ -12,7 +12,8 @@ body, html {
     padding: 0px;
     box-sizing: border-box;
 }
-.table{
+
+.table {
     border-block: black;
     border-block-style: dot-dot-dash;
 }

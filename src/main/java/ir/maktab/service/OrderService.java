@@ -19,8 +19,11 @@ public interface OrderService {
     public OrderDto save(OrderDto orderDto);
 
     public List<OrderDto> findSuggest();
+
     public void addCustomerToOrder(CustomerDto customer, OrderDto order);
+
     public void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order);
+
     public Order giveReceptionNumber(Order order);
 
     public Order findByReceptionNumber(long number);

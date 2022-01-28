@@ -24,7 +24,7 @@ public class SubServiceMap {
     }
 
     public SubService createSubService(SubServiceDto subServiceDto) {
-        SubService service= SubService.builder()
+        SubService service = SubService.builder()
                 .name(subServiceDto.getName())
                 .price(subServiceDto.getPrice())
                 .description(subServiceDto.getDescription())
@@ -43,7 +43,7 @@ public class SubServiceMap {
                 .price(subService.getPrice())
                 .description(subService.getDescription())
                 .build();
-        if (subService.getExpertList()!= null) {
+        if (subService.getExpertList() != null) {
             serviceDto.setExpertList(subService.getExpertList().stream().map(expertMap::createExpertDto)
                     .collect(Collectors.toList()));
         }

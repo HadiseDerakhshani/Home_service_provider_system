@@ -11,7 +11,9 @@ public interface SubServiceService {
 
 
     public List<SubServiceDto> findAll();
-    public SubService find(String name) ;
+
+    public SubService find(String name);
+
     public SubServiceDto findByName(String name);
 
     public void addExpertToList(ExpertDto expertDto, SubServiceDto service);

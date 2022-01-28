@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LastViewInterceptor  implements HandlerInterceptor {
+public class LastViewInterceptor implements HandlerInterceptor {
 
     public static final String LAST_VIEW_ATTRIBUTE = LastViewInterceptor.class.getName() + ".lastView";
 

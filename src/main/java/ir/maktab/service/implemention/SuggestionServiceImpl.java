@@ -10,7 +10,6 @@ import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Expert;
-import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.SuggestionService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +95,7 @@ public class SuggestionServiceImpl implements SuggestionService {
                 orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
                 Expert expert = suggest.getExpert();
                 expertServiceImpl.updateStatus(UserStatus.CONFIRMED, expert);
-              //  orderServiceImpl.updateExpert(expert, order);
+                //  orderServiceImpl.updateExpert(expert, order);
             } else
                 updateStatus(suggest, SuggestionStatus.REJECT);
             count++;

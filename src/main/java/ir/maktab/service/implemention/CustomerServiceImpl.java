@@ -47,14 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     public CustomerServiceImpl(CustomerDao customerDao, @Lazy SuggestionServiceImpl suggestServiceImpl,
                                @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
-                               @Lazy CommentServiceImpl commentServiceImpl,@Lazy OrderMap orderMap, @Lazy CustomerMap customerMap) {
+                               @Lazy CommentServiceImpl commentServiceImpl, @Lazy OrderMap orderMap, @Lazy CustomerMap customerMap) {
         this.customerDao = customerDao;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.commentServiceImpl = commentServiceImpl;
         this.customerMap = customerMap;
-        this.orderMap=orderMap;
+        this.orderMap = orderMap;
     }
 
     @Override
@@ -100,12 +100,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateOrder(CustomerDto customerDto,OrderDto orderDto) {
+    public void updateOrder(CustomerDto customerDto, OrderDto orderDto) {
         Customer customerFound = findByEmail(customerDto.getEmail()).get();
         customerDto.getOrderList().add(orderDto);
-        customerFound.setOrderList( customerDto.getOrderList().stream().map(orderMap::createOrder)
+        customerFound.setOrderList(customerDto.getOrderList().stream().map(orderMap::createOrder)
                 .collect(Collectors.toList()));
-      customerDao.save(customerFound);
+        customerDao.save(customerFound);
     }
 
     @Override

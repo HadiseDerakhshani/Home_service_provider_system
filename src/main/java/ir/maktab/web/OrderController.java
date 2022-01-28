@@ -1,7 +1,10 @@
 package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
-import ir.maktab.data.dto.*;
+import ir.maktab.data.dto.CustomerDto;
+import ir.maktab.data.dto.OrderDto;
+import ir.maktab.data.dto.ServiceDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.service.implemention.*;
 import lombok.RequiredArgsConstructor;
@@ -38,33 +41,35 @@ public class OrderController {
 
         List<ServiceDto> serviceDtoList = service.findAll();
 
-        return new ModelAndView("/order/choose_service", "serviceDtoList",serviceDtoList);
+        return new ModelAndView("/order/choose_service", "serviceDtoList", serviceDtoList);
     }
 
     @PostMapping("/order/registerOrder")
     public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto,
-                                      @SessionAttribute("customer")CustomerDto customerDto,
-                                      @RequestParam("name")String name){
+                                      @SessionAttribute("customer") CustomerDto customerDto,
+                                      @RequestParam("name") String name) {
 
         SubServiceDto serviceDto = subServiceService.findByName(name);
-      orderDto.setStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION);
+        orderDto.setStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION);
         OrderDto saveOrder = orderService.save(orderDto);
-        orderService.addCustomerToOrder(customerDto,saveOrder);
-        orderService.addServiceToOrder(serviceDto,saveOrder);
-          customerService.updateOrder(customerDto,saveOrder);
-            return new ModelAndView("order/success_register", "message",
-                    "success register order for customer");
+        orderService.addCustomerToOrder(customerDto, saveOrder);
+        orderService.addServiceToOrder(serviceDto, saveOrder);
+        customerService.updateOrder(customerDto, saveOrder);
+        return new ModelAndView("order/success_register", "message",
+                "success register order for customer");
     }
+
     @ExceptionHandler(value = BindException.class)
     public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
         String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
+
     @GetMapping("/order/selectService/{name}")
-    public String selectService(@PathVariable String name,Model model) {
+    public String selectService(@PathVariable String name, Model model) {
         ServiceDto serviceDto = service.findByName(name);
         Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();
-        model.addAttribute("subServiceList",subServiceList);
+        model.addAttribute("subServiceList", subServiceList);
         model.addAttribute("order", new OrderDto());
         return "order/order_register";
     }

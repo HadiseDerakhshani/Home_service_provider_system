@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order giveReceptionNumber(Order order) {
         order.setReceptionNumber(1000 + order.getId());
-       return order;
+        return order;
     }
 
     @Override
@@ -103,21 +103,23 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addExpertToOrder(ExpertDto expert, OrderDto order) {
 
-        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setExpert(expertServiceImpl.findByEmail(expert.getEmail()).get());
         orderDao.save(orderFound);
     }
+
     @Override
     public void addCustomerToOrder(CustomerDto customer, OrderDto order) {
 
-        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setCustomer(customerServiceImpl.findByEmail(customer.getEmail()).get());
         orderDao.save(orderFound);
     }
+
     @Override
     public void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order) {
 
-        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setService(subServiceServiceImpl.find(subServiceDto.getName()));
         orderDao.save(orderFound);
     }
@@ -144,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
                     .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SELECTION.name()))
                     .collect(Collectors.toList());
             if (orderList != null) {
-                return listFind=orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
+                return listFind = orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
             } else
                 throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
         } else

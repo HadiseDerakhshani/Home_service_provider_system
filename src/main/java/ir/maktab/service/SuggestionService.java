@@ -3,7 +3,6 @@ package ir.maktab.service;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.model.enums.SuggestionStatus;
 import ir.maktab.data.model.order.Suggestion;
-import ir.maktab.data.model.user.Expert;
 
 import java.util.List;
 

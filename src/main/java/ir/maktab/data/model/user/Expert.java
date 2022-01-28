@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 public class Expert extends User {
 
-  @Lob
+    @Lob
     private byte[] image;
     private int score;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList")

@@ -1,15 +1,10 @@
 package ir.maktab.data.dto;
 
-import jdk.jfr.ContentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 

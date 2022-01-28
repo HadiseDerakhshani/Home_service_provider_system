@@ -94,7 +94,7 @@
                     <form:errors path="phoneNumber" cssClass="text-danger"/>
                 </td>
             </tr>
-           <tr>
+            <tr>
                 <td>
                     <label>Upload Profile Image :</label>
                 </td>

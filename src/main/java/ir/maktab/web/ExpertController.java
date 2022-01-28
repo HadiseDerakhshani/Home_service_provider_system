@@ -2,7 +2,6 @@ package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
@@ -27,18 +26,19 @@ public class ExpertController {
     @GetMapping("/expert")
     public String showRegisterPage(Model model) {
         List<SubServiceDto> subServiceDtoList = subServiceService.findAll();
-        model.addAttribute("serviceList",subServiceDtoList);
+        model.addAttribute("serviceList", subServiceDtoList);
         model.addAttribute("expert", new ExpertDto());
         return "expert/expert_register";
     }
 
     @PostMapping(value = "/expert/initializer")
-    public String initializer(@RequestParam("image") CommonsMultipartFile image,@Validated @ModelAttribute("expert")
+    public String initializer(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
             ExpertDto expertDto) {
-               expertDto.setPhoto(image.getBytes());
-               expertService.save(expertDto);
-               return "services/service_selected";
+        expertDto.setPhoto(image.getBytes());
+        expertService.save(expertDto);
+        return "services/service_selected";
     }
+
     @ExceptionHandler(value = BindException.class)
     public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
         String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);

@@ -12,7 +12,6 @@ import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.serviceSystem.SubService;
-import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
@@ -61,15 +60,13 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public Expert save(ExpertDto expertDto) {
         if (!findByEmail(expertDto.getEmail()).isPresent()) {
-           Expert expert = expertMap.createExpert(expertDto);
+            Expert expert = expertMap.createExpert(expertDto);
             expert.setUserStatus(UserStatus.WAITING_CONFIRM);
             expert.setUserRole(UserRole.EXPERT);
             return expertDao.save(expert);
         } else
             throw new InValidUserInfoException("-- Expert is exit for this email --");
     }
-
-
 
 
     @Override
@@ -88,7 +85,7 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public Optional<Expert> findByEmail(String email) {
-      return expertDao.findByEmail(email);
+        return expertDao.findByEmail(email);
     }
 
     @Override

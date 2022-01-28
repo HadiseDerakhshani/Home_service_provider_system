@@ -1,8 +1,10 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.OrderDao;
+import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.model.enums.OrderStatus;
@@ -67,8 +69,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateReceptionNumber(Order order) {
-
+    public Order giveReceptionNumber(Order order) {
         order.setReceptionNumber(1000 + order.getId());
        return order;
     }
@@ -93,17 +94,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateSuggestion(Order order, Suggestion suggest) {
+    public void addSuggestionToOrder(Order order, Suggestion suggest) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.getSuggestion().add(suggest);
         orderDao.save(orderFound);
     }
 
     @Override
-    public void updateExpert(ExpertDto expert, OrderDto order) {
+    public void addExpertToOrder(ExpertDto expert, OrderDto order) {
 
         Order orderFound= findByReceptionNumber(order.getReceptionNumber());
-        orderFound.setExpert(expertServiceImpl.findByEmail(expert.getEmail()));
+        orderFound.setExpert(expertServiceImpl.findByEmail(expert.getEmail()).get());
+        orderDao.save(orderFound);
+    }
+    @Override
+    public void addCustomerToOrder(CustomerDto customer, OrderDto order) {
+
+        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        orderFound.setCustomer(customerServiceImpl.findByEmail(customer.getEmail()).get());
+        orderDao.save(orderFound);
+    }
+    @Override
+    public void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order) {
+
+        Order orderFound= findByReceptionNumber(order.getReceptionNumber());
+        orderFound.setService(subServiceServiceImpl.find(subServiceDto.getName()));
         orderDao.save(orderFound);
     }
 
@@ -170,7 +185,8 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDto save(OrderDto orderDto) {
         Order save = orderDao.save(orderMap.createOrder(orderDto));
-        Order order = updateReceptionNumber(save);
+        Order order = giveReceptionNumber(save);
+        orderDao.save(order);
         return orderMap.createOrderDto(order);
     }
 }

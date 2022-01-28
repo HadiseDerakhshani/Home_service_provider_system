@@ -8,6 +8,7 @@ import ir.maktab.data.model.serviceSystem.SubService;
 import ir.maktab.data.model.user.Expert;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface ExpertService {
@@ -15,11 +16,11 @@ public interface ExpertService {
 
     public Expert save(ExpertDto expert);
 
-    public void changePassword(ExpertDto expertDto, String newPass);
+    public void updatePassword(ExpertDto expertDto, String newPass);
 
-    public void changePhoneNumber(ExpertDto expertDto, String newPhoneNumber);
+    public void updatePhoneNumber(ExpertDto expertDto, String newPhoneNumber);
 
-    public Expert findByEmail(String email);
+    public Optional<Expert> findByEmail(String email);
 
 
     public void addSuggest(int number, SuggestionDto suggestionDto, ExpertDto expertDto);

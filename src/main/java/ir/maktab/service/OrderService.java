@@ -1,7 +1,9 @@
 package ir.maktab.service;
 
+import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
@@ -17,8 +19,9 @@ public interface OrderService {
     public OrderDto save(OrderDto orderDto);
 
     public List<OrderDto> findSuggest();
-
-    public Order updateReceptionNumber(Order order);
+    public void addCustomerToOrder(CustomerDto customer, OrderDto order);
+    public void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order);
+    public Order giveReceptionNumber(Order order);
 
     public Order findByReceptionNumber(long number);
 
@@ -26,9 +29,9 @@ public interface OrderService {
 
     public void updatePricePaid(Order order, double amount);
 
-    public void updateSuggestion(Order order, Suggestion suggest);
+    public void addSuggestionToOrder(Order order, Suggestion suggest);
 
-    public void updateExpert(ExpertDto expert, OrderDto orderr);
+    public void addExpertToOrder(ExpertDto expert, OrderDto orderr);
 
     public List<OrderDto> findAll();
 

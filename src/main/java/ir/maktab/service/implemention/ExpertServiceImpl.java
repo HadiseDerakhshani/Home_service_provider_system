@@ -12,6 +12,7 @@ import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.serviceSystem.SubService;
+import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
@@ -23,11 +24,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Service
@@ -61,39 +60,35 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public Expert save(ExpertDto expertDto) {
-        if (findByEmail(expertDto.getEmail()) == null) {
-            Expert expert = expertMap.createExpert(expertDto);
+        if (!findByEmail(expertDto.getEmail()).isPresent()) {
+           Expert expert = expertMap.createExpert(expertDto);
             expert.setUserStatus(UserStatus.WAITING_CONFIRM);
             expert.setUserRole(UserRole.EXPERT);
             return expertDao.save(expert);
         } else
-            throw new InValidUserInfoException("-- Customer is exit for this email --");
-
+            throw new InValidUserInfoException("-- Expert is exit for this email --");
     }
 
 
 
 
     @Override
-    public void changePassword(ExpertDto expertDto, String newPass) {
-        Expert expert = findByEmail(expertDto.getEmail());
+    public void updatePassword(ExpertDto expertDto, String newPass) {
+        Expert expert = findByEmail(expertDto.getEmail()).get();
         expert.setPassword(newPass);
         expertDao.save(expert);
     }
 
     @Override
-    public void changePhoneNumber(ExpertDto expertDto, String newPhoneNumber) {
-        Expert expert = findByEmail(expertDto.getEmail());
+    public void updatePhoneNumber(ExpertDto expertDto, String newPhoneNumber) {
+        Expert expert = findByEmail(expertDto.getEmail()).get();
         expert.setPhoneNumber(newPhoneNumber);
         expertDao.save(expert);
     }
 
     @Override
-    public Expert findByEmail(String email) {
-        if (expertDao.findByEmail(email).isPresent())
-            return expertDao.findByEmail(email).get();
-        else
-            throw new ObjectEntityNotFoundException(" expert is not exit");
+    public Optional<Expert> findByEmail(String email) {
+      return expertDao.findByEmail(email);
     }
 
     @Override
@@ -101,7 +96,7 @@ public class ExpertServiceImpl implements ExpertService {
         Order order = orderServiceImpl.findByReceptionNumber(number);
         if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION))
             orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
-        orderServiceImpl.updateSuggestion(order, suggestionMap.createSuggestion(suggestionDto));
+        orderServiceImpl.addSuggestionToOrder(order, suggestionMap.createSuggestion(suggestionDto));
     }
 
     @Override
@@ -125,14 +120,14 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public void updateServiceList(List<SubService> list, ExpertDto expert) {
-        Expert expertFound = findByEmail(expert.getEmail());
+        Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setServiceList(list);
         expertDao.save(expertFound);
     }
 
     @Override
     public void updateScore(int score, Expert expert) {
-        Expert expertFound = findByEmail(expert.getEmail());
+        Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setScore(score);
         expertDao.save(expertFound);
 
@@ -140,14 +135,14 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public void updateStatus(UserStatus status, Expert expert) {
-        Expert expertFound = findByEmail(expert.getEmail());
+        Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setUserStatus(status);
         expertDao.save(expertFound);
     }
 
     @Override
     public void updateCredit(double amount, Expert expert) {
-        Expert expertFound = findByEmail(expert.getEmail());
+        Expert expertFound = findByEmail(expert.getEmail()).get();
         double credit = expertFound.getCredit();
         expertFound.setCredit(credit + amount);
         expertDao.save(expertFound);

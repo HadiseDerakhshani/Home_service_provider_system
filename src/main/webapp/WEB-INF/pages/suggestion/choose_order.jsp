@@ -11,13 +11,18 @@
 </head>
 <body>
 
-<h2 style="color: floralwhite">please select service for order</h2>
+<h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
 <table border="5" width="70%" cellpadding="2">
-
-    <c:forEach var="list" items="${serviceDtoList}">
+    <tr>><th>Service</th><th>Do Date</th><th>Proposed price</th><th>Jop Description</th><th>Date Register</th><th>Reception Number</th></tr>
+    <c:forEach var="list" items="${list}">
         <tr>
-            <td>${list.name}</td>
-            <td><a href="/order/selectService/${list.name}">Select</a></td>
+            <td>${list.service}</td>
+            <td>${list.doDate}</td>
+            <td>${list.proposedPrice}</td>
+            <td>${list.jobDescription}</td>
+            <td>${list.registerDate}</td>
+            <td>${list.receptionNumber}</td>
+            <td><a href="/expert/registerSuggestion/${list.receptionNumber}">Select</a></td>
         </tr>
     </c:forEach>
 </table>

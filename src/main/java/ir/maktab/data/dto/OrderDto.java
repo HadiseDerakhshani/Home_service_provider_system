@@ -17,12 +17,9 @@ public class OrderDto {
 
     private double proposedPrice;
     private String jobDescription;
-
     private Date registerDate;
-
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date doDate;
-
     private long receptionNumber;
     private double PricePaid;
     private SubServiceDto service;

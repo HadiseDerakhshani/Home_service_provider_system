@@ -33,7 +33,6 @@ public class SuggestionDto {
 
     private long receptionNumber;
 
-    @Enumerated(EnumType.STRING)
     private SuggestionStatus status;
 
     private ExpertDto expert;

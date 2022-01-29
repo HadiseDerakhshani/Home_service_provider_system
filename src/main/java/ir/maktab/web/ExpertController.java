@@ -1,20 +1,16 @@
 package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
-import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.dto.SuggestionDto;
+import ir.maktab.data.dto.*;
+import ir.maktab.data.model.order.Order;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
+
 @Component
 @Controller
 @RequiredArgsConstructor
@@ -62,9 +60,22 @@ public class ExpertController {
     @GetMapping("/suggestion")
     public String showRegisterSuggestPage(Model model) {
         List<OrderDto> list = orderService.findOrderToSuggest();
-        model.addAttribute("suggest", new SuggestionDto());
         model.addAttribute("list", list);
 
-        return "expert/suggestion_register";
+        return "suggestion/choose_order";
+    }
+    @GetMapping("/selectOrder/{number}")
+    public String selectOrder(@PathVariable long number, Model model) {
+
+        OrderDto orderDto = orderService.find(number);
+       model.addAttribute("suggest",new SuggestionDto());
+       model.addAttribute("orderDto",orderDto);
+        return "suggestion/suggestion_register";
+    }
+    @PostMapping(value = "/registerSuggestion")
+    public ModelAndView registerSuggestion(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
+            ExpertDto expertDto, @RequestParam("name") String name) {
+
+        return new ModelAndView("expert/success_register", "expert", expertDto);
     }
 }

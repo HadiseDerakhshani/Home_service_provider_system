@@ -68,7 +68,10 @@ public class OrderServiceImpl implements OrderService {
         order.setReceptionNumber(1000 + order.getId());
         return order;
     }
-
+    @Override
+    public OrderDto find(long number) {
+        return orderMap.createOrderDto(findByReceptionNumber(number));
+    }
     @Override
     public Order findByReceptionNumber(long number) {
         return orderDao.findByReceptionNumber(number).get();

@@ -44,6 +44,10 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
     public Suggestion save(Suggestion suggestion) {
+        //suggest mojod base ya nabashe
+        //reception
+        //status
+
         return suggestionDao.save(suggestion);
     }
 
@@ -52,23 +56,6 @@ public class SuggestionServiceImpl implements SuggestionService {
         return suggestionDao.findByReceptionNumber(number).get();
     }
 
-   /* @Override
-    public Suggestion createSuggest(double price, int timeSpan, int time, Expert expert) {
-
-        Suggestion suggestion = Suggestion.builder()
-                .ProposedPrice(price)
-                .durationOfWork(timeSpan)
-                .startTime(time)
-                .status(SuggestionStatus.NEW)
-                .expert(expert)
-                .build();
-        if (suggestionDao.findByReceptionNumber(suggestion.getReceptionNumber()).isEmpty()) {
-            suggestion = save(suggestion);
-            updateReceptionNumber(suggestion);
-            return suggestion;
-        } else
-            throw new ObjectEntityNotFoundException("---this suggestion exited---");
-    }*/
 
     @Override
     public void updateReceptionNumber(Suggestion suggestion) {

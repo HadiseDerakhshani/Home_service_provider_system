@@ -14,7 +14,7 @@
     <h1> Success Register ${expert.firstName} ${expert.lastName}</h1>
 
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
-    <a href="<c:url value="/"/>" class="btn btn-outline-primary">give suggestion</a>
+    <a href="<c:url value="/expert/suggestion"/>" class="btn btn-outline-primary">give suggestion</a>
 
 
 </div>

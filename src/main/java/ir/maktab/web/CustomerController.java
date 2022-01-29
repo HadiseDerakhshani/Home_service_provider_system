@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@SessionAttributes({"customer"})
+@SessionAttributes({"customer","orderDto"})
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {

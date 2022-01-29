@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.SubServiceDao;
+import ir.maktab.data.repasitory.SubServiceRepository;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.mapping.ExpertMap;
@@ -24,20 +24,20 @@ public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceMap subServiceMap;
 
     private final ExpertMap expertMap;
-    private final SubServiceDao subServiceDao;
+    private final SubServiceRepository subServiceRepository;
 
     @Autowired
     public SubServiceServiceImpl(@Lazy SubServiceMap subServiceMap, @Lazy ExpertMap expertMap,
-                                 SubServiceDao subServiceDao) {
+                                 SubServiceRepository subServiceRepository) {
         this.subServiceMap = subServiceMap;
         this.expertMap = expertMap;
-        this.subServiceDao = subServiceDao;
+        this.subServiceRepository = subServiceRepository;
     }
 
 
     @Override
     public List<SubServiceDto> findAll() {
-        List<SubService> listSubService = subServiceDao.findAll();
+        List<SubService> listSubService = subServiceRepository.findAll();
         if (listSubService != null) {
             List<SubServiceDto> listSubServiceDto = listSubService.stream().map(subServiceMap::createSubServiceDto)
                     .collect(Collectors.toList());
@@ -48,23 +48,23 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public SubServiceDto findByName(String name) {
-        return subServiceMap.createSubServiceDto(subServiceDao.findByName(name).get());
+        return subServiceMap.createSubServiceDto(subServiceRepository.findByName(name).get());
     }
 
     @Override
     public SubService find(String name) {
-        return subServiceDao.findByName(name).get();
+        return subServiceRepository.findByName(name).get();
     }
 
     @Override
     public void addExpertToList(ExpertDto expertDto, SubServiceDto service) {
         SubService subService = find(service.getName());
-      ///  subService.getExpertList().add(expertMap.createExpert(expertDto));
-        subServiceDao.save(subService);
+        ///  subService.getExpertList().add(expertMap.createExpert(expertDto));
+        subServiceRepository.save(subService);
     }
 
     @Override
     public void deleteSubService(String name) {
-        subServiceDao.delete(find(name));
+        subServiceRepository.delete(find(name));
     }
 }

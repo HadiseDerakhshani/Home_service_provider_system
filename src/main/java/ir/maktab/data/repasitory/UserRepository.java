@@ -1,4 +1,4 @@
-package ir.maktab.data.dao;
+package ir.maktab.data.repasitory;
 
 import ir.maktab.data.model.enums.UserRole;
 import ir.maktab.data.model.serviceSystem.SubService;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface UserDao extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
     static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, String service) {
         return (Specification<User>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();

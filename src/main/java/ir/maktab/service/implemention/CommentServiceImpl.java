@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.CommentDao;
+import ir.maktab.data.repasitory.CommentRepository;
 import ir.maktab.data.model.order.Comment;
 import ir.maktab.data.model.user.Customer;
 import ir.maktab.data.model.user.Expert;
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    private final CommentDao commentDao;
+    private final CommentRepository commentRepository;
 
     @Override
     public void save(Comment comment) {
-        commentDao.save(comment);
+        commentRepository.save(comment);
     }
 
     @Override

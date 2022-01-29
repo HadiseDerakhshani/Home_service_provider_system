@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.ServiceDao;
+import ir.maktab.data.repasitory.ServiceRepository;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.mapping.ServiceMap;
 import ir.maktab.data.model.serviceSystem.Service;
@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 
 public class ServiceServiceImpl implements ServiceService {
-    private final ServiceDao serviceDao;
+    private final ServiceRepository serviceRepository;
 
     private final ServiceMap serviceMap;
 
     @Autowired
-    public ServiceServiceImpl(ServiceDao serviceDao, @Lazy ServiceMap serviceMap) {
-        this.serviceDao = serviceDao;
+    public ServiceServiceImpl(ServiceRepository serviceRepository, @Lazy ServiceMap serviceMap) {
+        this.serviceRepository = serviceRepository;
         this.serviceMap = serviceMap;
     }
 
     @Override
     public Service save(Service service) {
-        return serviceDao.save(service);
+        return serviceRepository.save(service);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public ServiceDto findByName(String name) {
-        if (serviceDao.findByName(name).isPresent())
-            return serviceMap.createServiceDto(serviceDao.findByName(name).get());
+        if (serviceRepository.findByName(name).isPresent())
+            return serviceMap.createServiceDto(serviceRepository.findByName(name).get());
         else
             throw new ObjectEntityNotFoundException("Service not found");
     }
@@ -54,18 +54,18 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public void deleteService(String name) {
 
-        serviceDao.delete(serviceMap.createService(findByName(name)));
+        serviceRepository.delete(serviceMap.createService(findByName(name)));
     }
 
     @Override
     public void update(ServiceDto serviceDto) {
         Service service = serviceMap.createService(serviceDto);
-        serviceDao.save(service);
+        serviceRepository.save(service);
     }
 
     @Override
     public List<ServiceDto> findAll() {
-        List<Service> serviceList = serviceDao.findAll();
+        List<Service> serviceList = serviceRepository.findAll();
         return serviceList.stream().map(serviceMap::createServiceDto).collect(Collectors.toList());
     }
 }

@@ -1,4 +1,4 @@
-package ir.maktab.data.dao;
+package ir.maktab.data.repasitory;
 
 
 import ir.maktab.data.model.user.Expert;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ExpertDao extends JpaRepository<Expert, Integer> {
+public interface ExpertRepository extends JpaRepository<Expert, Integer> {
 
 
     Optional<Expert> findByEmail(String email);

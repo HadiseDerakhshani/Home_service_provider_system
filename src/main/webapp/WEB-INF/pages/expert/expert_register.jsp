@@ -111,7 +111,7 @@
                     <select name="name">
                         <c:forEach items="${subServiceDtoList}" var="list">
 
-                            <option value="${list.name}">  ${list.name} </option>
+                            <option value="${list.name}"> ${list.name} </option>
 
                         </c:forEach>
                     </select>

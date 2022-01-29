@@ -1,4 +1,4 @@
-package ir.maktab.data.dao;
+package ir.maktab.data.repasitory;
 
 
 import ir.maktab.data.model.enums.UserStatus;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface CustomerDao extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 
     List<Customer> findByUserStatus(UserStatus status);

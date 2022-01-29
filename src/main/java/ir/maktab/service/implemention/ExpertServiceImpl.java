@@ -1,7 +1,7 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.ExpertDao;
-import ir.maktab.data.dao.SubServiceDao;
+import ir.maktab.data.repasitory.ExpertRepository;
+import ir.maktab.data.repasitory.SubServiceRepository;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +33,9 @@ import java.util.Optional;
 public class ExpertServiceImpl implements ExpertService {
 
     private final ExpertMap expertMap;
-    private final ExpertDao expertDao;
+    private final ExpertRepository expertRepository;
     private final SubServiceMap subServiceMap;
-    private final SubServiceDao subServiceDao;
+    private final SubServiceRepository subServiceRepository;
     private final SuggestionMap suggestionMap;
 
     private final SubServiceServiceImpl subServiceServiceImpl;
@@ -46,18 +45,18 @@ public class ExpertServiceImpl implements ExpertService {
     private final SuggestionServiceImpl suggestionServiceImpl;
 
     @Autowired
-    public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
+    public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertRepository expertRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                              @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap,
                              @Lazy SuggestionServiceImpl suggestionServiceImpl, @Lazy SubServiceMap subServiceMap,
-                             @Lazy SubServiceDao subServiceDao) {
+                             @Lazy SubServiceRepository subServiceRepository) {
         this.expertMap = expertMap;
-        this.expertDao = expertDao;
+        this.expertRepository = expertRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.suggestionServiceImpl = suggestionServiceImpl;
         this.suggestionMap = suggestionMap;
         this.subServiceMap = subServiceMap;
-        this.subServiceDao = subServiceDao;
+        this.subServiceRepository = subServiceRepository;
     }
 
     @Override
@@ -66,7 +65,7 @@ public class ExpertServiceImpl implements ExpertService {
             Expert expert = expertMap.createExpert(expertDto);
             expert.setUserStatus(UserStatus.WAITING_CONFIRM);
             expert.setUserRole(UserRole.EXPERT);
-            return expertDao.save(expert);
+            return expertRepository.save(expert);
         } else
             throw new InValidUserInfoException("-- Expert is exit for this email --");
     }
@@ -76,19 +75,19 @@ public class ExpertServiceImpl implements ExpertService {
     public void updatePassword(ExpertDto expertDto, String newPass) {
         Expert expert = findByEmail(expertDto.getEmail()).get();
         expert.setPassword(newPass);
-        expertDao.save(expert);
+        expertRepository.save(expert);
     }
 
     @Override
     public void updatePhoneNumber(ExpertDto expertDto, String newPhoneNumber) {
         Expert expert = findByEmail(expertDto.getEmail()).get();
         expert.setPhoneNumber(newPhoneNumber);
-        expertDao.save(expert);
+        expertRepository.save(expert);
     }
 
     @Override
     public Optional<Expert> findByEmail(String email) {
-        return expertDao.findByEmail(email);
+        return expertRepository.findByEmail(email);
     }
 
     @Override
@@ -98,7 +97,8 @@ public class ExpertServiceImpl implements ExpertService {
             orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         orderServiceImpl.addSuggestionToOrder(order, suggestionMap.createSuggestion(suggestionDto));
     }
-@Override
+
+    @Override
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {
         SubService subService = subServiceServiceImpl.find(name);
         Expert expert = expertMap.createExpert(expertDto);
@@ -110,14 +110,14 @@ public class ExpertServiceImpl implements ExpertService {
     public void updateServiceList(List<SubService> list, ExpertDto expert) {
         Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setServiceList(list);
-        expertDao.save(expertFound);
+        expertRepository.save(expertFound);
     }
 
     @Override
     public void updateScore(int score, Expert expert) {
         Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setScore(score);
-        expertDao.save(expertFound);
+        expertRepository.save(expertFound);
 
     }
 
@@ -125,7 +125,7 @@ public class ExpertServiceImpl implements ExpertService {
     public void updateStatus(UserStatus status, Expert expert) {
         Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setUserStatus(status);
-        expertDao.save(expertFound);
+        expertRepository.save(expertFound);
     }
 
     @Override
@@ -133,12 +133,12 @@ public class ExpertServiceImpl implements ExpertService {
         Expert expertFound = findByEmail(expert.getEmail()).get();
         double credit = expertFound.getCredit();
         expertFound.setCredit(credit + amount);
-        expertDao.save(expertFound);
+        expertRepository.save(expertFound);
     }
 
     @Override
     public List<ExpertDto> findAll(int pageNumber, int pageSize) {
-        Page<Expert> pageList = expertDao.findAll(PageRequest.of(pageNumber, pageSize));
+        Page<Expert> pageList = expertRepository.findAll(PageRequest.of(pageNumber, pageSize));
         List<Expert> list = pageList.toList();
         List<ExpertDto> listDto = new ArrayList<>();
         if (list != null) {
@@ -152,12 +152,12 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public long totalRecord() {
-        return expertDao.count();
+        return expertRepository.count();
     }
 
     @Override
     public void deleteExpert(String email) {
-        expertDao.delete(expertDao.findByEmail(email).get());
+        expertRepository.delete(expertRepository.findByEmail(email).get());
     }
 
 }

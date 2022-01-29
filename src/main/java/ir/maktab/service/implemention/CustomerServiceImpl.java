@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.CustomerDao;
+import ir.maktab.data.repasitory.CustomerRepository;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerDao customerDao;
+    private final CustomerRepository customerRepository;
 
     private final SuggestionServiceImpl suggestServiceImpl;
 
@@ -45,10 +45,10 @@ public class CustomerServiceImpl implements CustomerService {
     private final OrderMap orderMap;
 
     @Autowired
-    public CustomerServiceImpl(CustomerDao customerDao, @Lazy SuggestionServiceImpl suggestServiceImpl,
+    public CustomerServiceImpl(CustomerRepository customerRepository, @Lazy SuggestionServiceImpl suggestServiceImpl,
                                @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
                                @Lazy CommentServiceImpl commentServiceImpl, @Lazy OrderMap orderMap, @Lazy CustomerMap customerMap) {
-        this.customerDao = customerDao;
+        this.customerRepository = customerRepository;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
             customer.setUserRole(UserRole.CUSTOMER);
             // customer.setOrderList(customerDto.getOrderList());
-            return customerDao.save(customer);
+            return customerRepository.save(customer);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
     }
@@ -73,7 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDto> findByUserStatus(UserStatus status) {
 
-        List<Customer> list = customerDao.findByUserStatus(status);
+        List<Customer> list = customerRepository.findByUserStatus(status);
 
         String nameStatus = status.name();
         List<CustomerDto> listDto = new ArrayList<>();
@@ -88,14 +88,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String email) {
-        customerDao.delete(customerDao.findByEmail(email).get());
+        customerRepository.delete(customerRepository.findByEmail(email).get());
     }
 
     @Override
     public void changePassword(CustomerDto customer, String newPass) {
         Customer customerFound = findByEmail(customer.getEmail()).get();
         customerFound.setPassword(newPass);
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
 
     }
 
@@ -105,14 +105,14 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.getOrderList().add(orderDto);
         customerFound.setOrderList(customerDto.getOrderList().stream().map(orderMap::createOrder)
                 .collect(Collectors.toList()));
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
     }
 
     @Override
     public void updateStatus(String email, UserStatus status) {
         Customer customerFound = findByEmail(email).get();
         customerFound.setUserStatus(status);
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
 
     }
 
@@ -120,14 +120,14 @@ public class CustomerServiceImpl implements CustomerService {
     public void changePhoneNumber(CustomerDto customer, String newPhoneNumber) {
         Customer customerFound = findByEmail(customer.getEmail()).get();
         customerFound.setPhoneNumber(newPhoneNumber);
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
 
     }
 
     @Override
     public Optional<Customer> findByEmail(String email) {
 
-        return customerDao.findByEmail(email);
+        return customerRepository.findByEmail(email);
 
     }
 
@@ -136,7 +136,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerFound = findByEmail(customer.getEmail()).get();
         double credit = customerFound.getCredit();
         customerFound.setCredit(credit + amount);
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
     }
 
     @Override
@@ -144,12 +144,12 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerFound = findByEmail(customer.getEmail()).get();
         double credit = customerFound.getCredit();
         customerFound.setCredit(credit - amount);
-        customerDao.save(customerFound);
+        customerRepository.save(customerFound);
     }
 
     @Override
     public List<CustomerDto> findAll(int pageNumber, int pageSize) {
-        Page<Customer> pageList = customerDao.findAll(PageRequest.of(pageNumber, pageSize));
+        Page<Customer> pageList = customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
         List<Customer> list = pageList.toList();
         List<CustomerDto> listDto = new ArrayList<>();
         if (list != null) {
@@ -199,7 +199,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public long totalRecord() {
-        return customerDao.count();
+        return customerRepository.count();
     }
 
 }

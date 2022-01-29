@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.UserDao;
+import ir.maktab.data.repasitory.UserRepository;
 import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.mapping.UserMap;
 import ir.maktab.data.model.enums.UserRole;
@@ -21,22 +21,22 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     private final UserMap userMap;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, @Lazy UserMap userMap) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepository userRepository, @Lazy UserMap userMap) {
+        this.userRepository = userRepository;
         this.userMap = userMap;
     }
 
     @Override
     public UserDto findByEmail(String email) {
-        if (userDao.findByEmail(email).isPresent())
+        if (userRepository.findByEmail(email).isPresent())
             throw new ObjectEntityNotFoundException("user is not exit");
         else {
-            User user = userDao.findByEmail(email).get();
+            User user = userRepository.findByEmail(email).get();
 
             return userMap.createUserDto(user);
         }
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> filtering(String name, String family, String email, UserRole role, SubService service) {
         List<UserDto> listDto = new ArrayList<>();
-        List<User> list = userDao.findAll(UserDao.filterByCriteria(name, family, email, role, service.getName()));
+        List<User> list = userRepository.findAll(UserRepository.filterByCriteria(name, family, email, role, service.getName()));
         if (list.size() != 0) {
             for (User user : list) {
                 listDto.add(userMap.createUserDto(user));

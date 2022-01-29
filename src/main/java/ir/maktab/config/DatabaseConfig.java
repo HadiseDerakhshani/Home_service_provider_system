@@ -17,7 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@EnableJpaRepositories(basePackages = "ir.maktab.data.dao")
+@EnableJpaRepositories(basePackages = "ir.maktab.data.repasitory")
 @PropertySource("classpath:database.properties")
 @Configuration
 @EnableTransactionManagement

@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.OrderDao;
+import ir.maktab.data.repasitory.OrderRepository;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderMap orderMap;
 
-    private final OrderDao orderDao;
+    private final OrderRepository orderRepository;
     private final SubServiceMap subServiceMap;
 
     private final SubServiceServiceImpl subServiceServiceImpl;
@@ -41,11 +41,11 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerServiceImpl customerServiceImpl;
 
     @Autowired
-    public OrderServiceImpl(@Lazy OrderMap orderMap, OrderDao orderDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
+    public OrderServiceImpl(@Lazy OrderMap orderMap, OrderRepository orderRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                             @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl,
                             @Lazy SubServiceMap subServiceMap) {
         this.orderMap = orderMap;
-        this.orderDao = orderDao;
+        this.orderRepository = orderRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.customerServiceImpl = customerServiceImpl;
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findOrderToSuggest() {
-        List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
+        List<Order> list = orderRepository.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
                 OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         if (list != null) {
             return list.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
@@ -68,34 +68,36 @@ public class OrderServiceImpl implements OrderService {
         order.setReceptionNumber(1000 + order.getId());
         return order;
     }
+
     @Override
     public OrderDto find(long number) {
         return orderMap.createOrderDto(findByReceptionNumber(number));
     }
+
     @Override
     public Order findByReceptionNumber(long number) {
-        return orderDao.findByReceptionNumber(number).get();
+        return orderRepository.findByReceptionNumber(number).get();
     }
 
     @Override
     public void updateStatus(Order order, OrderStatus status) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setStatus(status);
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
     public void updatePricePaid(Order order, double amount) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setPricePaid(amount);
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
     public void addSuggestionToOrder(Order order, Suggestion suggest) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.getSuggestion().add(suggest);
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
@@ -103,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setExpert(expertServiceImpl.findByEmail(expert.getEmail()).get());
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
@@ -111,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setCustomer(customerServiceImpl.findByEmail(customer.getEmail()).get());
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
@@ -119,12 +121,12 @@ public class OrderServiceImpl implements OrderService {
 
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setService(subServiceServiceImpl.find(subServiceDto.getName()));
-        orderDao.save(orderFound);
+        orderRepository.save(orderFound);
     }
 
     @Override
     public List<OrderDto> findAll() {
-        List<Order> list = orderDao.findAll();
+        List<Order> list = orderRepository.findAll();
         List<OrderDto> listDto = new ArrayList<>();
         if (list != null) {
             for (Order order : list) {
@@ -137,7 +139,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findOrderToSelectExpert(Customer customer) {
-        List<Order> list = orderDao.findAll();
+        List<Order> list = orderRepository.findAll();
         List<OrderDto> listFind = findAll();
         if (list != null) {
             List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
@@ -153,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findOrderToPayment(Customer customer) {
-        List<Order> list = orderDao.findAll();
+        List<Order> list = orderRepository.findAll();
         List<OrderDto> listFind = findAll();
         if (list != null) {
             List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
@@ -184,9 +186,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public OrderDto save(OrderDto orderDto) {
-        Order save = orderDao.save(orderMap.createOrder(orderDto));
+        Order save = orderRepository.save(orderMap.createOrder(orderDto));
         Order order = giveReceptionNumber(save);
-        orderDao.save(order);
+        orderRepository.save(order);
         return orderMap.createOrderDto(order);
     }
 }

@@ -1,4 +1,4 @@
-package ir.maktab.data.dao;
+package ir.maktab.data.repasitory;
 
 import ir.maktab.data.model.order.Suggestion;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SuggestionDao extends JpaRepository<Suggestion, Integer> {
+public interface SuggestionRepository extends JpaRepository<Suggestion, Integer> {
 
     Optional<Suggestion> findByReceptionNumber(long number);
 

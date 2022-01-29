@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.ManagerDao;
+import ir.maktab.data.repasitory.ManagerRepository;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.mapping.ManagerMap;
 import ir.maktab.data.model.enums.OrderStatus;
@@ -28,17 +28,17 @@ public class ManagerServiceImpl implements ManagerService {
     private final OrderServiceImpl orderServiceImpl;
 
     private final ExpertServiceImpl expertServiceImpl;
-    private final ManagerDao managerDao;
+    private final ManagerRepository managerRepository;
 
     private final ManagerMap managerMap;
 
     @Autowired
     public ManagerServiceImpl(@Lazy CustomerServiceImpl customerServiceImpl, @Lazy OrderServiceImpl orderServiceImpl,
-                              @Lazy ExpertServiceImpl expertServiceImpl, ManagerDao managerDao, @Lazy ManagerMap managerMap) {
+                              @Lazy ExpertServiceImpl expertServiceImpl, ManagerRepository managerRepository, @Lazy ManagerMap managerMap) {
         this.customerServiceImpl = customerServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
-        this.managerDao = managerDao;
+        this.managerRepository = managerRepository;
         this.managerMap = managerMap;
     }
 
@@ -55,7 +55,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void Save(Manager manager) {
         if (checkManager(manager) == null) {
-            managerDao.save(manager);
+            managerRepository.save(manager);
         }
         throw new ObjectEntityNotFoundException("--- manager is exit ----");
     }
@@ -63,7 +63,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Manager checkManager(Manager manager) {
 
-        return managerDao.findByUsernameAndPassword(manager.getUsername(), manager.getPassword()).get();
+        return managerRepository.findByUsernameAndPassword(manager.getUsername(), manager.getPassword()).get();
     }
 
     @Override

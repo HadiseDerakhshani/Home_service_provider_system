@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.AddressDao;
+import ir.maktab.data.repasitory.AddressRepository;
 import ir.maktab.data.dto.AddressDto;
 import ir.maktab.data.mapping.AddressMap;
 import ir.maktab.data.model.order.Address;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    private final AddressDao addressDao;
+    private final AddressRepository addressRepository;
     @Lazy
     private final AddressMap addressMap;
 
     @Override
     public AddressDto save(AddressDto address) {
 
-        return addressMap.createAddressDto(addressDao.save(addressMap.createAddress(address)));
+        return addressMap.createAddressDto(addressRepository.save(addressMap.createAddress(address)));
     }
 
     @Override

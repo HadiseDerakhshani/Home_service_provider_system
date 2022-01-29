@@ -12,9 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@SessionAttributes({"customer","orderDto"})
+@SessionAttributes({"customer", "orderDto"})
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/customer")
 public class CustomerController {
 
     private final CustomerServiceImpl customerService;

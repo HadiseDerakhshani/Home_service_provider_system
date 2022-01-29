@@ -1,4 +1,4 @@
-package ir.maktab.data.dao;
+package ir.maktab.data.repasitory;
 
 import ir.maktab.data.model.enums.OrderStatus;
 import ir.maktab.data.model.order.Order;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrderDao extends JpaRepository<Order, Integer> {
+public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByStatusOrStatus(OrderStatus statusSelect, OrderStatus statusSuggest);
 

@@ -13,7 +13,14 @@
 
 <h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
 <table border="5" width="70%" cellpadding="2">
-    <tr>><th>Service</th><th>Do Date</th><th>Proposed price</th><th>Jop Description</th><th>Date Register</th><th>Reception Number</th></tr>
+    <tr>>
+        <th>Service</th>
+        <th>Do Date</th>
+        <th>Proposed price</th>
+        <th>Jop Description</th>
+        <th>Date Register</th>
+        <th>Reception Number</th>
+    </tr>
     <c:forEach var="list" items="${list}">
         <tr>
             <td>${list.service}</td>

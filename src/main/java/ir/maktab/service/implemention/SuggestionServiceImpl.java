@@ -1,6 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dao.SuggestionDao;
+import ir.maktab.data.repasitory.SuggestionRepository;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SuggestionMap;
@@ -26,18 +26,18 @@ public class SuggestionServiceImpl implements SuggestionService {
     private final SuggestionMap suggestionMap;
 
     private final ExpertMap expertMap;
-    private final SuggestionDao suggestionDao;
+    private final SuggestionRepository suggestionRepository;
 
     private final ExpertServiceImpl expertServiceImpl;
 
     private final OrderServiceImpl orderServiceImpl;
 
     @Autowired
-    public SuggestionServiceImpl(@Lazy SuggestionMap suggestionMap, @Lazy ExpertMap expertMap, SuggestionDao suggestionDao,
+    public SuggestionServiceImpl(@Lazy SuggestionMap suggestionMap, @Lazy ExpertMap expertMap, SuggestionRepository suggestionRepository,
                                  @Lazy ExpertServiceImpl expertServiceImpl, @Lazy OrderServiceImpl orderServiceImpl) {
         this.suggestionMap = suggestionMap;
         this.expertMap = expertMap;
-        this.suggestionDao = suggestionDao;
+        this.suggestionRepository = suggestionRepository;
         this.expertServiceImpl = expertServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
     }
@@ -48,25 +48,25 @@ public class SuggestionServiceImpl implements SuggestionService {
         //reception
         //status
 
-        return suggestionDao.save(suggestion);
+        return suggestionRepository.save(suggestion);
     }
 
     @Override
     public Suggestion findByReceptionNumber(long number) {
-        return suggestionDao.findByReceptionNumber(number).get();
+        return suggestionRepository.findByReceptionNumber(number).get();
     }
 
 
     @Override
     public void updateReceptionNumber(Suggestion suggestion) {
         suggestion.setReceptionNumber((suggestion.getId() + 1000));
-        suggestionDao.save(suggestion);
+        suggestionRepository.save(suggestion);
     }
 
     @Override
     public void updateStatus(Suggestion suggestion, SuggestionStatus status) {
         suggestion.setStatus(status);
-        suggestionDao.save(suggestion);
+        suggestionRepository.save(suggestion);
     }
 
     @Override

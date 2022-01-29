@@ -19,7 +19,7 @@
     <form:form cssClass="p-1 my-5 mx-5" modelAttribute="suggest" enctype="multipart/form-data"
                action="/expert/registerExpert" method="post">
         <table class="table table-bordered table-striped text-dark">
-        <tr>Order for service : ${orderDto.service} & reception number : ${orderDto.receptionNumber}</tr>
+            <tr>Order for service : ${orderDto.service} & reception number : ${orderDto.receptionNumber}</tr>
             <tr>
                 <td>
                     <form:label path="firstName">proposed Price :</form:label>

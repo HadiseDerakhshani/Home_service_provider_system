@@ -1,6 +1,5 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.repasitory.SuggestionRepository;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SuggestionMap;
@@ -10,6 +9,7 @@ import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.order.Order;
 import ir.maktab.data.model.order.Suggestion;
 import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.repasitory.SuggestionRepository;
 import ir.maktab.service.SuggestionService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +43,11 @@ public class SuggestionServiceImpl implements SuggestionService {
     }
 
     @Override
-    public Suggestion save(Suggestion suggestion) {
-        //suggest mojod base ya nabashe
-        //reception
-        //status
-
-        return suggestionRepository.save(suggestion);
+    public SuggestionDto save(SuggestionDto suggestion) {
+        Suggestion suggest = suggestionMap.createSuggestion(suggestion);
+        suggest.setStatus(SuggestionStatus.NEW);
+        giveReceptionNumber(suggest);
+        return suggestionMap.createSuggestionDto(suggestionRepository.save(suggest));
     }
 
     @Override
@@ -58,7 +57,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 
 
     @Override
-    public void updateReceptionNumber(Suggestion suggestion) {
+    public void giveReceptionNumber(Suggestion suggestion) {
         suggestion.setReceptionNumber((suggestion.getId() + 1000));
         suggestionRepository.save(suggestion);
     }

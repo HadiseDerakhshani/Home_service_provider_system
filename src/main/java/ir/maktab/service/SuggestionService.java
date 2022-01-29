@@ -10,12 +10,12 @@ import java.util.List;
 public interface SuggestionService {
 
 
-    public Suggestion save(Suggestion suggestion);
+    public SuggestionDto save(SuggestionDto suggestion);
 
     public Suggestion findByReceptionNumber(long number);
 
 
-    public void updateReceptionNumber(Suggestion suggestion);
+    public void giveReceptionNumber(Suggestion suggestion);
 
     public void updateStatus(Suggestion suggestion, SuggestionStatus status);
 

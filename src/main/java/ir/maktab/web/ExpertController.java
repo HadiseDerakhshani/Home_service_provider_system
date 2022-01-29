@@ -8,6 +8,7 @@ import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
+import ir.maktab.service.implemention.SuggestionServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,8 @@ public class ExpertController {
     private final SubServiceServiceImpl subServiceService;
     @Lazy
     private final OrderServiceImpl orderService;
+    @Lazy
+    private final SuggestionServiceImpl suggestionService;
 
     @GetMapping
     public String showRegisterPage(Model model) {
@@ -60,7 +63,7 @@ public class ExpertController {
     @GetMapping("/suggestion")
     public ModelAndView showRegisterSuggestPage() {
         List<OrderDto> list = orderService.findOrderToSuggest();
-        return new ModelAndView("suggestion/choose_order","list", list);
+        return new ModelAndView("suggestion/choose_order", "list", list);
     }
 
     @GetMapping("/selectOrder/{number}")
@@ -73,10 +76,11 @@ public class ExpertController {
     }
 
     @PostMapping(value = "/registerSuggestion")
-    public ModelAndView registerSuggestion( @Validated @ModelAttribute("suggest")SuggestionDto suggestionDto,
-                                            @SessionAttribute("expert") ExpertDto expertDto,
-                                            @SessionAttribute("orderDto")OrderDto orderDto) {
-
+    public ModelAndView registerSuggestion(@Validated @ModelAttribute("suggest") SuggestionDto suggestionDto,
+                                           @SessionAttribute("expert") ExpertDto expertDto,
+                                           @SessionAttribute("orderDto") OrderDto orderDto) {
+        SuggestionDto saveSuggest = suggestionService.save(suggestionDto);
+        ////todo
         return new ModelAndView("expert/success_register", "expert", expertDto);
     }
 }

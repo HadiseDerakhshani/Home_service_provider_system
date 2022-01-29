@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,14 +98,11 @@ public class ExpertServiceImpl implements ExpertService {
             orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         orderServiceImpl.addSuggestionToOrder(order, suggestionMap.createSuggestion(suggestionDto));
     }
-
+@Override
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {
-
         SubService subService = subServiceServiceImpl.find(name);
         Expert expert = expertMap.createExpert(expertDto);
         expert.getServiceList().add(subService);
-        subService.getExpertList().add(expert);
-        subServiceDao.save(subService);
         return expertMap.createExpertDto(expert);
     }
 

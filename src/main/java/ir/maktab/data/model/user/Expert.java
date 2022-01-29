@@ -24,7 +24,7 @@ public class Expert extends User {
     @Lob
     private byte[] image;
     private int score;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "expertList")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<SubService> serviceList = new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Order> orderList = new ArrayList<>();

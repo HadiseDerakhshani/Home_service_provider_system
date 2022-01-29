@@ -25,7 +25,7 @@
                     <form:label path="firstName">First Name :</form:label>
                 </td>
                 <td>
-                    <form:input path="firstName" name="firstName"/>
+                    <form:input path="firstName" name="firstName" placeholder="enter your name"/>
                 </td>
             </tr>
             <tr>
@@ -40,7 +40,7 @@
                     <form:label path="lastName">Last Name :</form:label>
                 </td>
                 <td>
-                    <form:input path="lastName" name="lastName"/>
+                    <form:input path="lastName" name="lastName" placeholder="enter your family"/>
                 </td>
             </tr>
             <tr>
@@ -55,7 +55,7 @@
                     <form:label path="email">Email :</form:label>
                 </td>
                 <td>
-                    <form:input path="email" name="email"/>
+                    <form:input path="email" name="email" placeholder="email@gmaile.com"/>
                 </td>
             </tr>
             <tr>
@@ -70,7 +70,7 @@
                     <form:label path="password">Password :</form:label>
                 </td>
                 <td>
-                    <form:input path="password" name="password"/>
+                    <form:input path="password" name="password" placeholder="min 8{number,alphbet,symbole}"/>
                 </td>
             </tr>
             <tr>
@@ -85,7 +85,7 @@
                     <form:label path="phoneNumber">Phone Number :</form:label>
                 </td>
                 <td>
-                    <form:input path="phoneNumber" name="phoneNumber"/>
+                    <form:input path="phoneNumber" name="phoneNumber" placeholder="09*********"/>
                 </td>
             </tr>
             <tr>
@@ -105,10 +105,13 @@
             </tr>
             <tr>
                 <td>
+                    Select Service :
+                </td>
+                <td>
                     <select name="name">
-                        <c:forEach items="${serviceList}" var="list">
+                        <c:forEach items="${subServiceDtoList}" var="list">
 
-                            <option value="${list.name}">${list.name} , ${list.price} T ,(${list.description})</option>
+                            <option value="${list.name}">  ${list.name} </option>
 
                         </c:forEach>
                     </select>

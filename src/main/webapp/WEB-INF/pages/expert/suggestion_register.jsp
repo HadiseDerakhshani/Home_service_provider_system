@@ -3,17 +3,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>register_customer Page</title>
+    <title>Register Expert Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
 
 </head>
+<head>
+    <title>Register Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 <body>
 <div>
-    <h1 style="color:red">${message}</h1>
-    <form:form cssClass="p-3 m-3" modelAttribute="customer" action="/customer/register" method="post">
+    <form:form cssClass="p-1 my-5 mx-5" modelAttribute="suggest" enctype="multipart/form-data"
+               action="/expert/registerExpert" method="post">
         <table class="table table-bordered table-striped text-dark">
+
             <tr>
                 <td>
                     <form:label path="firstName">First Name :</form:label>
@@ -91,17 +97,24 @@
             </tr>
             <tr>
                 <td>
-                    <form:label path="credit">Credit :</form:label>
+                    <label>Upload Profile Image :</label>
                 </td>
                 <td>
-                    <form:input path="credit" name="credit"/>
+                    <input type="file" id="image" name="image">
                 </td>
             </tr>
             <tr>
                 <td>
+                    Select Service :
                 </td>
                 <td>
-                    <form:errors path="credit" cssClass="text-danger"/>
+                    <select name="name">
+                        <c:forEach items="${subServiceDtoList}" var="list">
+
+                            <option value="${list.name}">  ${list.name} </option>
+
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -114,7 +127,6 @@
         </table>
     </form:form>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

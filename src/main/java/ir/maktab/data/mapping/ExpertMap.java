@@ -37,6 +37,7 @@ public class ExpertMap {
                 .password(expertDto.getPassword())
                 .phoneNumber(expertDto.getPhoneNumber())
                 .credit(expertDto.getCredit())
+                .image(expertDto.getPhoto())
                 .build();
         if (expertDto.getServiceList() != null) {
             expert.setServiceList(expertDto.getServiceList().stream().map(subServiceMap::createSubService)
@@ -65,6 +66,7 @@ public class ExpertMap {
                 .password(expert.getPassword())
                 .phoneNumber(expert.getPhoneNumber())
                 .credit(expert.getCredit())
+                .photo(expert.getImage())
                 .build();
         if (expert.getServiceList() != null) {
             expertDto.setServiceList(expert.getServiceList().stream().map(subServiceMap::createSubServiceDto)

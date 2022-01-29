@@ -24,6 +24,7 @@ import java.util.Set;
 @Component
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/order")
 public class OrderController {
     @Lazy
     private final CustomerServiceImpl customerService;
@@ -33,18 +34,17 @@ public class OrderController {
     private final SubServiceServiceImpl subServiceService;
     @Lazy
     private final ServiceServiceImpl service;
-    @Lazy
-    private final AddressServiceImpl addressService;
 
-    @GetMapping("/order")
+
+    @GetMapping
     public ModelAndView showRegisterOrder() {
 
         List<ServiceDto> serviceDtoList = service.findAll();
 
-        return new ModelAndView("/order/choose_service", "serviceDtoList", serviceDtoList);
+        return new ModelAndView("services/choose_service", "serviceDtoList", serviceDtoList);
     }
 
-    @PostMapping("/order/registerOrder")
+    @PostMapping("/registerOrder")
     public ModelAndView registerOrder(@Validated @ModelAttribute("order") OrderDto orderDto,
                                       @SessionAttribute("customer") CustomerDto customerDto,
                                       @RequestParam("name") String name) {
@@ -65,7 +65,7 @@ public class OrderController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
-    @GetMapping("/order/selectService/{name}")
+    @GetMapping("/selectService/{name}")
     public String selectService(@PathVariable String name, Model model) {
         ServiceDto serviceDto = service.findByName(name);
         Set<SubServiceDto> subServiceList = serviceDto.getSubServiceList();

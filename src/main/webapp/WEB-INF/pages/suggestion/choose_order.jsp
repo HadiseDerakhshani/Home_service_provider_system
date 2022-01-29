@@ -3,21 +3,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>success Page</title>
+    <title>Choose Service Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
 
 </head>
 <body>
-<div class="container">
-    <h1> Success Register ${expert.firstName} ${expert.lastName}</h1>
 
-    <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
-    <a href="<c:url value="/"/>" class="btn btn-outline-primary">give suggestion</a>
+<h2 style="color: floralwhite">please select service for order</h2>
+<table border="5" width="70%" cellpadding="2">
 
-
-</div>
+    <c:forEach var="list" items="${serviceDtoList}">
+        <tr>
+            <td>${list.name}</td>
+            <td><a href="/order/selectService/${list.name}">Select</a></td>
+        </tr>
+    </c:forEach>
+</table>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

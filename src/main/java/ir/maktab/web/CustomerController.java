@@ -12,20 +12,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@SessionAttributes({"customer", "serviceList"})
+@SessionAttributes({"customer"})
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerServiceImpl customerService;
 
-    @GetMapping("/customer")
+    @GetMapping
     public ModelAndView showRegisterPage() {
 
         return new ModelAndView("customer/customer_register", "customer", new CustomerDto());
     }
 
-    @PostMapping("/customer/register")
+    @PostMapping("/register")
     public ModelAndView register(@Validated @ModelAttribute("customer") CustomerDto customerDto) {
         customerService.save(customerDto);
         return new ModelAndView("customer/success_register", "customer", customerDto);

@@ -59,7 +59,7 @@ public class SubServiceServiceImpl implements SubServiceService {
     @Override
     public void addExpertToList(ExpertDto expertDto, SubServiceDto service) {
         SubService subService = find(service.getName());
-        subService.getExpertList().add(expertMap.createExpert(expertDto));
+      ///  subService.getExpertList().add(expertMap.createExpert(expertDto));
         subServiceDao.save(subService);
     }
 

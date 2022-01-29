@@ -54,16 +54,11 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<OrderDto> findSuggest() {
+    public List<OrderDto> findOrderToSuggest() {
         List<Order> list = orderDao.findByStatusOrStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION,
                 OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         if (list != null) {
-            ArrayList<OrderDto> listOrderDto = new ArrayList<>();
-            ///stream
-            for (Order order : list) {
-                listOrderDto.add(orderMap.createOrderDto(order));
-            }
-            return listOrderDto;
+            return list.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
         } else
             throw new ObjectEntityNotFoundException("---order is not for given Suggestion---");
     }

@@ -58,11 +58,9 @@ public class ExpertController {
     }
 
     @GetMapping("/suggestion")
-    public String showRegisterSuggestPage(Model model) {
+    public ModelAndView showRegisterSuggestPage() {
         List<OrderDto> list = orderService.findOrderToSuggest();
-        model.addAttribute("list", list);
-
-        return "suggestion/choose_order";
+        return new ModelAndView("suggestion/choose_order","list", list);
     }
 
     @GetMapping("/selectOrder/{number}")
@@ -75,8 +73,9 @@ public class ExpertController {
     }
 
     @PostMapping(value = "/registerSuggestion")
-    public ModelAndView registerSuggestion(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
-            ExpertDto expertDto, @RequestParam("name") String name) {
+    public ModelAndView registerSuggestion( @Validated @ModelAttribute("suggest")SuggestionDto suggestionDto,
+                                            @SessionAttribute("expert") ExpertDto expertDto,
+                                            @SessionAttribute("orderDto")OrderDto orderDto) {
 
         return new ModelAndView("expert/success_register", "expert", expertDto);
     }

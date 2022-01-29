@@ -29,7 +29,7 @@
             <td>${list.jobDescription}</td>
             <td>${list.registerDate}</td>
             <td>${list.receptionNumber}</td>
-            <td><a href="/expert/registerSuggestion/${list.receptionNumber}">Select</a></td>
+            <td><a href="/expert/selectOrder/${list.receptionNumber}">Select</a></td>
         </tr>
     </c:forEach>
 </table>

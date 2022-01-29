@@ -17,8 +17,9 @@
 <body>
 <div>
     <form:form cssClass="p-1 my-5 mx-5" modelAttribute="expert" enctype="multipart/form-data"
-               action="/expert/initializer" method="post">
+               action="/expert/registerExpert" method="post">
         <table class="table table-bordered table-striped text-dark">
+
             <tr>
                 <td>
                     <form:label path="firstName">First Name :</form:label>
@@ -100,6 +101,17 @@
                 </td>
                 <td>
                     <input type="file" id="image" name="image">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="name">
+                        <c:forEach items="${serviceList}" var="list">
+
+                            <option value="${list.name}">${list.name} , ${list.price} T ,(${list.description})</option>
+
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>

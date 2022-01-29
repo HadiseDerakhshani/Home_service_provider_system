@@ -1,8 +1,8 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dao.ExpertDao;
+import ir.maktab.data.dao.SubServiceDao;
 import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SubServiceMap;
@@ -35,7 +35,7 @@ public class ExpertServiceImpl implements ExpertService {
     private final ExpertMap expertMap;
     private final ExpertDao expertDao;
     private final SubServiceMap subServiceMap;
-
+    private final SubServiceDao subServiceDao;
     private final SuggestionMap suggestionMap;
 
     private final SubServiceServiceImpl subServiceServiceImpl;
@@ -47,7 +47,8 @@ public class ExpertServiceImpl implements ExpertService {
     @Autowired
     public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertDao expertDao, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                              @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap,
-                             @Lazy SuggestionServiceImpl suggestionServiceImpl, @Lazy SubServiceMap subServiceMap) {
+                             @Lazy SuggestionServiceImpl suggestionServiceImpl, @Lazy SubServiceMap subServiceMap,
+                             @Lazy SubServiceDao subServiceDao) {
         this.expertMap = expertMap;
         this.expertDao = expertDao;
         this.subServiceServiceImpl = subServiceServiceImpl;
@@ -55,6 +56,7 @@ public class ExpertServiceImpl implements ExpertService {
         this.suggestionServiceImpl = suggestionServiceImpl;
         this.suggestionMap = suggestionMap;
         this.subServiceMap = subServiceMap;
+        this.subServiceDao = subServiceDao;
     }
 
     @Override
@@ -96,23 +98,14 @@ public class ExpertServiceImpl implements ExpertService {
         orderServiceImpl.addSuggestionToOrder(order, suggestionMap.createSuggestion(suggestionDto));
     }
 
-    @Override
-    public List<SubService> addSubServiceExpert(ExpertDto expertDto, List<SubServiceDto> subServiceDtoList, int index) {
-        index--;
+    public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {
 
-        SubServiceDto subServiceDto = subServiceDtoList.get(index);
-
-        SubService subService = subServiceMap.createSubService(subServiceServiceImpl.findByName(subServiceDto.getName()));
-        SubServiceDto findService = null;
-        findService = expertDto.getServiceList().stream().filter(s -> s.getName().equals(subService.getName()))
-                .findAny().orElse(null);
-
-        if (findService == null) {
-            Expert expert = expertMap.createExpert(expertDto);
-            expert.getServiceList().add(subService);
-            return expert.getServiceList();
-        } else
-            throw new ObjectEntityNotFoundException("---not add Because this subService exit in expert ir.maktab.service list---");
+        SubService subService = subServiceServiceImpl.find(name);
+        Expert expert = expertMap.createExpert(expertDto);
+        expert.getServiceList().add(subService);
+        subService.getExpertList().add(expert);
+        subServiceDao.save(subService);
+        return expertMap.createExpertDto(expert);
     }
 
     @Override

@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<div class="cantainer">
+<div class="container">
     <h1> Success Register Expert </h1>
 
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>

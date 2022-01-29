@@ -1,7 +1,6 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.model.enums.UserStatus;
 import ir.maktab.data.model.serviceSystem.SubService;
@@ -25,7 +24,7 @@ public interface ExpertService {
 
     public void addSuggest(int number, SuggestionDto suggestionDto, ExpertDto expertDto);
 
-    public List<SubService> addSubServiceExpert(ExpertDto expertDto, List<SubServiceDto> subServiceDtoList, int index);
+    public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name);
 
 
     public void updateServiceList(List<SubService> list, ExpertDto expert);

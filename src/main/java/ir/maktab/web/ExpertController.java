@@ -31,12 +31,13 @@ public class ExpertController {
         return "expert/expert_register";
     }
 
-    @PostMapping(value = "/expert/initializer")
-    public String initializer(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
-            ExpertDto expertDto) {
+    @PostMapping(value = "/expert/registerExpert")
+    public String registerExpert(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
+            ExpertDto expertDto, @RequestParam("name") String name) {
         expertDto.setPhoto(image.getBytes());
+        expertService.addSubServiceToExpert(expertDto, name);
         expertService.save(expertDto);
-        return "services/service_selected";
+        return "expert/success_register";
     }
 
     @ExceptionHandler(value = BindException.class)
@@ -45,14 +46,5 @@ public class ExpertController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
-    @PostMapping(value = "/expert/register")
-    public ModelAndView register(@ModelAttribute("nameService") String nameService,
-                                 @RequestParam("expert") ExpertDto expertDto,
-                                 Model model) {
-        SubServiceDto serviceDto = subServiceService.findByName(nameService);
-        expertDto.getServiceList().add(serviceDto);
-        expertService.save(expertDto);
-        return new ModelAndView("/expert/success_register", "message", "Success add service to expert");
-    }
 
 }

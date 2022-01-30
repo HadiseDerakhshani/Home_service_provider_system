@@ -1,9 +1,6 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SubServiceDto;
+import ir.maktab.data.dto.*;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.entity.enums.OrderStatus;
@@ -33,9 +30,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final SubServiceMap subServiceMap;
-
     private final SubServiceServiceImpl subServiceServiceImpl;
-
+private final SuggestionServiceImpl suggestionService;
     private final ExpertServiceImpl expertServiceImpl;
 
     private final CustomerServiceImpl customerServiceImpl;
@@ -43,13 +39,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public OrderServiceImpl(@Lazy OrderMap orderMap, OrderRepository orderRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                             @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl,
-                            @Lazy SubServiceMap subServiceMap) {
+                            @Lazy SubServiceMap subServiceMap,@Lazy SuggestionServiceImpl suggestionService) {
         this.orderMap = orderMap;
         this.orderRepository = orderRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
         this.expertServiceImpl = expertServiceImpl;
         this.customerServiceImpl = customerServiceImpl;
         this.subServiceMap = subServiceMap;
+        this.suggestionService=suggestionService;
     }
 
 
@@ -80,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateStatus(Order order, OrderStatus status) {
+    public void updateStatus(OrderDto order, OrderStatus status) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setStatus(status);
         orderRepository.save(orderFound);
@@ -94,9 +91,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addSuggestionToOrder(Order order, Suggestion suggest) {
+    public void addSuggestionToOrder(OrderDto order, SuggestionDto suggest) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
-        orderFound.getSuggestion().add(suggest);
+        if(order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION))
+            orderFound.setStatus(OrderStatus.WAITING_FOR_EXPERT_SELECTION);
+        Suggestion suggestion = suggestionService.findByReceptionNumber(suggest.getReceptionNumber());
+        orderFound.getSuggestion().add(suggestion);
         orderRepository.save(orderFound);
     }
 
@@ -173,7 +173,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void startAndEndOrder(int number, int chose, Expert expert) {
-        Order order = findByReceptionNumber(number);
+      /*  Order order = findByReceptionNumber(number);
         if (order != null) {
             if (chose == 6)
                 updateStatus(order, OrderStatus.STARTED);
@@ -182,7 +182,7 @@ public class OrderServiceImpl implements OrderService {
                 expertServiceImpl.updateStatus(UserStatus.WAITING_CONFIRM, expert);
             }
         } else
-            throw new ObjectEntityNotFoundException(" order is not exit");
+            throw new ObjectEntityNotFoundException(" order is not exit");*/
     }
 
     public OrderDto save(OrderDto orderDto) {

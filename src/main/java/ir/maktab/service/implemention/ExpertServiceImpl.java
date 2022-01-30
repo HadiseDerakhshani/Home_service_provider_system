@@ -1,7 +1,9 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
+import ir.maktab.data.entity.order.Suggestion;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.mapping.SuggestionMap;
@@ -90,13 +92,6 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.findByEmail(email);
     }
 
-    @Override
-    public void addSuggest(int number, SuggestionDto suggestionDto, ExpertDto expertDto) {
-        Order order = orderServiceImpl.findByReceptionNumber(number);
-        if (order.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SUGGESTION))
-            orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_SELECTION);
-        orderServiceImpl.addSuggestionToOrder(order, suggestionMap.createSuggestion(suggestionDto));
-    }
 
     @Override
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {

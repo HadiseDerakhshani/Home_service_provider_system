@@ -63,7 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
             Customer customer = customerMap.createCustomer(customerDto);
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
             customer.setUserRole(UserRole.CUSTOMER);
-            // customer.setOrderList(customerDto.getOrderList());
             return customerRepository.save(customer);
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
@@ -190,7 +189,7 @@ public class CustomerServiceImpl implements CustomerService {
         Expert expert = order.getExpert();
         expertServiceImpl.updateCredit((0.80 * amount), expert);
         expertServiceImpl.updateScore(score, expert);
-        orderServiceImpl.updateStatus(order, OrderStatus.PAID);
+     //   orderServiceImpl.updateStatus(order, OrderStatus.PAID);
         orderServiceImpl.updatePricePaid(order, amount);
 
         if (commentText != null)

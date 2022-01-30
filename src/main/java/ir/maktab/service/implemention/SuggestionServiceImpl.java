@@ -1,5 +1,7 @@
 package ir.maktab.service.implemention;
 
+import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SuggestionMap;
@@ -43,9 +45,13 @@ public class SuggestionServiceImpl implements SuggestionService {
     }
 
     @Override
-    public SuggestionDto save(SuggestionDto suggestion) {
+    public SuggestionDto save(SuggestionDto suggestion, OrderDto orderDto, ExpertDto expertDto) {
+        Order order = orderServiceImpl.findByReceptionNumber(orderDto.getReceptionNumber());
+        Expert expert = expertServiceImpl.findByEmail(expertDto.getEmail()).get();
         Suggestion suggest = suggestionMap.createSuggestion(suggestion);
         suggest.setStatus(SuggestionStatus.NEW);
+        suggest.setOrder(order);
+        suggest.setExpert(expert);
         giveReceptionNumber(suggest);
         return suggestionMap.createSuggestionDto(suggestionRepository.save(suggest));
     }
@@ -68,6 +74,7 @@ public class SuggestionServiceImpl implements SuggestionService {
         suggestionRepository.save(suggestion);
     }
 
+
     @Override
     public void update(int index, List<SuggestionDto> list) {
         int count = 0;
@@ -78,7 +85,7 @@ public class SuggestionServiceImpl implements SuggestionService {
             if (count == index - 1) {
                 updateStatus(suggest, SuggestionStatus.CONFIRMED);
                 Order order = suggest.getOrder();
-                orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);
+              //  orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);//todo
                 Expert expert = suggest.getExpert();
                 expertServiceImpl.updateStatus(UserStatus.CONFIRMED, expert);
                 //  orderServiceImpl.updateExpert(expert, order);

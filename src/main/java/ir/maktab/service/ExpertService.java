@@ -21,9 +21,6 @@ public interface ExpertService {
 
     public Optional<Expert> findByEmail(String email);
 
-
-    public void addSuggest(int number, SuggestionDto suggestionDto, ExpertDto expertDto);
-
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name);
 
 

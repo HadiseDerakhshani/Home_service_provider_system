@@ -5,6 +5,7 @@ import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
+import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
@@ -79,9 +80,9 @@ public class ExpertController {
     public ModelAndView registerSuggestion(@Validated @ModelAttribute("suggest") SuggestionDto suggestionDto,
                                            @SessionAttribute("expert") ExpertDto expertDto,
                                            @SessionAttribute("orderDto") OrderDto orderDto) {
-        SuggestionDto saveSuggest = suggestionService.save(suggestionDto);
+        SuggestionDto saveSuggest = suggestionService.save(suggestionDto,orderDto,expertDto);
 
-        ////todo
-        return new ModelAndView("expert/success_register", "expert", expertDto);
+         orderService.addSuggestionToOrder(orderDto,saveSuggest);
+        return new ModelAndView("suggestion/success_register", "expert", expertDto);
     }
 }

@@ -5,7 +5,7 @@ import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.model.enums.OrderStatus;
+import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;

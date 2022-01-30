@@ -4,11 +4,11 @@ import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.model.enums.OrderStatus;
-import ir.maktab.data.model.order.Order;
-import ir.maktab.data.model.order.Suggestion;
-import ir.maktab.data.model.user.Customer;
-import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.entity.enums.OrderStatus;
+import ir.maktab.data.entity.order.Order;
+import ir.maktab.data.entity.order.Suggestion;
+import ir.maktab.data.entity.user.Customer;
+import ir.maktab.data.entity.user.Expert;
 
 import java.util.List;
 

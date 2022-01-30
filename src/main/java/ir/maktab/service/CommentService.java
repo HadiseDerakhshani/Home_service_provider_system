@@ -1,8 +1,8 @@
 package ir.maktab.service;
 
-import ir.maktab.data.model.order.Comment;
-import ir.maktab.data.model.user.Customer;
-import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.entity.order.Comment;
+import ir.maktab.data.entity.user.Customer;
+import ir.maktab.data.entity.user.Expert;
 
 
 public interface CommentService {

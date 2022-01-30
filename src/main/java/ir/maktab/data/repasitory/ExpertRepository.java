@@ -1,7 +1,7 @@
 package ir.maktab.data.repasitory;
 
 
-import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.entity.user.Expert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

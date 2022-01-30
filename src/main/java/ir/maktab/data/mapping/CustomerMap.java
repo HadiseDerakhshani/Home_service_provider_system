@@ -1,8 +1,8 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.model.order.Order;
-import ir.maktab.data.model.user.Customer;
+import ir.maktab.data.entity.order.Order;
+import ir.maktab.data.entity.user.Customer;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

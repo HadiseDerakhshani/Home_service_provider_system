@@ -2,9 +2,9 @@ package ir.maktab.service;
 
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SuggestionDto;
-import ir.maktab.data.model.enums.UserStatus;
-import ir.maktab.data.model.serviceSystem.SubService;
-import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.data.entity.serviceSystem.SubService;
+import ir.maktab.data.entity.user.Expert;
 
 import java.util.List;
 import java.util.Optional;

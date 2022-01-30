@@ -1,7 +1,7 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.ManagerDto;
-import ir.maktab.data.model.user.Manager;
+import ir.maktab.data.entity.user.Manager;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

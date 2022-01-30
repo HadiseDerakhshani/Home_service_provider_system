@@ -1,8 +1,8 @@
 package ir.maktab.data.repasitory;
 
 
-import ir.maktab.data.model.enums.UserStatus;
-import ir.maktab.data.model.user.Customer;
+import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.data.entity.user.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

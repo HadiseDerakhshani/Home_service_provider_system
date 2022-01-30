@@ -1,7 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.ServiceDto;
-import ir.maktab.data.model.serviceSystem.Service;
+import ir.maktab.data.entity.serviceSystem.Service;
 
 import java.util.List;
 

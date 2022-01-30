@@ -1,7 +1,7 @@
 package ir.maktab.data.repasitory;
 
-import ir.maktab.data.model.enums.OrderStatus;
-import ir.maktab.data.model.order.Order;
+import ir.maktab.data.entity.enums.OrderStatus;
+import ir.maktab.data.entity.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

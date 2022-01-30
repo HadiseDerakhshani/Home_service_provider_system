@@ -2,11 +2,11 @@ package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.mapping.ManagerMap;
-import ir.maktab.data.model.enums.OrderStatus;
-import ir.maktab.data.model.enums.UserStatus;
-import ir.maktab.data.model.order.Order;
-import ir.maktab.data.model.user.Expert;
-import ir.maktab.data.model.user.Manager;
+import ir.maktab.data.entity.enums.OrderStatus;
+import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.data.entity.order.Order;
+import ir.maktab.data.entity.user.Expert;
+import ir.maktab.data.entity.user.Manager;
 import ir.maktab.data.repasitory.ManagerRepository;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ManagerService;

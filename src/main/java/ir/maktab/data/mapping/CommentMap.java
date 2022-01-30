@@ -1,7 +1,7 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.CommentDto;
-import ir.maktab.data.model.order.Comment;
+import ir.maktab.data.entity.order.Comment;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

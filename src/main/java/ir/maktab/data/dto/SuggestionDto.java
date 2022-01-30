@@ -1,6 +1,6 @@
 package ir.maktab.data.dto;
 
-import ir.maktab.data.model.enums.SuggestionStatus;
+import ir.maktab.data.entity.enums.SuggestionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

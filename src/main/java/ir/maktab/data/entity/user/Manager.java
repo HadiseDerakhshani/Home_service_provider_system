@@ -1,4 +1,4 @@
-package ir.maktab.data.model.user;
+package ir.maktab.data.entity.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

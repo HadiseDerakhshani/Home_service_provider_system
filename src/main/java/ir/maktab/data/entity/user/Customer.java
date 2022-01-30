@@ -1,6 +1,6 @@
-package ir.maktab.data.model.user;
+package ir.maktab.data.entity.user;
 
-import ir.maktab.data.model.order.Order;
+import ir.maktab.data.entity.order.Order;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

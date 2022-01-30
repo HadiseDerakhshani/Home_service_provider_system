@@ -1,7 +1,7 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.AddressDto;
-import ir.maktab.data.model.order.Address;
+import ir.maktab.data.entity.order.Address;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -2,7 +2,7 @@ package ir.maktab.service;
 
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.model.serviceSystem.SubService;
+import ir.maktab.data.entity.serviceSystem.SubService;
 
 import java.util.List;
 

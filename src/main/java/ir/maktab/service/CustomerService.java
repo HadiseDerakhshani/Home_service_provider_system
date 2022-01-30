@@ -3,8 +3,8 @@ package ir.maktab.service;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
-import ir.maktab.data.model.enums.UserStatus;
-import ir.maktab.data.model.user.Customer;
+import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.data.entity.user.Customer;
 
 import java.util.List;
 import java.util.Optional;

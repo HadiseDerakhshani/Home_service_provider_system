@@ -1,4 +1,4 @@
-package ir.maktab.data.model.serviceSystem;
+package ir.maktab.data.entity.serviceSystem;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

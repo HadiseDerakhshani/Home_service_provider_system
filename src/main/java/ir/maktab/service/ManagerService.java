@@ -1,6 +1,6 @@
 package ir.maktab.service;
 
-import ir.maktab.data.model.user.Manager;
+import ir.maktab.data.entity.user.Manager;
 
 
 public interface ManagerService {

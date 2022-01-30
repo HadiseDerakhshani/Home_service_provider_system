@@ -1,10 +1,9 @@
-package ir.maktab.data.model.user;
+package ir.maktab.data.entity.user;
 
 
-import ir.maktab.data.model.order.Comment;
-import ir.maktab.data.model.order.Order;
-import ir.maktab.data.model.order.Suggestion;
-import ir.maktab.data.model.serviceSystem.SubService;
+import ir.maktab.data.entity.order.Comment;
+import ir.maktab.data.entity.order.Order;
+import ir.maktab.data.entity.serviceSystem.SubService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,14 +21,12 @@ import java.util.List;
 public class Expert extends User {
 
     @Lob
-    private byte[] image;
+    private byte[] photo;
     private int score;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<SubService> serviceList = new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Order> orderList = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "expert")
-    private List<Suggestion> suggestList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 

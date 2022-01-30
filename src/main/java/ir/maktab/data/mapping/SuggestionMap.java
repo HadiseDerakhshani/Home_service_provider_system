@@ -1,7 +1,7 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.SuggestionDto;
-import ir.maktab.data.model.order.Suggestion;
+import ir.maktab.data.entity.order.Suggestion;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

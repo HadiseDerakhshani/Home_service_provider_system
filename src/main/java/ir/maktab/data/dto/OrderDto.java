@@ -1,6 +1,6 @@
 package ir.maktab.data.dto;
 
-import ir.maktab.data.model.enums.OrderStatus;
+import ir.maktab.data.entity.enums.OrderStatus;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

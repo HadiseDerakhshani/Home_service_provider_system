@@ -1,4 +1,4 @@
-package ir.maktab.data.model.enums;
+package ir.maktab.data.entity.enums;
 
 public enum OrderStatus {
     WAITING_FOR_EXPERT_SUGGESTION,

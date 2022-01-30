@@ -1,7 +1,7 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.model.serviceSystem.SubService;
+import ir.maktab.data.entity.serviceSystem.SubService;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

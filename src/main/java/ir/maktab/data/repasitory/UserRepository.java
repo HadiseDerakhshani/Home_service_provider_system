@@ -1,8 +1,8 @@
 package ir.maktab.data.repasitory;
 
-import ir.maktab.data.model.enums.UserRole;
-import ir.maktab.data.model.serviceSystem.SubService;
-import ir.maktab.data.model.user.User;
+import ir.maktab.data.entity.enums.UserRole;
+import ir.maktab.data.entity.serviceSystem.SubService;
+import ir.maktab.data.entity.user.User;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

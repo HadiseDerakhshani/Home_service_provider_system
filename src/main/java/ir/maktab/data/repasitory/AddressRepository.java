@@ -1,6 +1,6 @@
 package ir.maktab.data.repasitory;
 
-import ir.maktab.data.model.order.Address;
+import ir.maktab.data.entity.order.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

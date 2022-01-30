@@ -1,6 +1,6 @@
 package ir.maktab.data.repasitory;
 
-import ir.maktab.data.model.order.Suggestion;
+import ir.maktab.data.entity.order.Suggestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

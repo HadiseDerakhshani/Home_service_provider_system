@@ -1,4 +1,4 @@
-package ir.maktab.data.model.serviceSystem;
+package ir.maktab.data.entity.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,17 +10,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-public class SubService {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double price;
-    private String name;
-    private String description;
-
+    private String city;
+    private String street;
+    private int plaque;
 }

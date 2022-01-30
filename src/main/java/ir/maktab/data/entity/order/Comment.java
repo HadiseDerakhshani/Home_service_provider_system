@@ -1,7 +1,7 @@
-package ir.maktab.data.model.order;
+package ir.maktab.data.entity.order;
 
-import ir.maktab.data.model.user.Customer;
-import ir.maktab.data.model.user.Expert;
+import ir.maktab.data.entity.user.Customer;
+import ir.maktab.data.entity.user.Expert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

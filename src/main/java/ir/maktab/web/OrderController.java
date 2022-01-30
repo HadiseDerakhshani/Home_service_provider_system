@@ -11,8 +11,6 @@ import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -24,19 +22,26 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
-@Component
-@Controller
 @RequiredArgsConstructor
+@Controller
 @RequestMapping("/order")
 public class OrderController {
-    @Lazy
+
     private final CustomerServiceImpl customerService;
-    @Lazy
+
     private final OrderServiceImpl orderService;
-    @Lazy
+
     private final SubServiceServiceImpl subServiceService;
-    @Lazy
+
     private final ServiceServiceImpl service;
+/*@Autowired
+    public OrderController(@Lazy CustomerServiceImpl customerService,@Lazy OrderServiceImpl orderService,
+                           @Lazy SubServiceServiceImpl subServiceService,@Lazy ServiceServiceImpl service) {
+        this.customerService = customerService;
+        this.orderService = orderService;
+        this.subServiceService = subServiceService;
+        this.service = service;
+    }*/
 
 
     @GetMapping

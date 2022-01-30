@@ -55,7 +55,7 @@
                     <form:label path="email">Email :</form:label>
                 </td>
                 <td>
-                    <form:input path="email" name="email" placeholder="email@gmaile.com"/>
+                    <form:input path="email" name="email" placeholder="name@gmail.com"/>
                 </td>
             </tr>
             <tr>

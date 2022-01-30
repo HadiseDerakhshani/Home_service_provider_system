@@ -12,8 +12,9 @@
 <body>
 
 <h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
+<br><br>
 <table border="5" width="70%" cellpadding="2">
-    <tr>>
+    <tr>
         <th>Service</th>
         <th>Do Date</th>
         <th>Proposed price</th>

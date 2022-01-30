@@ -1,17 +1,21 @@
 package ir.maktab.web;
 
 
-import ir.maktab.data.dto.CustomerDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping(value = "/")
-    public String getHomeView(Model model) {
-        model.addAttribute("customerDto", new CustomerDto());
-        return "index";
+    @GetMapping(value = "/login")
+    public String loginView() {
+
+        return "login";
+    }
+
+    @GetMapping(value = "/register")
+    public String registerView() {
+
+        return "register";
     }
 }
 

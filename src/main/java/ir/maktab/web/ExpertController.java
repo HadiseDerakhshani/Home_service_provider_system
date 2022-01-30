@@ -5,14 +5,11 @@ import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.dto.SuggestionDto;
-import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
 import ir.maktab.service.implemention.SuggestionServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -24,19 +21,28 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Component
-@Controller
 @RequiredArgsConstructor
+@Controller
 @RequestMapping("/expert")
 public class ExpertController {
 
     private final ExpertServiceImpl expertService;
-    @Lazy
+
     private final SubServiceServiceImpl subServiceService;
-    @Lazy
+
     private final OrderServiceImpl orderService;
-    @Lazy
+
     private final SuggestionServiceImpl suggestionService;
+/*
+@Autowired
+    public ExpertController(@Lazy ExpertServiceImpl expertService, @Lazy SubServiceServiceImpl subServiceService,
+                            @Lazy  OrderServiceImpl orderService,@Lazy SuggestionServiceImpl suggestionService) {
+        this.expertService = expertService;
+        this.subServiceService = subServiceService;
+        this.orderService = orderService;
+        this.suggestionService = suggestionService;
+    }
+*/
 
     @GetMapping
     public String showRegisterPage(Model model) {
@@ -62,17 +68,20 @@ public class ExpertController {
     }
 
     @GetMapping("/suggestion")
-    public ModelAndView showRegisterSuggestPage() {
-        List<OrderDto> list = orderService.findOrderToSuggest();
-        return new ModelAndView("suggestion/choose_order", "list", list);
+    // public ModelAndView showRegisterSuggestPage() {
+    public String showRegisterSuggestPage() {
+        //List<OrderDto> list = orderService.findOrderToSuggest();
+        List<OrderDto> list = orderService.findAll();
+        //  return new ModelAndView("suggestion/choose_order", "list", list);
+        return "suggestion/choose_order";
     }
 
     @GetMapping("/selectOrder/{number}")
     public String selectOrder(@PathVariable long number, Model model) {
 
-        OrderDto orderDto = orderService.find(number);
+        /// OrderDto orderDto = orderService.find(number);
         model.addAttribute("suggest", new SuggestionDto());
-        model.addAttribute("orderDto", orderDto);
+        //   model.addAttribute("orderDto", orderDto);
         return "suggestion/suggestion_register";
     }
 
@@ -80,9 +89,8 @@ public class ExpertController {
     public ModelAndView registerSuggestion(@Validated @ModelAttribute("suggest") SuggestionDto suggestionDto,
                                            @SessionAttribute("expert") ExpertDto expertDto,
                                            @SessionAttribute("orderDto") OrderDto orderDto) {
-        SuggestionDto saveSuggest = suggestionService.save(suggestionDto,orderDto,expertDto);
-
-         orderService.addSuggestionToOrder(orderDto,saveSuggest);
+        SuggestionDto saveSuggest = suggestionService.save(suggestionDto, orderDto, expertDto);
+        //  orderService.addSuggestionToOrder(orderDto,saveSuggest);
         return new ModelAndView("suggestion/success_register", "expert", expertDto);
     }
 }

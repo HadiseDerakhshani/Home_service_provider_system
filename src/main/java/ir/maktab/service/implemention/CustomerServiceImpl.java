@@ -3,14 +3,13 @@ package ir.maktab.service.implemention;
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
-import ir.maktab.data.mapping.CustomerMap;
-import ir.maktab.data.mapping.OrderMap;
-import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.user.Customer;
 import ir.maktab.data.entity.user.Expert;
+import ir.maktab.data.mapping.CustomerMap;
+import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.repasitory.CustomerRepository;
 import ir.maktab.exception.InValidUserInfoException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
@@ -189,7 +188,7 @@ public class CustomerServiceImpl implements CustomerService {
         Expert expert = order.getExpert();
         expertServiceImpl.updateCredit((0.80 * amount), expert);
         expertServiceImpl.updateScore(score, expert);
-     //   orderServiceImpl.updateStatus(order, OrderStatus.PAID);
+        //   orderServiceImpl.updateStatus(order, OrderStatus.PAID);
         orderServiceImpl.updatePricePaid(order, amount);
 
         if (commentText != null)

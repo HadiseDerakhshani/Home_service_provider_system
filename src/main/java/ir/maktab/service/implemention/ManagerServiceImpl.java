@@ -1,12 +1,11 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.mapping.ManagerMap;
-import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.entity.user.Manager;
+import ir.maktab.data.mapping.ManagerMap;
 import ir.maktab.data.repasitory.ManagerRepository;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ManagerService;
@@ -88,7 +87,7 @@ public class ManagerServiceImpl implements ManagerService {
         if (order != null) {
             Expert expert = order.getExpert();
             orderServiceImpl.updatePricePaid(order, amount);
-           // orderServiceImpl.updateStatus(order, OrderStatus.PAID);//todo
+            // orderServiceImpl.updateStatus(order, OrderStatus.PAID);//todo
             expertServiceImpl.updateScore(score, expert);
             expertServiceImpl.updateCredit((0.80 * amount), expert);
 

@@ -10,13 +10,9 @@
 
 </head>
 <div>
-    Email: <br>
-    <input type="password" id="email" placeholder="name@gmail.com">
-    <br><br>
-    Password: <br>
-    <input type="password" id="password" placeholder="Password">
-    <br><br>
-    <button type="submit" value="/" name="login" style="border-bottom: darkslategray ">Login</button>
+    <a href="<c:url value="/customer"/>" class="btn btn-outline-primary">Customer</a>
+    <a href="<c:url value="/expert"/>" class="btn btn-outline-primary">Expert</a>
+
 </div>
 <body>
 

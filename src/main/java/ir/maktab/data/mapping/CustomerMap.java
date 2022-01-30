@@ -1,7 +1,6 @@
 package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.user.Customer;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
@@ -37,8 +35,8 @@ public class CustomerMap {
                 .build();
 
         if (customerDto.getOrderList() != null) {
-            List<Order> collect = customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList());
-            customer.setOrderList(collect);
+            customer.setOrderList(customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList()));
+
         }
         return customer;
     }
@@ -56,6 +54,7 @@ public class CustomerMap {
         if (customer.getOrderList() != null) {
             customerDto.setOrderList(customer.getOrderList().stream().map(orderMap::createOrderDto)
                     .collect(Collectors.toList()));
+
         }
         return customerDto;
     }

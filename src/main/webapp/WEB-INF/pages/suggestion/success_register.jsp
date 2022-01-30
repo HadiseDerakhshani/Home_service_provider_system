@@ -16,7 +16,6 @@
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
 
 
-
 </div>
 
 

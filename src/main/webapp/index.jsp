@@ -13,8 +13,8 @@
 <div class="cantainer">
     <h1>WELCOME TO SERVICES HOME </h1>
     <div>
-        <a href="<c:url value="/customer"/>" class="btn btn-outline-primary">Customer</a>
-        <a href="<c:url value="/expert"/>" class="btn btn-outline-primary">Expert</a>
+        <a href="<c:url value="login"/>" class="btn btn-outline-primary">Login</a>
+        <a href="<c:url value="register"/>" class="btn btn-outline-primary">register</a>
 
     </div>
 

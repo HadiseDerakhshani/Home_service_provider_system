@@ -128,7 +128,12 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByEmail(email);
 
     }
+    @Override
+    public CustomerDto find(String email) {
 
+        return customerMap.createCustomerDto(customerRepository.findByEmail(email).get());
+
+    }
     @Override
     public void increaseCredit(Customer customer, double amount) {
         Customer customerFound = findByEmail(customer.getEmail()).get();

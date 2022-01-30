@@ -87,6 +87,11 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.findByEmail(email);
     }
 
+    @Override
+    public ExpertDto find(String email) {
+
+        return expertMap.createExpertDto(expertRepository.findByEmail(email).get());
+    }
 
     @Override
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {

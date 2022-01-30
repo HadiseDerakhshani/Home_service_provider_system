@@ -18,7 +18,6 @@ import java.util.List;
 
 @Getter
 @Service
-
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -32,19 +31,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByEmail(String email) {
+    public UserRole findByEmail(String email,String pass) {
         if (userRepository.findByEmail(email).isPresent())
             throw new ObjectEntityNotFoundException("user is not exit");
         else {
             User user = userRepository.findByEmail(email).get();
-
-            return userMap.createUserDto(user);
+           if(checkPassword(user,pass));
+            return user.getUserRole();
         }
     }
 
     @Override
-    public boolean checkPassword(UserDto user, String pass) {
-        if (userMap.createUser(user).getPassword().equals(pass)) {
+    public boolean checkPassword(User user, String pass) {
+        if (user.getPassword().equals(pass)) {
             return true;
         }
         return false;

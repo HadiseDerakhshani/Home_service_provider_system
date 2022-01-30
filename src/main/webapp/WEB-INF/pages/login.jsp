@@ -10,6 +10,8 @@
 
 </head>
 <div>
+    <h2 style="color: red">${message}</h2>
+    <br><br>
     Email: <br>
     <input type="password" id="email" placeholder="name@gmail.com">
     <br><br>

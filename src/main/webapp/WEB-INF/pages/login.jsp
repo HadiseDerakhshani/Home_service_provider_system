@@ -20,7 +20,7 @@
         <br>
         <input type="password" placeholder="Enter Password" name="password" class="form-control" required>
         <br><br>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Login</button>
     </div>
 </form>
 <%--<div>

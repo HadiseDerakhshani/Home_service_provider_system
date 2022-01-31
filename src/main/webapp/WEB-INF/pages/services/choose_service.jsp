@@ -12,6 +12,7 @@
 <body>
 
 <h2 style="color: floralwhite">please select service for order</h2>
+<br><br>
 <table border="5" width="70%" cellpadding="2">
 
     <c:forEach var="list" items="${serviceDtoList}">

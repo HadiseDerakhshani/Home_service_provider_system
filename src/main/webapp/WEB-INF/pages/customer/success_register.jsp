@@ -13,7 +13,9 @@
 
 
 <h1> success register ${customer.firstName} ${customer.lastName}</h1>
+<br><br>
 <h1 style="color: darkcyan">${message}</h1>
+<br><br>
 <div class="btn-group mt-5 mx-5">
 
     <a href="<c:url value="/order" />" class="btn btn-outline-primary">Order</a>

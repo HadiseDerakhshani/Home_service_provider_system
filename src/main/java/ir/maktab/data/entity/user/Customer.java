@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,8 +20,8 @@ import java.util.List;
 @Entity
 
 public class Customer extends User {
-@Transient
-   @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
+    @Transient
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orderList = new ArrayList<>();
 
 

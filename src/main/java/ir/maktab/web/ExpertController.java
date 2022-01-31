@@ -9,7 +9,6 @@ import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
 import ir.maktab.service.implemention.SuggestionServiceImpl;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -36,9 +35,9 @@ public class ExpertController {
 
     private final SuggestionServiceImpl suggestionService;
 
-@Autowired
+    @Autowired
     public ExpertController(@Lazy ExpertServiceImpl expertService, @Lazy SubServiceServiceImpl subServiceService,
-                            @Lazy  OrderServiceImpl orderService, @Lazy SuggestionServiceImpl suggestionService) {
+                            @Lazy OrderServiceImpl orderService, @Lazy SuggestionServiceImpl suggestionService) {
         this.expertService = expertService;
         this.subServiceService = subServiceService;
         this.orderService = orderService;

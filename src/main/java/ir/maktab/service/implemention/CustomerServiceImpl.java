@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerServiceImpl(CustomerRepository customerRepository, @Lazy SuggestionServiceImpl suggestServiceImpl,
                                @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
                                @Lazy CommentServiceImpl commentServiceImpl, @Lazy OrderMap orderMap,
-                               @Lazy CustomerMap customerMap,@Lazy UserServiceImpl userService) {
+                               @Lazy CustomerMap customerMap, @Lazy UserServiceImpl userService) {
         this.customerRepository = customerRepository;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.commentServiceImpl = commentServiceImpl;
         this.customerMap = customerMap;
         this.orderMap = orderMap;
-        this.userService=userService;
+        this.userService = userService;
     }
 
     @Override
@@ -97,7 +97,6 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerFound = findByEmail(customer.getEmail()).get();
         customerFound.setPassword(newPass);
         customerRepository.save(customerFound);
-
     }
 
     @Override
@@ -131,17 +130,19 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByEmail(email);
 
     }
+
     @Override
     public CustomerDto find(String email) {
 
-     if(findByEmail(email).isPresent())
-        return customerMap.createCustomerDto(findByEmail(email).get());
-else{
+        if (findByEmail(email).isPresent())
+            return customerMap.createCustomerDto(findByEmail(email).get());
+        else {
 
-         System.out.println("---------------------------------");
-         return null;
-}
+            System.out.println("---------------------------------");
+            return null;
+        }
     }
+
     @Override
     public void increaseCredit(Customer customer, double amount) {
         Customer customerFound = findByEmail(customer.getEmail()).get();

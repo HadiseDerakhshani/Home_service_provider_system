@@ -1,7 +1,5 @@
 package ir.maktab.data.mapping;
 
-import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.entity.user.Customer;
 import ir.maktab.data.entity.user.Expert;
@@ -21,20 +19,22 @@ public class UserMap {
 
         return mapper.map(userDto, User.class);
     }
+
     public User mapCustomerDtoToUser(Customer customer) {
-           User user=User.builder()
-                   .firstName(customer.getFirstName())
-                   .firstName(customer.getFirstName())
-                   .lastName(customer.getLastName())
-                   .password(customer.getPassword())
-                   .phoneNumber(customer.getPhoneNumber())
-                   .credit(customer.getCredit())
-                   .email(customer.getEmail())
-                   .build();
+        User user = User.builder()
+                .firstName(customer.getFirstName())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .password(customer.getPassword())
+                .phoneNumber(customer.getPhoneNumber())
+                .credit(customer.getCredit())
+                .email(customer.getEmail())
+                .build();
         return user;
     }
+
     public User mapExpertDtoToUser(Expert expert) {
-        User user=User.builder()
+        User user = User.builder()
                 .firstName(expert.getFirstName())
                 .firstName(expert.getFirstName())
                 .lastName(expert.getLastName())
@@ -45,6 +45,7 @@ public class UserMap {
                 .build();
         return user;
     }
+
     public UserDto createUserDto(User user) {
         return mapper.map(user, UserDto.class);
     }

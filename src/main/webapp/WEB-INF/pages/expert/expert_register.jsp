@@ -110,9 +110,7 @@
                 <td>
                     <select name="name">
                         <c:forEach items="${subServiceDtoList}" var="list">
-
                             <option value="${list.name}"> ${list.name} </option>
-
                         </c:forEach>
                     </select>
                 </td>
@@ -127,7 +125,17 @@
         </table>
     </form:form>
 </div>
+<%--<script>
+    const imageFile = document.getElementById("image");
 
+    imageFile.onchange = function () {
+        const maxAllowedSize = 100 * 1024;
+        if (this.files[0].size > maxAllowedSize) {
+            alert("Image File is too big!");
+            this.value = "";
+        }
+    }
+</script>--%>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

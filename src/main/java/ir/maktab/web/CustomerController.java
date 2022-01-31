@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@SessionAttributes({"customer", "expert", "orderDto"})
+@SessionAttributes({"customer", "expert", "orderDto", "customerProfile"})
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customer")
@@ -38,5 +38,30 @@ public class CustomerController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
+    @GetMapping("/pass/{passw}")
+    public ModelAndView StringChangePassword(@PathVariable("passw") String password
+    ) {
+        //  customerService.changePassword(customerDto,password);
+        System.out.println(password);
+        return new ModelAndView("customer/customer_profile", "message", "change password successfully");
+    }
+/* @PostMapping("/pass")
+ public ModelAndView StringChangePassword(@RequestParam("password") String password) {
+     //  customerService.changePassword(customerDto,password);
+     System.out.println(password);
+     return new ModelAndView("customer/customer_profile","message","change password successfully");
+ }*/
 
+  /*  @GetMapping("/phone/{phone}")
+    public ModelAndView changePHone(@PathVariable String phone,
+                                       @SessionAttribute("customerProfile")CustomerDto customerDto) {
+        customerService.changePhoneNumber(customerDto,phone);
+        return new ModelAndView("customer/customer_profile","message","change Phone number successfully");
+    }
+    @GetMapping("/credit/{credit}")
+    public ModelAndView changeCredit(@PathVariable double credit,
+                                    @SessionAttribute("customerProfile")CustomerDto customerDto) {
+
+        return new ModelAndView("customer/customer_profile","message","change Phone number successfully");
+    }*/
 }

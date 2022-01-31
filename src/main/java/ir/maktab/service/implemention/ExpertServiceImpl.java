@@ -38,14 +38,14 @@ public class ExpertServiceImpl implements ExpertService {
     private final SubServiceServiceImpl subServiceServiceImpl;
 
     private final OrderServiceImpl orderServiceImpl;
-private final UserServiceImpl userService;
+    private final UserServiceImpl userService;
     private final SuggestionServiceImpl suggestionServiceImpl;
 
     @Autowired
     public ExpertServiceImpl(@Lazy ExpertMap expertMap, ExpertRepository expertRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                              @Lazy OrderServiceImpl orderServiceImpl, @Lazy SuggestionMap suggestionMap,
                              @Lazy SuggestionServiceImpl suggestionServiceImpl, @Lazy SubServiceMap subServiceMap,
-                             @Lazy SubServiceRepository subServiceRepository,@Lazy UserServiceImpl userService) {
+                             @Lazy SubServiceRepository subServiceRepository, @Lazy UserServiceImpl userService) {
         this.expertMap = expertMap;
         this.expertRepository = expertRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
@@ -54,7 +54,7 @@ private final UserServiceImpl userService;
         this.suggestionMap = suggestionMap;
         this.subServiceMap = subServiceMap;
         this.subServiceRepository = subServiceRepository;
-        this.userService=userService;
+        this.userService = userService;
     }
 
     @Override
@@ -96,9 +96,11 @@ private final UserServiceImpl userService;
     @Override
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name) {
         SubService subService = subServiceServiceImpl.find(name);
-        Expert expert = expertMap.createExpert(expertDto);
+        Expert expert = findByEmail(expertDto.getEmail()).get();
         expert.getServiceList().add(subService);
+        expertRepository.save(expert);
         return expertMap.createExpertDto(expert);
+        //////
     }
 
     @Override

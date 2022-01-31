@@ -21,6 +21,7 @@ public interface ExpertService {
     public Optional<Expert> findByEmail(String email);
 
     public ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name);
+
     public ExpertDto find(String email);
 
     public void updateServiceList(List<SubService> list, ExpertDto expert);

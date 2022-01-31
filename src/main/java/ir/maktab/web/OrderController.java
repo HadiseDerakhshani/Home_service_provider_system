@@ -10,7 +10,6 @@ import ir.maktab.service.implemention.CustomerServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,8 @@ public class OrderController {
     private final SubServiceServiceImpl subServiceService;
 
     private final ServiceServiceImpl service;
-@Autowired
+
+    @Autowired
     public OrderController(@Lazy CustomerServiceImpl customerService, @Lazy OrderServiceImpl orderService,
                            @Lazy SubServiceServiceImpl subServiceService, @Lazy ServiceServiceImpl service) {
         this.customerService = customerService;

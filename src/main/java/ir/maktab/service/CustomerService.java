@@ -16,7 +16,9 @@ public interface CustomerService {
     public Customer save(CustomerDto customerDto);
 
     public List<CustomerDto> findByUserStatus(UserStatus status);
+
     public CustomerDto find(String email);
+
     public void deleteCustomer(String email);
 
     public void changePassword(CustomerDto customer, String newPass);

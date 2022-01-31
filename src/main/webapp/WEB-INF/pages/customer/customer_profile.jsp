@@ -11,108 +11,112 @@
 </head>
 <body>
 <div>
-    <h1 style="color:red">${message}</h1>
-    <form:form cssClass="p-3 m-3" modelAttribute="customer" action="/customer/register" method="post">
+<form:form modelAttribute="customerDto" method="get">
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>
-                    <form:label path="firstName">First Name :</form:label>
+                   First Name :
                 </td>
                 <td>
-                    <form:input path="firstName" name="firstName" placeholder="enter your name"/>
+                  ${customerDto.firstName}
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                  Last Name :
+                </td>
+                <td>
+                    ${customerDto.lastName}
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                  Email :
+                </td>
+                <td>
+                    ${customerDto.email}
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Password :
+                </td>
+                <td>
+                    ${customerDto.password}
+                </td>
+                <td>
+                    <a href="">Edit</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                   Phone Number :
+                </td>
+                <td>
+                    ${customerDto.phoneNumber}
+                </td>
+                <td>
+                    <a href="">Edit</a>
                 </td>
             </tr>
             <tr>
                 <td>
+                Credit :
                 </td>
                 <td>
-                    <form:errors path="firstName" cssClass="text-danger"/>
+                    ${customerDto.credit}
+                </td>
+                <td>
+                    <a href="">Edit</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                   User Status :
+                </td>
+                <td>
+                    ${customerDto.userStatus}
+                </td>
+                <td>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form:label path="lastName">Last Name :</form:label>
+                  Last Update Date :
                 </td>
                 <td>
-                    <form:input path="lastName" name="lastName" placeholder="enter your family"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
+                    ${customerDto.dateUpdate}
                 </td>
                 <td>
-                    <form:errors path="lastName" cssClass="text-danger"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form:label path="email">Email :</form:label>
+                    Orders :
                 </td>
                 <td>
-                    <form:input path="email" name="email" placeholder="name@gmail.com"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="email" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="password">Password :</form:label>
+                    <select name="name">
+                        <c:forEach items="${order}" var="list">
+                            <option value="${list.receptionNumber}"> ${list.receptionNumber} , ${list.service.name},${list.status}</option>
+                        </c:forEach>
+                    </select>
                 </td>
                 <td>
-                    <form:input path="password" name="password" placeholder="min 8{number,alphbet,symbole}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="password" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="phoneNumber">Phone Number :</form:label>
-                </td>
-                <td>
-                    <form:input path="phoneNumber" name="phoneNumber" placeholder="09*********"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="phoneNumber" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="credit">Credit :</form:label>
-                </td>
-                <td>
-                    <form:input path="credit" name="credit"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="credit" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:button name="register">Register</form:button>
                 </td>
             </tr>
         </table>
-    </form:form>
+</form:form>
 </div>
 
 

@@ -123,7 +123,6 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(orderFound);
     }
 
-    // @Transactional
     @Override
     public List<OrderDto> findAll() {
         List<Order> list = orderRepository.findAll();
@@ -191,4 +190,21 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
         return orderMap.createOrderDto(order);
     }
+
+
+    @Override
+    public List<OrderDto> findOrder(CustomerDto customer) {
+        List<Order> list = orderRepository.findAll();
+        List<OrderDto> listFind = findAll();
+        if (list != null) {
+            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
+                    .collect(Collectors.toList());
+            if (orderList != null) {
+                return listFind = orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
+            } else
+                throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
+        } else
+            throw new ObjectEntityNotFoundException(" --- Order is not exit yet ---");
+    }
+
 }

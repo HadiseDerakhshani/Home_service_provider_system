@@ -17,7 +17,7 @@ public interface OrderService {
     public List<OrderDto> findOrderToSuggest();
 
     public OrderDto find(long number);
-
+    public List<OrderDto> findOrder(CustomerDto customer);
     public void addCustomerToOrder(CustomerDto customer, OrderDto order);
 
     public void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order);

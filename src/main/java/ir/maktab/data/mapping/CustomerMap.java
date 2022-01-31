@@ -49,6 +49,8 @@ public class CustomerMap {
                 .phoneNumber(customer.getPhoneNumber())
                 .credit(customer.getCredit())
                 .email(customer.getEmail())
+                .userStatus(customer.getUserStatus())
+                .dateUpdate(customer.getDateUpdate())
                 .build();
 
         if (customer.getOrderList() != null) {

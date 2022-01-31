@@ -9,7 +9,21 @@
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
 
 </head>
-<div>
+<h2>${message}</h2>
+<form action="/user/login" method="post">
+    <div class="container">
+        <b>Username</b>
+        <br>
+        <input type="email" placeholder="Enter Username" name="email" class="form-control" required>
+   <br><br>
+       <b>Password</b>
+        <br>
+        <input type="password" placeholder="Enter Password" name="password" class="form-control" required>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</form>
+<%--<div>
     <h2 style="color: red">${message}</h2>
     <br><br>
     Email: <br>
@@ -18,8 +32,8 @@
     Password: <br>
     <input type="password" id="password" placeholder="Password">
     <br><br>
-    <button type="submit" value="/" name="login" style="border-bottom: darkslategray ">Login</button>
-</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>--%>
 <body>
 
 </body>

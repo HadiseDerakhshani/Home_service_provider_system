@@ -39,14 +39,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final ExpertServiceImpl expertServiceImpl;
 
     private final CommentServiceImpl commentServiceImpl;
-
+    private final UserServiceImpl userService;
     private final CustomerMap customerMap;
     private final OrderMap orderMap;
 
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository, @Lazy SuggestionServiceImpl suggestServiceImpl,
                                @Lazy OrderServiceImpl orderServiceImpl, @Lazy ExpertServiceImpl expertServiceImpl,
-                               @Lazy CommentServiceImpl commentServiceImpl, @Lazy OrderMap orderMap, @Lazy CustomerMap customerMap) {
+                               @Lazy CommentServiceImpl commentServiceImpl, @Lazy OrderMap orderMap,
+                               @Lazy CustomerMap customerMap,@Lazy UserServiceImpl userService) {
         this.customerRepository = customerRepository;
         this.suggestServiceImpl = suggestServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
@@ -54,6 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.commentServiceImpl = commentServiceImpl;
         this.customerMap = customerMap;
         this.orderMap = orderMap;
+        this.userService=userService;
     }
 
     @Override
@@ -63,6 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setUserStatus(UserStatus.WAITING_CONFIRM);
             customer.setUserRole(UserRole.CUSTOMER);
             return customerRepository.save(customer);
+
         } else
             throw new InValidUserInfoException("-- Customer is exit for this email --");
     }
@@ -131,8 +134,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto find(String email) {
 
-        return customerMap.createCustomerDto(customerRepository.findByEmail(email).get());
+     if(findByEmail(email).isPresent())
+        return customerMap.createCustomerDto(findByEmail(email).get());
+else{
 
+         System.out.println("---------------------------------");
+         return null;
+}
     }
     @Override
     public void increaseCredit(Customer customer, double amount) {

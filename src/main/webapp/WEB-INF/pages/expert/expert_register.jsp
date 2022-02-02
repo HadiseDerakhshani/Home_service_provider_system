@@ -125,17 +125,17 @@
         </table>
     </form:form>
 </div>
-<%--<script>
+<script>
     const imageFile = document.getElementById("image");
 
     imageFile.onchange = function () {
         const maxAllowedSize = 100 * 1024;
         if (this.files[0].size > maxAllowedSize) {
-            alert("Image File is too big!");
+            alert("Image File is too big! size image maximum : 300Kb");
             this.value = "";
         }
     }
-</script>--%>
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

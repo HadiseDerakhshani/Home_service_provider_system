@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>register_customer Page</title>
+    <title>customer_profile Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
@@ -13,7 +13,8 @@
 
 <h1 style="color: aqua">${message}</h1>
 <br><br>
-<div class="container">
+
+<div class="container" id="showT">
     <table class="table table-bordered table-striped text-dark">
         <tr>
             <td>
@@ -75,7 +76,8 @@
             </td>
             <td>
                 <div id="hide2" style="display: none">
-                    <input type="password" placeholder="Enter Password" name="password" class="form-control" required>
+                    <input type="password" placeholder="Enter Password" name="password" class="form-control" required
+                    pattern="^[A-Za-z0-9._%+@|!&*=/-]{8,}$">
                 </div>
             </td>
             <td>
@@ -108,7 +110,8 @@
                 </td>
                 <td>
                     <div id="hide5" style="display: none">
-                        <input type="text" placeholder="09*********" name="phone" class="form-control" required>
+                        <input type="text" placeholder="09*********" name="phone" class="form-control" required
+                        pattern="^(\+98|0)?9\d{9}$">
                     </div>
                 </td>
                 <td>

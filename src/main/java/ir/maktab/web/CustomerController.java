@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@SessionAttributes({"customer", "expert", "orderDto", "customerProfile"})
+@SessionAttributes({"customer", "expert", "orderDto"})
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customer")
@@ -42,15 +42,15 @@ public class CustomerController {
 
 
  @PostMapping("/pass")
- public ModelAndView StringChangePassword(@RequestParam("password")String password) {
-  //customerService.changePassword(customerDto,password);
-     System.out.println(password);
+ public ModelAndView StringChangePassword(@RequestParam("password")String password,
+                                          @SessionAttribute("customerProfile") CustomerDto customerProfile) {
+  customerService.changePassword(customerProfile,password);
      return new ModelAndView("customer/customer_profile","message","change password successfully");
  }
     @PostMapping("/phone")
-    public ModelAndView StringChangePhone(@RequestParam("phone")String phone) {
-        // customerService.changePassword(customerDto,password);
-        System.out.println(phone);
+    public ModelAndView StringChangePhone(@RequestParam("phone")String phone,
+                                          @SessionAttribute("customerProfile") CustomerDto customerProfile) {
+        customerService.changePassword(customerProfile,phone);
         return new ModelAndView("customer/customer_profile","message","change phone number successfully");
     }
 

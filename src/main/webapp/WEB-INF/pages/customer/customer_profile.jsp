@@ -12,7 +12,8 @@
 <body>
 
 <h1 style="color: aqua">${message}</h1>
-<form:form modelAttribute="customerProfile">
+<br><br>
+<div class="container">
     <table class="table table-bordered table-striped text-dark">
         <tr>
             <td>
@@ -53,6 +54,10 @@
             </td>
             <td>
                     ${customerProfile.password}
+
+
+
+
             </td>
             <td>
 
@@ -62,7 +67,7 @@
         </tr>
 
         <tr>
-
+    <form action="/customer/pass" method="post">
             <td>
                 <div id="hide1" style="display: none">
                     New password :
@@ -70,16 +75,16 @@
             </td>
             <td>
                 <div id="hide2" style="display: none">
-                    <input type="password" placeholder="Enter Password" name="passw" class="form-control" required>
+                    <input type="password" placeholder="Enter Password" name="password" class="form-control" required>
                 </div>
             </td>
             <td>
+
                 <div id="hide3" style="display: none">
-                    <a href="<c:url value="/customer/pass/"/>" class="btn btn-outline-primary" type="submit">Change</a>
-                        <%-- <button type="submit" class="btn btn-outline-primary" value="register"></button>--%>
+                    <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Change</button>
                 </div>
             </td>
-
+</form>
         </tr>
         <tr>
             <td>
@@ -95,21 +100,24 @@
             </td>
         </tr>
         <tr>
-            <td>
-                <div id="hide4" style="display: none">
-                    New Phone Number :
-                </div>
-            </td>
-            <td>
-                <div id="hide5" style="display: none">
-                    <input type="text" placeholder="09*********" name="phone" class="form-control" required>
-                </div>
-            </td>
-            <td>
-                <div id="hide6" style="display: none">
-                    <button type="submit" class="btn btn-outline-primary" value="login">Change</button>
-                </div>
-            </td>
+            <form action="/customer/phone" method="post">
+                <td>
+                    <div id="hide4" style="display: none">
+                        New password :
+                    </div>
+                </td>
+                <td>
+                    <div id="hide5" style="display: none">
+                        <input type="text" placeholder="09*********" name="phone" class="form-control" required>
+                    </div>
+                </td>
+                <td>
+
+                    <div id="hide6" style="display: none">
+                        <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Change</button>
+                    </div>
+                </td>
+            </form>
         </tr>
         <tr>
             <td>
@@ -158,7 +166,7 @@
             </td>
         </tr>
     </table>
-</form:form>
+</div>
 <br><br>
 <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
 

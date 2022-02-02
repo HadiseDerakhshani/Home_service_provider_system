@@ -47,10 +47,13 @@ public class UserController {
                 //   return new ModelAndView("expert/expert_profile","expertDto",expertDto);
             } else if (role.equals(UserRole.CUSTOMER)) {
                 CustomerDto customerProfile = customerService.find(email);
+                if(customerProfile.getPassword().equals(password)){
                 List<OrderDto> orderList = orderService.findOrder(customerProfile);
                 model.addAttribute("customerProfile", customerProfile);
                 model.addAttribute("order", orderList);
-                return "customer/customer_profile";
+                return "customer/customer_profile";}
+                else
+                    return "login";
                 //   return new ModelAndView("customer/customer_profile", "customerDto", customerFound);}
             }
         }

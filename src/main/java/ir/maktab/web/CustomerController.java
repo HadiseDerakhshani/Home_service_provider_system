@@ -43,7 +43,7 @@ public class CustomerController {
 
  @PostMapping("/pass")
  public ModelAndView StringChangePassword(@RequestParam("password")String password) {
-     // customerService.changePassword(customerDto,password);
+  //customerService.changePassword(customerDto,password);
      System.out.println(password);
      return new ModelAndView("customer/customer_profile","message","change password successfully");
  }

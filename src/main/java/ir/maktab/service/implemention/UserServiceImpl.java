@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Service
@@ -74,5 +75,11 @@ public class UserServiceImpl implements UserService {
             return listDto;
         } else
             throw new ObjectEntityNotFoundException("-- user list not found --");
+    }
+
+    @Override
+    public List<UserDto> findAll() {
+        List<User> list = userRepository.findAll();
+      return   list.stream().map(userMap::createUserDto).collect(Collectors.toList());
     }
 }

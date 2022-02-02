@@ -18,6 +18,7 @@ public interface UserService {
     public UserDto saveExpert(Expert expert);
 
     public boolean checkPassword(User user, String pass);
+    public List<UserDto> findAll();
 
     public List<UserDto> filtering(String name, String family, String email, UserRole role, SubService service);
 }

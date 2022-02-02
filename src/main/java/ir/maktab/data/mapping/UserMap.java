@@ -16,8 +16,18 @@ public class UserMap {
     private ModelMapper mapper;
 
     public User createUser(UserDto userDto) {
-
-        return mapper.map(userDto, User.class);
+        User user=User.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .phoneNumber(userDto.getPhoneNumber())
+                .userStatus(userDto.getUserStatus())
+                .userRole(userDto.getUserRole())
+                .credit(userDto.getCredit())
+                .dateUpdate(userDto.getDateUpdate())
+                .dateRegister(userDto.getDateRegister()).build();
+        return user;
     }
 
     public User mapCustomerDtoToUser(Customer customer) {
@@ -47,6 +57,17 @@ public class UserMap {
     }
 
     public UserDto createUserDto(User user) {
-        return mapper.map(user, UserDto.class);
+        UserDto userDto=UserDto.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phoneNumber(user.getPhoneNumber())
+                .userStatus(user.getUserStatus())
+                .userRole(user.getUserRole())
+                .credit(user.getCredit())
+                .dateUpdate(user.getDateUpdate())
+                .dateRegister(user.getDateRegister()).build();
+        return userDto;
     }
 }

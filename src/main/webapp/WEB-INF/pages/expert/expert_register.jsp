@@ -100,7 +100,7 @@
                     <label>Upload Profile Image :</label>
                 </td>
                 <td>
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="image" name="image" accept="image/jpeg">
                 </td>
             </tr>
             <tr>

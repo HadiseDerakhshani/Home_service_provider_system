@@ -11,7 +11,9 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode
 @SuperBuilder
@@ -23,11 +25,14 @@ public class Expert extends User {
     @Lob
     private byte[] photo;
     private int score;
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<SubService> serviceList = new ArrayList<>();
-    @OneToMany(mappedBy = "expert")
+     @Transient
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<SubService> serviceList = new HashSet<>();
+     @Transient
+    @OneToMany(mappedBy = "expert",fetch = FetchType.EAGER)
     private List<Order> orderList = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>();
+     @Transient
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Comment> commentList = new HashSet<>();
 
 }

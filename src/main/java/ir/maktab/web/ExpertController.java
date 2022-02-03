@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
+@SessionAttributes({"expert", "orderDto"})
 @Controller
 @RequestMapping("/expert")
 public class ExpertController {
@@ -57,8 +57,8 @@ public class ExpertController {
     public ModelAndView registerExpert(@RequestParam("image") CommonsMultipartFile image, @Validated @ModelAttribute("expert")
             ExpertDto expertDto, @RequestParam("name") String name) {
         expertDto.setPhoto(image.getBytes());
-        expertService.addSubServiceToExpert(expertDto, name);
         expertService.save(expertDto);
+        expertService.addSubServiceToExpert(expertDto, name);
         return new ModelAndView("expert/success_register", "expert", expertDto);
     }
 
@@ -69,20 +69,20 @@ public class ExpertController {
     }
 
     @GetMapping("/suggestion")
-    // public ModelAndView showRegisterSuggestPage() {
-    public String showRegisterSuggestPage() {
-        //List<OrderDto> list = orderService.findOrderToSuggest();
-        List<OrderDto> list = orderService.findAll();
-        //  return new ModelAndView("suggestion/choose_order", "list", list);
+
+    public String showRegisterSuggestPage(Model model) {
+        List<OrderDto> list = orderService.findOrderToSuggest();
+       // List<OrderDto> list = orderService.findAll();
+        model.addAttribute("list",list);
         return "suggestion/choose_order";
     }
 
     @GetMapping("/selectOrder/{number}")
     public String selectOrder(@PathVariable long number, Model model) {
 
-        /// OrderDto orderDto = orderService.find(number);
+       OrderDto orderDto = orderService.find(number);
         model.addAttribute("suggest", new SuggestionDto());
-        //   model.addAttribute("orderDto", orderDto);
+        model.addAttribute("orderDto", orderDto);
         return "suggestion/suggestion_register";
     }
 

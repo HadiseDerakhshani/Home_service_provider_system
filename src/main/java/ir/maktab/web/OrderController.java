@@ -1,10 +1,7 @@
 package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
-import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.ServiceDto;
-import ir.maktab.data.dto.SubServiceDto;
+import ir.maktab.data.dto.*;
 import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
@@ -82,5 +79,20 @@ public class OrderController {
         model.addAttribute("subServiceList", subServiceList);
         model.addAttribute("order", new OrderDto());
         return "order/order_register";
+    }
+    @GetMapping("/findOrder")
+    public String findOrder( Model model,@SessionAttribute("customerProfile")CustomerDto customerDto) {
+        List<OrderDto> orderDtoList = orderService.findOrder(customerDto);
+        model.addAttribute("orderDtoList", orderDtoList);
+        return "order/choose_order";
+    }
+    @GetMapping("/selectOrder/{number}")
+    public String selectOrder(@PathVariable long number, Model model) {
+//////////////////customer
+        OrderDto orderDto = orderService.find(number);
+        List<SuggestionDto> suggestion = orderDto.getSuggestion();
+        model.addAttribute("orderDto", orderDto);
+        model.addAttribute("suggestList", suggestion);
+        return "suggestion/suggestion_register";
     }
 }

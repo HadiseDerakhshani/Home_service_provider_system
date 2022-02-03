@@ -21,7 +21,7 @@
                 First Name :
             </td>
             <td>
-                    ${customerProfile.firstName}
+                ${customerProfile.firstName}
             </td>
             <td>
             </td>
@@ -32,7 +32,7 @@
                 Last Name :
             </td>
             <td>
-                    ${customerProfile.lastName}
+                ${customerProfile.lastName}
             </td>
             <td>
             </td>
@@ -43,7 +43,7 @@
                 Email :
             </td>
             <td>
-                    ${customerProfile.email}
+                ${customerProfile.email}
             </td>
             <td>
             </td>
@@ -54,9 +54,7 @@
                 Password :
             </td>
             <td>
-                    ${customerProfile.password}
-
-
+                ${customerProfile.password}
 
 
             </td>
@@ -68,32 +66,33 @@
         </tr>
 
         <tr>
-    <form action="/customer/pass" method="post">
-            <td>
-                <div id="hide1" style="display: none">
-                    New password :
-                </div>
-            </td>
-            <td>
-                <div id="hide2" style="display: none">
-                    <input type="password" placeholder="Enter Password" name="password" class="form-control" required
-                    pattern="^[A-Za-z0-9._%+@|!&*=/-]{8,}$">
-                </div>
-            </td>
-            <td>
+            <form action="/customer/pass" method="post">
+                <td>
+                    <div id="hide1" style="display: none">
+                        New password :
+                    </div>
+                </td>
+                <td>
+                    <div id="hide2" style="display: none">
+                        <input type="password" placeholder="Enter Password" name="password" class="form-control"
+                               required
+                               pattern="^[A-Za-z0-9._%+@|!&*=/-]{8,}$">
+                    </div>
+                </td>
+                <td>
 
-                <div id="hide3" style="display: none">
-                    <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Change</button>
-                </div>
-            </td>
-</form>
+                    <div id="hide3" style="display: none">
+                        <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Change</button>
+                    </div>
+                </td>
+            </form>
         </tr>
         <tr>
             <td>
                 Phone Number :
             </td>
             <td>
-                    ${customerProfile.phoneNumber}
+                ${customerProfile.phoneNumber}
             </td>
             <td>
                 <button class="btn btn-outline-primary" onclick="ShowChangePhoneDiv()" id="showItem" value="change">
@@ -111,7 +110,7 @@
                 <td>
                     <div id="hide5" style="display: none">
                         <input type="text" placeholder="09*********" name="phone" class="form-control" required
-                        pattern="^(\+98|0)?9\d{9}$">
+                               pattern="^(\+98|0)?9\d{9}$">
                     </div>
                 </td>
                 <td>
@@ -127,7 +126,7 @@
                 Credit :
             </td>
             <td>
-                    ${customerProfile.credit}
+                ${customerProfile.credit}
             </td>
             <td>
             </td>
@@ -138,7 +137,7 @@
                 User Status :
             </td>
             <td>
-                    ${customerProfile.userStatus}
+                ${customerProfile.userStatus}
             </td>
             <td>
             </td>
@@ -148,7 +147,7 @@
                 Last Update Date :
             </td>
             <td>
-                    ${customerProfile.dateUpdate}
+                ${customerProfile.dateUpdate}
             </td>
             <td>
             </td>
@@ -172,6 +171,7 @@
 </div>
 <br><br>
 <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
+<a href="<c:url value="/order/findOrder"/>" class="btn btn-outline-primary">select expert</a>
 
 <script>
     function ShowChangePassDiv() {

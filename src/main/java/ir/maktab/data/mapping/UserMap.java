@@ -16,7 +16,7 @@ public class UserMap {
     private ModelMapper mapper;
 
     public User createUser(UserDto userDto) {
-        User user=User.builder()
+        User user = User.builder()
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
@@ -57,7 +57,7 @@ public class UserMap {
     }
 
     public UserDto createUserDto(User user) {
-        UserDto userDto=UserDto.builder()
+        UserDto userDto = UserDto.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())

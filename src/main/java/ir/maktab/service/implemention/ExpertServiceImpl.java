@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Getter
 @Service
@@ -104,7 +105,7 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void updateServiceList(List<SubService> list, ExpertDto expert) {
+    public void updateServiceList(Set<SubService> list, ExpertDto expert) {
         Expert expertFound = findByEmail(expert.getEmail()).get();
         expertFound.setServiceList(list);
         expertRepository.save(expertFound);

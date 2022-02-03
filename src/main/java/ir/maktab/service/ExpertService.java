@@ -7,6 +7,7 @@ import ir.maktab.data.entity.user.Expert;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 public interface ExpertService {
@@ -24,7 +25,7 @@ public interface ExpertService {
 
     public ExpertDto find(String email);
 
-    public void updateServiceList(List<SubService> list, ExpertDto expert);
+    public void updateServiceList(Set<SubService> list, ExpertDto expert);
 
     public void updateScore(int score, Expert expert);
 

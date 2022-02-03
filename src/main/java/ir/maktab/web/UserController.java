@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
@@ -37,23 +40,22 @@ public class UserController {
     @PostMapping("/login")
     public String showRegisterPage(@RequestParam("email") String email, @RequestParam("password") String password,
                                    Model model) {
-      UserRole role = userService.findByEmail(email, password);
+        UserRole role = userService.findByEmail(email, password);
 
-            if (role.equals(UserRole.EXPERT)) {
-                ExpertDto expertDto = expertService.find(email);
-                //////////////
-                return null;
+        if (role.equals(UserRole.EXPERT)) {
+            ExpertDto expertDto = expertService.find(email);
+            //////////////
+            return null;
 
-            } else if (role.equals(UserRole.CUSTOMER)) {
-                CustomerDto customerProfile = customerService.find(email);
-                List<OrderDto> orderList = orderService.findOrder(customerProfile);
-                model.addAttribute("customerProfile", customerProfile);
-                model.addAttribute("order", orderList);
-                return "customer/customer_profile";
+        } else if (role.equals(UserRole.CUSTOMER)) {
+            CustomerDto customerProfile = customerService.find(email);
+            List<OrderDto> orderList = orderService.findOrder(customerProfile);
+            model.addAttribute("customerProfile", customerProfile);
+         model.addAttribute("order", orderList);
+            return "customer/customer_profile";
         }
         return "register";
     }
-
 
 
 }

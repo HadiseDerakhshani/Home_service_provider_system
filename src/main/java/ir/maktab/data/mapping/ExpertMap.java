@@ -41,7 +41,7 @@ public class ExpertMap {
                 .build();
         if (expertDto.getServiceList() != null) {
             expert.setServiceList(expertDto.getServiceList().stream().map(subServiceMap::createSubService)
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toSet()));
         }
         if (expertDto.getOrderList() != null) {
             expert.setOrderList(expertDto.getOrderList().stream().map(orderMap::createOrder)
@@ -53,7 +53,7 @@ public class ExpertMap {
         }*/
         if (expertDto.getCommentList() != null) {
             expert.setCommentList(expertDto.getCommentList().stream().map(commentMap::createComment)
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toSet()));
         }
         return expert;
     }

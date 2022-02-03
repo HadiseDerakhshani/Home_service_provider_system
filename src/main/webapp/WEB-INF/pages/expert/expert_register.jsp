@@ -129,7 +129,7 @@
     const imageFile = document.getElementById("image");
 
     imageFile.onchange = function () {
-        const maxAllowedSize = 100 * 1024;
+        const maxAllowedSize = 300 * 1024;
         if (this.files[0].size > maxAllowedSize) {
             alert("Image File is too big! size image maximum : 300Kb");
             this.value = "";

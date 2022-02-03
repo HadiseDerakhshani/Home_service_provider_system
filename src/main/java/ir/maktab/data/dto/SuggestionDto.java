@@ -22,7 +22,6 @@ public class SuggestionDto {
 
     private double proposedPrice;
 
-    @Pattern(regexp = "[0-9]+$", message = "invalid durationOfWork")
     private int durationOfWork;
 
     @Min(value = 6, message = "min of start time is 6")

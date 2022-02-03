@@ -34,10 +34,10 @@ public class CustomerMap {
                 .email(customerDto.getEmail())
                 .build();
 
-        if (customerDto.getOrderList() != null) {
+     /*   if (customerDto.getOrderList() != null) {
             customer.setOrderList(customerDto.getOrderList().stream().map(orderMap::createOrder).collect(Collectors.toList()));
 
-        }
+        }*/
         return customer;
     }
 
@@ -53,11 +53,11 @@ public class CustomerMap {
                 .dateUpdate(customer.getDateUpdate())
                 .build();
 
-        if (customer.getOrderList() != null) {
+       /* if (customer.getOrderList() != null) {
             customerDto.setOrderList(customer.getOrderList().stream().map(orderMap::createOrderDto)
                     .collect(Collectors.toList()));
 
-        }
+        }*/
         return customerDto;
     }
 }

@@ -31,12 +31,7 @@ public class SuggestionMap {
                 .ProposedPrice(suggestionDto.getProposedPrice())
                 .receptionNumber(suggestionDto.getReceptionNumber())
                 .build();
-        /*if(suggestionDto.getProposedPrice()!=0){
-            suggestion.setProposedPrice(suggestionDto.getProposedPrice());
-        }
-        if(suggestionDto.getReceptionNumber()!=0){
-            suggestion.setReceptionNumber(suggestionDto.getReceptionNumber());
-        }*/
+
         if (suggestionDto.getExpert() != null) {
             suggestion.setExpert(expertMap.createExpert(suggestionDto.getExpert()));
         }
@@ -55,12 +50,7 @@ public class SuggestionMap {
                 .proposedPrice(suggestion.getProposedPrice())
                 .receptionNumber(suggestion.getReceptionNumber())
                 .build();
-        /*if(suggestionDto.getProposedPrice()!=0){
-            suggestion.setProposedPrice(suggestionDto.getProposedPrice());
-        }
-        if(suggestionDto.getReceptionNumber()!=0){
-            suggestion.setReceptionNumber(suggestionDto.getReceptionNumber());
-        }*/
+
         if (suggestion.getExpert() != null) {
             suggest.setExpert(expertMap.createExpertDto(suggestion.getExpert()));
         }

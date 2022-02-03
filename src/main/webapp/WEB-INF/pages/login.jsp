@@ -15,9 +15,11 @@
             color: blue;
 
         }
-        div,p {
+
+        div, p {
             margin-left: 10px;
         }
+
         span {
             color: red;
         }
@@ -31,13 +33,13 @@
         <h2>Email : </h2>
         <br>
         <input type="email" placeholder="Enter Username" name="email" id="e1" class="form-control" required
-               pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$">
+              <%-- pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"--%>>
 
         <br><br>
         <h2>Password : </h2>
         <br>
         <input type="password" placeholder="Enter Password" name="password" id="p1" class="form-control" required
-        pattern="^[A-Za-z0-9._%+@|!&*=/-]{8,}$">
+              <%-- pattern="^[A-Za-z0-9._%+@|!&*=/-]{8,}$"--%>>
         <br><br>
 
         <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Login</button>

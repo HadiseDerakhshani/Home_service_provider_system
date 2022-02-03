@@ -42,6 +42,7 @@ public class OrderMap {
                 .pricePaid(orderDto.getPricePaid())
                 .status(orderDto.getStatus())
                 .receptionNumber(orderDto.getReceptionNumber())
+                .registerDate(orderDto.getRegisterDate())
                 .build();
 
       /*  if(orderDto.getReceptionNumber()!=0){
@@ -74,6 +75,7 @@ public class OrderMap {
                 .proposedPrice(order.getProposedPrice())
                 .status(order.getStatus())
                 .receptionNumber(order.getReceptionNumber())
+                .registerDate(order.getRegisterDate())
                 .build();
 
         /*if(order.getReceptionNumber()!=0){

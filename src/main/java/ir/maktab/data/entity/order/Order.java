@@ -39,6 +39,8 @@ public class Order {
     private Expert expert;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    @Transient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.EAGER)
     private List<Suggestion> suggestion = new ArrayList<>();
 

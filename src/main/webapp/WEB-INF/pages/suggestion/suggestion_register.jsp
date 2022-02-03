@@ -7,32 +7,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
 
-</head>
-<head>
-    <title>Register Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
 <body>
 <div>
-    <form:form cssClass="p-1 my-5 mx-5" modelAttribute="suggest" enctype="multipart/form-data"
-               action="/expert/registerExpert" method="post">
+    <form:form cssClass="p-1 my-5 mx-5" modelAttribute="suggest"
+               action="/expert/registerSuggestion" method="post">
         <table class="table table-bordered table-striped text-dark">
-            <tr>Order for service : ${orderDto.service} & reception number : ${orderDto.receptionNumber}</tr>
+            <tr>name service :${orderDto.service.name} , price service :${orderDto.service.price} , reception number : ${orderDto.receptionNumber}</tr>
             <tr>
                 <td>
-                    <form:label path="firstName">proposed Price :</form:label>
+                    <form:label path="proposedPrice">proposed Price :</form:label>
                 </td>
                 <td>
-                    <form:input path="proposedPrice" name="proposedPrice" placeholder="enter proposed Price"/>
+                    <form:input path="proposedPrice" name="proposedPrice" placeholder="enter proposed Price" id="price"/>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <form:errors path="proposedPrice" cssClass="text-danger"/>
+                    <span style="color: red"></span>
                 </td>
             </tr>
             <tr>
@@ -69,13 +65,25 @@
                 <td>
                 </td>
                 <td>
-                    <form:button name="register">Register</form:button>
+                    <form:button name="submit">Register</form:button>
                 </td>
             </tr>
         </table>
     </form:form>
 </div>
+<script>
 
+    $("form").submit(function (event) {
+
+        if ($("#price").val() < "${orderDto.service.price}") {
+
+            $("span").text(" Not valid proposed Price!").show();
+            event.preventDefault();
+        }
+        return;
+    });
+
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

@@ -142,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDto> listFind = findAll();
         if (list != null) {
             List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
-                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SELECTION.name()))
+                    .filter(o -> o.getStatus().equals(OrderStatus.WAITING_FOR_EXPERT_SELECTION))
                     .collect(Collectors.toList());
             if (orderList != null) {
                 return listFind = orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());

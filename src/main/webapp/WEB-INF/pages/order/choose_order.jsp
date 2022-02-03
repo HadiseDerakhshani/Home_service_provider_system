@@ -19,11 +19,11 @@
         <th>Service</th>
         <th>Do Date</th>
         <th>Proposed price</th>
-        <th>Jop Description</th>
         <th>Date Register</th>
         <th>Reception Number</th>
+        <th>Status order</th>
     </tr>
-    <c:forEach var="list" items="${list}">
+    <c:forEach var="list" items="${orderDtoList}">
         <tr>
             <td>${list.service.name}</td>
             <td>${list.doDate}</td>
@@ -31,7 +31,8 @@
             <td>${list.jobDescription}</td>
             <td>${list.registerDate}</td>
             <td>${list.receptionNumber}</td>
-            <td><a href="/expert/selectOrder/${list.receptionNumber}">Select</a></td>
+            <td>${list.status}</td>
+            <td><a href="/order/selectOrder/${list.receptionNumber}">Select</a></td>
         </tr>
     </c:forEach>
 </table>

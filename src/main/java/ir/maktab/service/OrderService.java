@@ -40,8 +40,10 @@ public interface OrderService {
 
     public List<OrderDto> findOrderToSelectExpert(Customer customer);
 
-     public OrderDto update(Order order);
+    public OrderDto update(Order order);
+
     public List<OrderDto> findOrderByExpert(ExpertDto expertDto);
+
     public List<OrderDto> findOrderToPayment(Customer customer);
 
     public void startAndEndOrder(int number, int chose, Expert expert);

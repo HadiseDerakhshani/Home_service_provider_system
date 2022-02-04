@@ -23,7 +23,6 @@ public class HomeController {
     public String loginView(Model model) {
         List<UserDto> userDtoList = userService.findAll();
         model.addAttribute("list", userDtoList);
-        model.addAttribute("test", new String());
         return "login";
     }
 

@@ -29,7 +29,7 @@ public class CustomerController {
 
     @PostMapping("/register")
     public ModelAndView register(@Validated @ModelAttribute("customer") CustomerDto customerDto, HttpSession session) {
-       session.setAttribute("customer",customerDto);
+        session.setAttribute("customer", customerDto);
         customerService.save(customerDto);
         return new ModelAndView("customer/success_register", "customer", customerDto);
     }

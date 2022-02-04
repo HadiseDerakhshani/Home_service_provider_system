@@ -12,13 +12,13 @@
 <body>
 <div class="container">
 
-<h1 style="color: darkcyan"> success register order${customer.firstName} ${customer.lastName}</h1>
-<br><br>
-<div class="btn-group mt-5 mx-5">
+    <h1 style="color: darkcyan"> success register order${customer.firstName} ${customer.lastName}</h1>
+    <br><br>
+    <div class="btn-group mt-5 mx-5">
 
-    <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
+        <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
 
-</div>
+    </div>
 </div>
 
 

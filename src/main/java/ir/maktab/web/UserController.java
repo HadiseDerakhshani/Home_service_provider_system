@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -28,12 +27,12 @@ public class UserController {
     @Autowired
     public UserController(@Lazy UserServiceImpl userService, @Lazy ExpertServiceImpl expertService,
                           @Lazy CustomerServiceImpl customerService, @Lazy OrderServiceImpl orderService,
-    @Lazy SuggestionServiceImpl suggestionService) {
+                          @Lazy SuggestionServiceImpl suggestionService) {
         this.userService = userService;
         this.expertService = expertService;
         this.customerService = customerService;
         this.orderService = orderService;
-        this.suggestionService=suggestionService;
+        this.suggestionService = suggestionService;
     }
 
     @PostMapping("/login")
@@ -43,25 +42,25 @@ public class UserController {
 
         if (role.equals(UserRole.EXPERT)) {
             ExpertDto expertProfile = expertService.find(email);
-         //  List<OrderDto> orderDtoList = orderService.findOrderByExpert(expertProfile);
-          //  System.out.println(orderDtoList);
+            List<OrderDto> orderDtoList = orderService.findOrderByExpert(expertProfile);
+            System.out.println(orderDtoList);
+
             List<SuggestionDto> suggestionDtoList = suggestionService.findByExpert(expertProfile);
             List<SubServiceDto> serviceList = expertProfile.getServiceList();
-            session.setAttribute("expert",expertProfile);
-            model.addAttribute("expert",expertProfile);
-        //  model.addAttribute("orderList",orderDtoList);
-            model.addAttribute("suggestionDtoList",suggestionDtoList);
-            model.addAttribute("serviceList",serviceList);
+            session.setAttribute("expert", expertProfile);
+            model.addAttribute("expert", expertProfile);
+            model.addAttribute("orderList", orderDtoList);
+            model.addAttribute("suggestionDtoList", suggestionDtoList);
+            model.addAttribute("serviceList", serviceList);
             return "expert/expert_profile";
-
 
 
         } else if (role.equals(UserRole.CUSTOMER)) {
             CustomerDto customerProfile = customerService.find(email);
-            session.setAttribute("customer",customerProfile);
+            session.setAttribute("customer", customerProfile);
             List<OrderDto> orderList = orderService.findOrderByCustomer(customerProfile);
             model.addAttribute("customer", customerProfile);
-         model.addAttribute("order", orderList);
+            model.addAttribute("order", orderList);
             return "customer/customer_profile";
         }
         return "register";

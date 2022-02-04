@@ -27,10 +27,7 @@ public class SubServiceMap {
                 .price(subServiceDto.getPrice())
                 .description(subServiceDto.getDescription())
                 .build();
-       /* if (subServiceDto.getExpertList() != null) {
-            service.setExpertList(subServiceDto.getExpertList().stream().map(expertMap::createExpert)
-                    .collect(Collectors.toList()));
-        }*/
+
         return service;
 
     }
@@ -41,10 +38,6 @@ public class SubServiceMap {
                 .price(subService.getPrice())
                 .description(subService.getDescription())
                 .build();
-       /* if (subService.getExpertList() != null) {
-            serviceDto.setExpertList(subService.getExpertList().stream().map(expertMap::createExpertDto)
-                    .collect(Collectors.toList()));
-        }*/
         return serviceDto;
 
     }

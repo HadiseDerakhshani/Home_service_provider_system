@@ -11,24 +11,30 @@
 </head>
 <body>
 <div class="container">
-<h2 style="color: floralwhite">${customer.firstName} ${customer.lastName} please select expert for order</h2>
-<br><br>
-<table border="5" width="70%" cellpadding="2">
-<tr><td>score expert</td><td>expert name</td><td>proposed price</td><td>duration of work</td><td>start time</td>
-<td>reception number</td>
-<td> select </td></tr>
-    <c:forEach var="list" items="${suggestList}">
+    <h2 style="color: floralwhite">${customer.firstName} ${customer.lastName} please select expert for order</h2>
+    <br><br>
+    <table border="5" width="70%" cellpadding="2">
         <tr>
-            <td>${list.expert.score}</td>
-            <td>${list.expert.lastName}</td>
-            <td>${list.proposedPrice}</td>
-            <td>${list.durationOfWork}</td>
-            <td>${list.startTime}</td>
-            <td>${list.receptionNumber}</td>
-            <td><a href="/expert/selectSuggest/${list.receptionNumber}">Select</a></td>
+            <td>score expert</td>
+            <td>expert name</td>
+            <td>proposed price</td>
+            <td>duration of work</td>
+            <td>start time</td>
+            <td>reception number</td>
+            <td> select</td>
         </tr>
-    </c:forEach>
-</table>
+        <c:forEach var="list" items="${suggestList}">
+            <tr>
+                <td>${list.expert.score}</td>
+                <td>${list.expert.lastName}</td>
+                <td>${list.proposedPrice}</td>
+                <td>${list.durationOfWork}</td>
+                <td>${list.startTime}</td>
+                <td>${list.receptionNumber}</td>
+                <td><a href="/expert/selectSuggest/${list.receptionNumber}">Select</a></td>
+            </tr>
+        </c:forEach>
+    </table>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

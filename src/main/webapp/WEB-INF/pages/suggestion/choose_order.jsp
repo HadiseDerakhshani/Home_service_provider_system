@@ -11,29 +11,29 @@
 </head>
 <body>
 <div class="container">
-<h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
-<br><br>
-<table border="5" width="70%" cellpadding="2">
-    <tr>
-        <th>Service</th>
-        <th>Do Date</th>
-        <th>Proposed price</th>
-        <th>Jop Description</th>
-        <th>Date Register</th>
-        <th>Reception Number</th>
-    </tr>
-    <c:forEach var="list" items="${list}">
+    <h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
+    <br><br>
+    <table border="5" width="70%" cellpadding="2">
         <tr>
-            <td>${list.service.name}</td>
-            <td>${list.doDate}</td>
-            <td>${list.proposedPrice}</td>
-            <td>${list.jobDescription}</td>
-            <td>${list.registerDate}</td>
-            <td>${list.receptionNumber}</td>
-            <td><a href="/expert/selectOrder/${list.receptionNumber}">Select</a></td>
+            <th>Service</th>
+            <th>Do Date</th>
+            <th>Proposed price</th>
+            <th>Jop Description</th>
+            <th>Date Register</th>
+            <th>Reception Number</th>
         </tr>
-    </c:forEach>
-</table>
+        <c:forEach var="list" items="${list}">
+            <tr>
+                <td>${list.service.name}</td>
+                <td>${list.doDate}</td>
+                <td>${list.proposedPrice}</td>
+                <td>${list.jobDescription}</td>
+                <td>${list.registerDate}</td>
+                <td>${list.receptionNumber}</td>
+                <td><a href="/expert/selectOrder/${list.receptionNumber}">Select</a></td>
+            </tr>
+        </c:forEach>
+    </table>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

@@ -49,10 +49,7 @@ public class ExpertMap {
             expert.setOrderList(expertDto.getOrderList().stream().map(orderMap::createOrder)
                     .collect(Collectors.toList()));
         }
-       /* if (expertDto.getSuggestList() != null) {
-            expert.setSuggestList(expertDto.getSuggestList().stream().map(suggestionMap::createSuggestion)
-                    .collect(Collectors.toList()));
-        }*/
+
         if (expertDto.getCommentList() != null) {
             expert.setCommentList(expertDto.getCommentList().stream().map(commentMap::createComment)
                     .collect(Collectors.toSet()));
@@ -80,10 +77,7 @@ public class ExpertMap {
             expertDto.setOrderList(expert.getOrderList().stream().map(orderMap::createOrderDto)
                     .collect(Collectors.toList()));
         }
-       /* if (expert.getSuggestList() != null) {
-            expertDto.setSuggestList(expert.getSuggestList().stream().map(suggestionMap::createSuggestionDto)
-                    .collect(Collectors.toList()));
-        }*/
+
         if (expertDto.getCommentList() != null) {
             expertDto.setCommentList(expert.getCommentList().stream().map(commentMap::createCommentDto)
                     .collect(Collectors.toList()));

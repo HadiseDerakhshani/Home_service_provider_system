@@ -18,6 +18,5 @@ public class ExpertDto extends UserDto {
     private int score;
     private List<SubServiceDto> serviceList = new ArrayList<>();
     private List<OrderDto> orderList = new ArrayList<>();
-    private List<SuggestionDto> suggestList = new ArrayList<>();
     private List<CommentDto> commentList = new ArrayList<>();
 }

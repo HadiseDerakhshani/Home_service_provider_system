@@ -10,9 +10,9 @@
 
 </head>
 <body>
-<div class="container" >
-<h1 style="color: aqua">${message}</h1>
-<br><br>
+<div class="container">
+    <h1 style="color: aqua">${message}</h1>
+    <br><br>
 
     <table class="table table-bordered table-striped text-dark">
         <tr>
@@ -168,9 +168,9 @@
         </tr>
     </table>
 
-<br><br>
-<a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
-<a href="<c:url value="/order/findOrder"/>" class="btn btn-outline-primary">select expert</a>
+    <br><br>
+    <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
+    <a href="<c:url value="/order/findOrder"/>" class="btn btn-outline-primary">select expert</a>
     <a href="<c:url value="/order" />" class="btn btn-outline-primary">new Order</a>
 </div>
 <script>

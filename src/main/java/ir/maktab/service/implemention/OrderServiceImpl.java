@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -199,11 +198,11 @@ public class OrderServiceImpl implements OrderService {
         Customer customerFound = customerServiceImpl.findByEmail(customer.getEmail()).get();
         List<Order> list = orderRepository.findAll();
         if (list != null) {
-            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getId()==customerFound.getId())
+            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getId() == customerFound.getId())
                     .collect(Collectors.toList());
             if (orderList != null) {
                 return orderList.stream().map(orderMap::createOrderDto)
-                        .sorted(Comparator.comparing(o->o.getRegisterDate()))
+                        .sorted(Comparator.comparing(o -> o.getRegisterDate()))
                         .collect(Collectors.toList());
             } else
                 throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
@@ -216,12 +215,13 @@ public class OrderServiceImpl implements OrderService {
         Order saveOrder = orderRepository.save(order);
         return orderMap.createOrderDto(saveOrder);
     }
+
     @Override
     public List<OrderDto> findOrderByExpert(ExpertDto expertDto) {
         Expert expert = expertServiceImpl.findByEmail(expertDto.getEmail()).get();
         List<Order> list = orderRepository.findAll();
         if (list != null) {
-            List<Order> orderList = list.stream().filter(o -> o.getExpert().getEmail()== expert.getEmail()).collect(Collectors.toList());
+            List<Order> orderList = list.stream().filter(o -> o.getExpert().getId() == expert.getId()).collect(Collectors.toList());
             if (orderList != null) {
                 return orderList.stream().map(orderMap::createOrderDto)
                         .collect(Collectors.toList());

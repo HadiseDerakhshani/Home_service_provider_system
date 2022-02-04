@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Builder

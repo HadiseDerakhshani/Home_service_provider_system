@@ -71,15 +71,15 @@ public class ExpertController {
 
     public String showRegisterSuggestPage(Model model) {
         List<OrderDto> list = orderService.findOrderToSuggest();
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         return "suggestion/choose_order";
     }
 
     @GetMapping("/selectOrder/{number}")
-    public String selectOrder(@PathVariable long number, Model model,HttpSession session) {
+    public String selectOrder(@PathVariable long number, Model model, HttpSession session) {
 
-       OrderDto orderDto = orderService.find(number);
-       session.setAttribute("orderDto", orderDto);
+        OrderDto orderDto = orderService.find(number);
+        session.setAttribute("orderDto", orderDto);
         model.addAttribute("suggest", new SuggestionDto());
         model.addAttribute("orderDto", orderDto);
         return "suggestion/suggestion_register";
@@ -90,7 +90,7 @@ public class ExpertController {
                                            @SessionAttribute("expert") ExpertDto expertDto,
                                            @SessionAttribute("orderDto") OrderDto orderDto) {
         SuggestionDto saveSuggest = suggestionService.save(suggestionDto, orderDto, expertDto);
-        orderService.addSuggestionToOrder(orderDto,saveSuggest);
+        orderService.addSuggestionToOrder(orderDto, saveSuggest);
         return new ModelAndView("suggestion/success_register", "expert", expertDto);
     }
 
@@ -102,10 +102,11 @@ public class ExpertController {
         List<SuggestionDto> suggestionDtoList = suggestionService.findByOrder(number);
         System.out.println(suggestionDtoList);
         model.addAttribute("orderDto", orderDto);
-         model.addAttribute("suggestList", suggestionDtoList);
+        model.addAttribute("suggestList", suggestionDtoList);
         model.addAttribute("customer", customerDto);
         return "suggestion/choose_suggestion";
     }
+
     @GetMapping("/selectSuggest/{number}")
     public String selectSuggest(@PathVariable long number, Model model) {
         suggestionService.update(number);

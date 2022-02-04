@@ -15,13 +15,15 @@
     <form:form cssClass="p-1 my-5 mx-5" modelAttribute="suggest"
                action="/expert/registerSuggestion" method="post">
         <table class="table table-bordered table-striped text-dark">
-            <tr>name service :${orderDto.service.name} , price service :${orderDto.service.price} , reception number : ${orderDto.receptionNumber}</tr>
+            <tr>name service :${orderDto.service.name} , price service :${orderDto.service.price} , reception number
+                : ${orderDto.receptionNumber}</tr>
             <tr>
                 <td>
                     <form:label path="proposedPrice">proposed Price :</form:label>
                 </td>
                 <td>
-                    <form:input path="proposedPrice" name="proposedPrice" placeholder="enter proposed Price" id="price"/>
+                    <form:input path="proposedPrice" name="proposedPrice" placeholder="enter proposed Price"
+                                id="price"/>
                 </td>
             </tr>
             <tr>

@@ -25,14 +25,14 @@ public class Expert extends User {
     @Lob
     private byte[] photo;
     private int score;
-     @Transient
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubService> serviceList = new HashSet<>();
-   @Transient
-    @OneToMany(mappedBy = "expert",fetch = FetchType.EAGER)
+    @Transient
+    @OneToMany(mappedBy = "expert", fetch = FetchType.EAGER)
     private List<Order> orderList = new ArrayList<>();
-     @Transient
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comment> commentList = new HashSet<>();
 
 }

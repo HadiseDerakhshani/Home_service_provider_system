@@ -18,7 +18,7 @@ public interface OrderService {
 
     public OrderDto find(long number);
 
-    public List<OrderDto> findOrder(CustomerDto customer);
+    public List<OrderDto> findOrderByCustomer(CustomerDto customer);
 
     public void addCustomerToOrder(CustomerDto customer, OrderDto order);
 
@@ -40,7 +40,8 @@ public interface OrderService {
 
     public List<OrderDto> findOrderToSelectExpert(Customer customer);
 
-
+     public OrderDto update(Order order);
+    public List<OrderDto> findOrderByExpert(ExpertDto expertDto);
     public List<OrderDto> findOrderToPayment(Customer customer);
 
     public void startAndEndOrder(int number, int chose, Expert expert);

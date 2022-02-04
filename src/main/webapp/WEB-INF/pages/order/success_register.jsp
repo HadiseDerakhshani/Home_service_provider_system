@@ -10,7 +10,7 @@
 
 </head>
 <body>
-
+<div class="container">
 
 <h1 style="color: darkcyan"> success register order${customer.firstName} ${customer.lastName}</h1>
 <br><br>
@@ -18,6 +18,7 @@
 
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
 
+</div>
 </div>
 
 

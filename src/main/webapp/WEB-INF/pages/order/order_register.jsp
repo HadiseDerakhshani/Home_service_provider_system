@@ -10,6 +10,7 @@
 
 </head>
 <body>
+<div class="container">
 <c:if test="${sessionScope.customer == null}">
     <h2 style="color: red"> customer not login</h2>
     <a href="<c:url value="/customer/register"/>" class="btn btn-outline-primary">customer login</a>
@@ -134,7 +135,7 @@
     </table>
 
 </form:form>
-
+</div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

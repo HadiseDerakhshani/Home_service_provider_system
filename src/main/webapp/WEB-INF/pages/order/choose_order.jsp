@@ -10,10 +10,10 @@
 
 </head>
 <body>
-
-<h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
-<br><br>
 <div class="container">
+<h4 style="color: floralwhite">Please Select Order For Suggestion</h4>
+<br><br>
+
 <table border="5" width="70%" cellpadding="2">
     <tr>
         <th>Service</th>
@@ -28,11 +28,10 @@
             <td>${list.service.name}</td>
             <td>${list.doDate}</td>
             <td>${list.proposedPrice}</td>
-            <td>${list.jobDescription}</td>
             <td>${list.registerDate}</td>
             <td>${list.receptionNumber}</td>
             <td>${list.status}</td>
-            <td><a href="/order/selectOrder/${list.receptionNumber}">Select</a></td>
+            <td><a href="/expert/selectOrderToSuggest/${list.receptionNumber}">Select</a></td>
         </tr>
     </c:forEach>
 </table>

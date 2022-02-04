@@ -38,6 +38,8 @@ public class ExpertMap {
                 .phoneNumber(expertDto.getPhoneNumber())
                 .credit(expertDto.getCredit())
                 .photo(expertDto.getPhoto())
+                .userStatus(expertDto.getUserStatus())
+                .dateUpdate(expertDto.getDateUpdate())
                 .build();
         if (expertDto.getServiceList() != null) {
             expert.setServiceList(expertDto.getServiceList().stream().map(subServiceMap::createSubService)
@@ -67,6 +69,8 @@ public class ExpertMap {
                 .phoneNumber(expert.getPhoneNumber())
                 .credit(expert.getCredit())
                 .photo(expert.getPhoto())
+                .userStatus(expert.getUserStatus())
+                .dateUpdate(expert.getDateUpdate())
                 .build();
         if (expert.getServiceList() != null) {
             expertDto.setServiceList(expert.getServiceList().stream().map(subServiceMap::createSubServiceDto)

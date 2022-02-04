@@ -158,4 +158,9 @@ public class ExpertServiceImpl implements ExpertService {
         expertRepository.delete(expertRepository.findByEmail(email).get());
     }
 
+    @Override
+    public ExpertDto update(Expert expert) {
+        Expert saveExpert = expertRepository.save(expert);
+        return expertMap.createExpertDto(expert);
+    }
 }

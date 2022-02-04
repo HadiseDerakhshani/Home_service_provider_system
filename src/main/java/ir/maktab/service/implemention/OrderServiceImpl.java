@@ -17,7 +17,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -193,14 +195,36 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<OrderDto> findOrder(CustomerDto customer) {
+    public List<OrderDto> findOrderByCustomer(CustomerDto customer) {
+        Customer customerFound = customerServiceImpl.findByEmail(customer.getEmail()).get();
         List<Order> list = orderRepository.findAll();
-        List<OrderDto> listFind = findAll();
         if (list != null) {
-            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
+            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getId()==customerFound.getId())
                     .collect(Collectors.toList());
             if (orderList != null) {
-                return listFind = orderList.stream().map(orderMap::createOrderDto).collect(Collectors.toList());
+                return orderList.stream().map(orderMap::createOrderDto)
+                        .sorted(Comparator.comparing(o->o.getRegisterDate()))
+                        .collect(Collectors.toList());
+            } else
+                throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
+        } else
+            throw new ObjectEntityNotFoundException(" --- Order is not exit yet ---");
+    }
+
+    @Override
+    public OrderDto update(Order order) {
+        Order saveOrder = orderRepository.save(order);
+        return orderMap.createOrderDto(saveOrder);
+    }
+    @Override
+    public List<OrderDto> findOrderByExpert(ExpertDto expertDto) {
+        Expert expert = expertServiceImpl.findByEmail(expertDto.getEmail()).get();
+        List<Order> list = orderRepository.findAll();
+        if (list != null) {
+            List<Order> orderList = list.stream().filter(o -> o.getExpert().getEmail()== expert.getEmail()).collect(Collectors.toList());
+            if (orderList != null) {
+                return orderList.stream().map(orderMap::createOrderDto)
+                        .collect(Collectors.toList());
             } else
                 throw new ObjectEntityNotFoundException(" --- Order is not exit for select expert ---");
         } else

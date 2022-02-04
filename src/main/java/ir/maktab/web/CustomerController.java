@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-@SessionAttributes({"customer", "expert", "orderDto"})
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customer")
@@ -27,7 +28,8 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@Validated @ModelAttribute("customer") CustomerDto customerDto) {
+    public ModelAndView register(@Validated @ModelAttribute("customer") CustomerDto customerDto, HttpSession session) {
+       session.setAttribute("customer",customerDto);
         customerService.save(customerDto);
         return new ModelAndView("customer/success_register", "customer", customerDto);
     }
@@ -41,14 +43,14 @@ public class CustomerController {
 
     @PostMapping("/pass")
     public ModelAndView StringChangePassword(@RequestParam("password") String password,
-                                             @SessionAttribute("customerProfile") CustomerDto customerProfile) {
+                                             @SessionAttribute("customer") CustomerDto customerProfile) {
         customerService.changePassword(customerProfile, password);
         return new ModelAndView("customer/customer_profile", "message", "change password successfully");
     }
 
     @PostMapping("/phone")
     public ModelAndView StringChangePhone(@RequestParam("phone") String phone,
-                                          @SessionAttribute("customerProfile") CustomerDto customerProfile) {
+                                          @SessionAttribute("customer") CustomerDto customerProfile) {
         customerService.changePassword(customerProfile, phone);
         return new ModelAndView("customer/customer_profile", "message", "change phone number successfully");
     }

@@ -15,7 +15,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<div>
+<div class="container">
     <form:form cssClass="p-1 my-5 mx-5" modelAttribute="expert" enctype="multipart/form-data"
                action="/expert/registerExpert" method="post">
         <table class="table table-bordered table-striped text-dark">

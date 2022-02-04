@@ -81,18 +81,10 @@ public class OrderController {
         return "order/order_register";
     }
     @GetMapping("/findOrder")
-    public String findOrder( Model model,@SessionAttribute("customerProfile")CustomerDto customerDto) {
-        List<OrderDto> orderDtoList = orderService.findOrder(customerDto);
+    public String findOrder( Model model,@SessionAttribute("customer")CustomerDto customerDto) {
+        List<OrderDto> orderDtoList = orderService.findOrderByCustomer(customerDto);
         model.addAttribute("orderDtoList", orderDtoList);
         return "order/choose_order";
     }
-    @GetMapping("/selectOrder/{number}")
-    public String selectOrder(@PathVariable long number, Model model) {
-//////////////////customer
-        OrderDto orderDto = orderService.find(number);
-        List<SuggestionDto> suggestion = orderDto.getSuggestion();
-        model.addAttribute("orderDto", orderDto);
-        model.addAttribute("suggestList", suggestion);
-        return "suggestion/suggestion_register";
-    }
+
 }

@@ -10,7 +10,7 @@
 
 </head>
 <body>
-
+<div class="container">
 <h2 style="color: floralwhite">please select service for order</h2>
 <br><br>
 <table border="5" width="70%" cellpadding="2">
@@ -22,7 +22,7 @@
         </tr>
     </c:forEach>
 </table>
-
+</div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

@@ -10,10 +10,9 @@
 
 </head>
 <body>
-
+<div class="container">
 <h2 style="color: floralwhite">Please Select Order For Suggestion</h2>
 <br><br>
-<div class="container">
 <table border="5" width="70%" cellpadding="2">
     <tr>
         <th>Service</th>

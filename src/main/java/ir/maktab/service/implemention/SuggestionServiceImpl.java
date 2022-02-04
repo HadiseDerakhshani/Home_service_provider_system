@@ -3,6 +3,7 @@ package ir.maktab.service.implemention;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
+import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.SuggestionStatus;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.order.Order;
@@ -17,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Getter
 @Service
@@ -51,8 +55,8 @@ public class SuggestionServiceImpl implements SuggestionService {
         suggest.setStatus(SuggestionStatus.NEW);
         suggest.setOrder(order);
         suggest.setExpert(expert);
-        giveReceptionNumber(suggest);
-        return suggestionMap.createSuggestionDto(suggestionRepository.save(suggest));
+        Suggestion saveSuggest = suggestionRepository.save(suggest);
+        return suggestionMap.createSuggestionDto(suggestionRepository.save(giveReceptionNumber(saveSuggest)));
     }
 
     @Override
@@ -62,9 +66,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 
 
     @Override
-    public void giveReceptionNumber(Suggestion suggestion) {
-        suggestion.setReceptionNumber((suggestion.getId() + 1000));
-        suggestionRepository.save(suggestion);
+    public Suggestion giveReceptionNumber(Suggestion suggestion) {
+        suggestion.setReceptionNumber(1000+suggestion.getId());
+       return suggestion;
     }
 
     @Override
@@ -74,24 +78,45 @@ public class SuggestionServiceImpl implements SuggestionService {
     }
 
 
+
     @Override
-    public void update(int index, List<SuggestionDto> list) {
-        int count = 0;
-        for (SuggestionDto dto : list) {
-            //  Suggestion suggest = suggestionDao.findByReceptionNumber(dto.getReceptionNumber()).get();
-            Suggestion suggest = suggestionMap.createSuggestion(dto);
+    public void update(long number) {
+        Suggestion suggestion = findByReceptionNumber(number);
+        Order order = suggestion.getOrder();
+        List<Suggestion> list = order.getSuggestion();
+        Expert expert = suggestion.getExpert();
+        expert.setUserStatus(UserStatus.CONFIRMED);
+        order.setExpert(expert);
+        suggestion.setStatus(SuggestionStatus.CONFIRMED);
+    order.setStatus(OrderStatus.WAITING_FOR_EXPERT_TO_COME);
 
-            if (count == index - 1) {
-                updateStatus(suggest, SuggestionStatus.CONFIRMED);
-                Order order = suggest.getOrder();
-                //  orderServiceImpl.updateStatus(order, OrderStatus.WAITING_FOR_EXPERT_TO_COME);//todo
-                Expert expert = suggest.getExpert();
-                expertServiceImpl.updateStatus(UserStatus.CONFIRMED, expert);
-                //  orderServiceImpl.updateExpert(expert, order);
-            } else
-                updateStatus(suggest, SuggestionStatus.REJECT);
-            count++;
-        }
+        List<Suggestion> suggestionList = list.stream().filter(s -> s.getReceptionNumber() != number)
+                .collect(Collectors.toList());
+        suggestionList.stream().forEach(s->s.setStatus(SuggestionStatus.REJECT));
+        order.setSuggestion(suggestionList);
+        order.getSuggestion().add(suggestion);
+        orderServiceImpl.update(order);
+        expertServiceImpl.update(expert);
+        suggestionRepository.save(suggestion);
 
+    }
+
+    @Override
+    public List<SuggestionDto> findByOrder(long number) {
+        List<Suggestion> list = suggestionRepository.findAll();
+        List<Suggestion> suggestionList = list.stream().filter(s -> s.getOrder().getReceptionNumber() == number)
+                .collect(Collectors.toList());
+        return suggestionList.stream().sorted().map(suggestionMap::createSuggestionDto)
+                .sorted(Comparator.comparingInt(s->s.getExpert().getScore()))
+                .sorted(Comparator.comparingDouble(s->s.getProposedPrice()))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<SuggestionDto> findByExpert(ExpertDto expertDto) {
+        List<Suggestion> list = suggestionRepository.findAll();
+        List<Suggestion> suggestionList = list.stream().filter(s ->s.getExpert().getEmail().equals(expertDto.getEmail()))
+                .collect(Collectors.toList());
+        return suggestionList.stream().sorted().map(suggestionMap::createSuggestionDto)
+                .collect(Collectors.toList());
     }
 }

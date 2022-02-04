@@ -67,4 +67,5 @@ public class SubServiceServiceImpl implements SubServiceService {
     public void deleteSubService(String name) {
         subServiceRepository.delete(find(name));
     }
+
 }

@@ -15,29 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Optional<Order> findByReceptionNumber(long number);
 
-  /*  @Transactional
-    @Modifying
-    @Query(value = "update Order set status=:status where id=:id", nativeQuery = true)
-    void updateStatus(@Param("id") int id, @Param("status") OrderStatus status);
 
-    @Transactional
-    @Modifying
-    @Query(value = "update Order set suggestion=:suggest where id=:id", nativeQuery = true)
-    void updateSuggestion(@Param("id") int id, @Param("suggest") List<Suggestion> suggest);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Order set pricePaid=:amount where  id=:id", nativeQuery = true)
-    void updatePricePaid(@Param("id") int id, @Param("amount") double amount);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Order set expert=:expert where  id=:id", nativeQuery = true)
-    void updateExpert(@Param("id") int id, @Param("expert") Expert expert);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Order set receptionNumber=:number where  id=:id", nativeQuery = true)
-    void updateReceptionNumber(@Param("id") int id, @Param("number") int number);*/
 }
 

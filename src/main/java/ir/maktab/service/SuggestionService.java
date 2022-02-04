@@ -15,12 +15,12 @@ public interface SuggestionService {
     public SuggestionDto save(SuggestionDto suggestion, OrderDto orderDto, ExpertDto expertDto);
 
     public Suggestion findByReceptionNumber(long number);
+    public List<SuggestionDto> findByExpert(ExpertDto expertDto);
 
-
-    public void giveReceptionNumber(Suggestion suggestion);
+    public Suggestion giveReceptionNumber(Suggestion suggestion);
 
     public void updateStatus(Suggestion suggestion, SuggestionStatus status);
 
-    public void update(int index, List<SuggestionDto> list);
-
+public List<SuggestionDto> findByOrder(long number);
+    public void update(long number);
 }

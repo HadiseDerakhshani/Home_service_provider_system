@@ -20,7 +20,7 @@
                 First Name :
             </td>
             <td>
-                ${customer.firstName}
+                ${expert.firstName}
             </td>
             <td>
             </td>
@@ -31,7 +31,7 @@
                 Last Name :
             </td>
             <td>
-                ${customer.lastName}
+                ${expert.lastName}
             </td>
             <td>
             </td>
@@ -42,7 +42,7 @@
                 Email :
             </td>
             <td>
-                ${customer.email}
+                ${expert.email}
             </td>
             <td>
             </td>
@@ -53,7 +53,7 @@
                 Password :
             </td>
             <td>
-                ${customer.password}
+                ${expert.password}
 
 
             </td>
@@ -91,7 +91,7 @@
                 Phone Number :
             </td>
             <td>
-                ${customer.phoneNumber}
+                ${expert.phoneNumber}
             </td>
             <td>
                 <button class="btn btn-outline-primary" onclick="ShowChangePhoneDiv()" id="showItem" value="change">
@@ -125,7 +125,7 @@
                 Credit :
             </td>
             <td>
-                ${customer.credit}
+                ${expert.credit}
             </td>
             <td>
             </td>
@@ -136,7 +136,7 @@
                 User Status :
             </td>
             <td>
-                ${customer.userStatus}
+                ${expert.userStatus}
             </td>
             <td>
             </td>
@@ -146,7 +146,7 @@
                 Last Update Date :
             </td>
             <td>
-                ${customer.dateUpdate}
+                ${expert.dateUpdate}
             </td>
             <td>
             </td>
@@ -157,9 +157,39 @@
             </td>
             <td>
                 <select name="name">
-                    <c:forEach items="${order}" var="list">
+                    <c:forEach items="${orderList}" var="list">
                         <option value="${list.receptionNumber}"> ${list.receptionNumber}
                             , ${list.service.name},${list.status}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                service :
+            </td>
+            <td>
+                <select name="name">
+                    <c:forEach items="${serviceList}" var="list">
+                        <option value="${list.name}"> ${list.name}
+                           </option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                suggestion :
+            </td>
+            <td>
+                <select name="name">
+                    <c:forEach items="${suggestionDtoList}" var="list">
+                        <option value="${list.receptionNumber}"> ${list.receptionNumber}
+                        </option>
                     </c:forEach>
                 </select>
             </td>

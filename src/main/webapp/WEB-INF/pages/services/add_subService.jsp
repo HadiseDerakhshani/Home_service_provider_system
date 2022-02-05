@@ -18,45 +18,49 @@
     <h2 style="color: red">${alert}</h2>
     <br><br>
     <table border="5" width="70%" cellpadding="2">
-
-        <c:forEach var="list" items="${serviceList}">
+        <tr><td>name</td><td>price</td><td>Description</td></tr>
+        <c:forEach var="list" items="${subServiceList}">
             <tr>
                 <td>${list.name}</td>
-                <td><a href="/manager/newSubService{name}/${list.name}">add</a></td>
+                <td>${list.price}</td>
+                <td>${list.description}</td>
             </tr>
         </c:forEach>
-       <tr>
-            <td>New Main Service</td>
-            <td>   <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New
-            </button>
-            </td>
-        </tr>
         <tr>
-        <form action="/manager/newService" method="post">
-            <td>
-                <div id="hide2" style="display: none">
-                    <input type="text" placeholder="Enter New Main Service name" name="name" class="form-control"
-                           required>
-                </div>
+
+            <td></td>
+            <td>   <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New sub Service
+            </button>
+            <td></td>
             </td>
-            <td>
-                <div id="hide3" style="display: none">
-                    <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Add</button>
-                </div>
-            </td>
-        </form>
         </tr>
+        <form action="/manager/newSubService" method="post">
+        <tr>
+                <td>
+                        <input type="text" placeholder="Enter New sub Service name" name="name" class="form-control"
+                               required>
+                </td>
+                <td>
+                    <input type="text" placeholder="Enter New sub Service description" name="description" class="form-control"
+                           required>
+                </td>
+                <td>
+                    <input type="text" placeholder="Enter New sub Service price" name="price" class="form-control"
+                           required>
+                </td>
+
+        </tr>
+            <tr>
+                <td></td>
+            <td>
+                <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">register new sub service</button>
+            </td>
+                <td></td>
+            </tr>
+        </form>
     </table>
 </div>
-<script>
-    function ShowChangePassDiv() {
-        var show = document.getElementById("show");
-        var hide2 = document.getElementById("hide2");
-        var hide3 = document.getElementById("hide3");
-        hide2.style.display = show.value === "change" ? "block" : "none";
-        hide3.style.display = show.value === "change" ? "block" : "none";
-    }
-</script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

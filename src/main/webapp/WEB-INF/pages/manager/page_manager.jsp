@@ -13,10 +13,11 @@
 <div class="container">
     <h1>WELCOME TO Manager Page </h1>
     <div>
-        <a href="<c:url value="login"/>" class="btn btn-outline-primary">add service</a>
-        <a href="<c:url value="register"/>" class="btn btn-outline-primary">add expert</a>
-        <a href="<c:url value="register"/>" class="btn btn-outline-primary">view user</a>
+   <%-- todo --%>
 
+        <a href="<c:url value="/manager/addService"/>" class="btn btn-outline-primary">add service</a>
+        <a href="<c:url value=""/>" class="btn btn-outline-primary">add expert</a>
+        <a href="<c:url value=""/>" class="btn btn-outline-primary">view user</a>
 
     </div>
 

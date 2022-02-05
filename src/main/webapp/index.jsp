@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<div class="cantainer">
+<div class="container">
     <h1>WELCOME TO SERVICES HOME </h1>
     <div>
         <a href="<c:url value="login"/>" class="btn btn-outline-primary">Login</a>

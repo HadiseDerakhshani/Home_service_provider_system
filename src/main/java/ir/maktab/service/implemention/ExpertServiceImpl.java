@@ -1,6 +1,7 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.serviceSystem.SubService;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Service
@@ -104,12 +106,6 @@ public class ExpertServiceImpl implements ExpertService {
         //////
     }
 
-    @Override
-    public void updateServiceList(Set<SubService> list, ExpertDto expert) {
-        Expert expertFound = findByEmail(expert.getEmail()).get();
-        expertFound.setServiceList(list);
-        expertRepository.save(expertFound);
-    }
 
     @Override
     public void updateScore(int score, Expert expert) {
@@ -162,5 +158,11 @@ public class ExpertServiceImpl implements ExpertService {
     public ExpertDto update(Expert expert) {
         Expert saveExpert = expertRepository.save(expert);
         return expertMap.createExpertDto(expert);
+    }
+
+    @Override
+    public List<ExpertDto> findAll() {
+        List<Expert> list = expertRepository.findAll();
+      return   list.stream().map(expertMap::createExpertDto).collect(Collectors.toList());
     }
 }

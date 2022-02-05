@@ -29,11 +29,11 @@
 <span></span>
 <br><br>
 <div class="container">
-<form action="/user/login" method="post">
+<form action="/manager/addExpert" method="post">
 
         <h4>Email : </h4>
         <br>
-        <input type="email" placeholder="Enter Username" name="email" id="e1" class="form-control" required
+        <input type="email" placeholder="Enter email" name="email" id="e1" class="form-control" required
         <%-- pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"--%>>
         <br><br>
         <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Login</button>
@@ -41,14 +41,12 @@
     </div>
 
 
-
 <script>
 
     $("form").submit(function (event) {
         <c:forEach var="list" items="${expertList}">
-        if ($("input:first").val() === "${list.email}") {
+        if ($("#e1").val() === "${list.email}") {
                 $("span").text("Submitted Successfully.").show();
-
                 return;
         }
         </c:forEach>

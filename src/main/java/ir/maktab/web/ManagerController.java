@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -84,10 +85,38 @@ public class ManagerController {
         return "services/add_subService";
     }
     @GetMapping("/selectExpert")
-    public String showAddExpert(Model model){
+    public String showSelectExpert(Model model){
         long record = expertService.totalRecord();
-        List<ExpertDto> expertDtoList = expertService.findAll(1, (int) record);
+        List<ExpertDto> expertDtoList = expertService.findAll();
         model.addAttribute("expertList",expertDtoList);
         return "/manager/select_expert";
+    }
+    @PostMapping("/addExpert")
+    public String showAddExpert(Model model,@RequestParam("email") String email,HttpSession session){
+
+        ExpertDto expertDto = expertService.find(email);
+        session.setAttribute("expertDto",expertDto);
+        model.addAttribute("expertDto",expertDto);
+        List<SubServiceDto> serviceList = expertDto.getServiceList();
+        model.addAttribute("serviceList",serviceList);
+        List<SubServiceDto> listAll = subServiceImpl.findAll();
+        model.addAttribute("listAll",listAll);
+        return "/manager/add_expert";
+    }
+    @PostMapping("/expertAddToService")
+    public String addExpertToService( @RequestParam("name")String name,Model model,
+                                           @SessionAttribute("expertDto") ExpertDto expertDto){
+       expertService.addSubServiceToExpert(expertDto,name);
+       model.addAttribute("message","expert add to list service Successfully");
+
+        ExpertDto expertDtoNew = expertService.find(expertDto.getEmail());
+
+        model.addAttribute("expertDto",expertDtoNew);
+        List<SubServiceDto> serviceList = expertDtoNew.getServiceList();
+        model.addAttribute("serviceList",serviceList);
+        List<SubServiceDto> listAll = subServiceImpl.findAll();
+        model.addAttribute("listAll",listAll);
+
+        return "/manager/add_expert";
     }
 }

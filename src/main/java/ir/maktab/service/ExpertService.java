@@ -27,7 +27,6 @@ public interface ExpertService {
 
     public ExpertDto find(String email);
 
-    public void updateServiceList(Set<SubService> list, ExpertDto expert);
 
     public void updateScore(int score, Expert expert);
 
@@ -36,6 +35,7 @@ public interface ExpertService {
     public void updateCredit(double amount, Expert expert);
 
     public List<ExpertDto> findAll(int pageNumber, int pageSize);
+    public List<ExpertDto> findAll();
 
     public long totalRecord();
 

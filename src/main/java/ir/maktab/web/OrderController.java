@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
@@ -47,11 +48,12 @@ public class OrderController {
 
 
     @GetMapping
-    public ModelAndView showRegisterOrder() {
+    public ModelAndView showRegisterOrder(HttpSession session) {
 
         List<ServiceDto> serviceDtoList = service.findAll();
+        session.setAttribute("serviceList",serviceDtoList);
 
-        return new ModelAndView("services/choose_service", "serviceDtoList", serviceDtoList);
+        return new ModelAndView("services/choose_service", "serviceList", serviceDtoList);
     }
 
     @PostMapping("/registerOrder")

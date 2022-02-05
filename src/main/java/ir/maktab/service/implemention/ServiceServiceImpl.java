@@ -4,6 +4,7 @@ import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.entity.serviceSystem.Service;
 import ir.maktab.data.mapping.ServiceMap;
 import ir.maktab.data.repasitory.ServiceRepository;
+import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ServiceService;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -28,20 +30,16 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public Service save(Service service) {
-        return serviceRepository.save(service);
+    public ServiceDto save(String name) {
+        if (!find(name).isPresent()) {
+            Service service = Service.builder()
+                    .name(name).build();
+            Service saveService = serviceRepository.save(service);
+            return serviceMap.createServiceDto(saveService);
+        } else
+            throw new DuplicateServiceException("--- exit Service ---");
     }
 
-    @Override
-    public Service createService(String name) {
-        if (findByName(name) == null) {
-            Service service = Service.builder()
-                    .name(name)
-                    .build();
-            return service;
-        } else
-            throw new ObjectEntityNotFoundException("--- exit Service ---");
-    }
 
     @Override
     public ServiceDto findByName(String name) {
@@ -49,6 +47,11 @@ public class ServiceServiceImpl implements ServiceService {
             return serviceMap.createServiceDto(serviceRepository.findByName(name).get());
         else
             throw new ObjectEntityNotFoundException("Service not found");
+    }
+
+    @Override
+    public Optional<Service> find(String name) {
+     return    serviceRepository.findByName(name);
     }
 
     @Override

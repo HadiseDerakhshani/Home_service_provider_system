@@ -16,7 +16,7 @@
    <%-- todo --%>
 
         <a href="<c:url value="/manager/addService"/>" class="btn btn-outline-primary">add service</a>
-        <a href="<c:url value=""/>" class="btn btn-outline-primary">add expert</a>
+        <a href="<c:url value="/manager/selectExpert"/>" class="btn btn-outline-primary">add expert</a>
         <a href="<c:url value=""/>" class="btn btn-outline-primary">view user</a>
 
     </div>

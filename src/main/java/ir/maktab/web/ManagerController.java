@@ -1,9 +1,10 @@
 package ir.maktab.web;
 
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.entity.serviceSystem.Service;
 import ir.maktab.exception.DuplicateServiceException;
+import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,10 +22,13 @@ import java.util.Set;
 public class ManagerController {
     private final ServiceServiceImpl service;
     private final SubServiceServiceImpl subServiceImpl;
+    private final ExpertServiceImpl expertService;
 @Autowired
-    public ManagerController(@Lazy  ServiceServiceImpl service, @Lazy SubServiceServiceImpl subServiceImpl) {
+    public ManagerController(@Lazy  ServiceServiceImpl service, @Lazy SubServiceServiceImpl subServiceImpl,
+                             @Lazy ExpertServiceImpl expertService) {
         this.service = service;
         this.subServiceImpl=subServiceImpl;
+        this.expertService=expertService;
     }
 
     @GetMapping
@@ -80,9 +83,11 @@ public class ManagerController {
         model.addAttribute("message", "sub service add successfully");
         return "services/add_subService";
     }
-    @GetMapping("/addExpert")
-    public String showAddExpert(){
-
-    return "";
+    @GetMapping("/selectExpert")
+    public String showAddExpert(Model model){
+        long record = expertService.totalRecord();
+        List<ExpertDto> expertDtoList = expertService.findAll(1, (int) record);
+        model.addAttribute("expertList",expertDtoList);
+        return "/manager/select_expert";
     }
 }

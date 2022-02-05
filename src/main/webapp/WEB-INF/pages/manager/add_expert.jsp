@@ -35,7 +35,7 @@
     <button type="submit">register</button>
 </form>
     <br><br>
-
+    <a href="<c:url value="/manager"/>" class="btn btn-outline-primary">manager page</a>
 
 
 </div>

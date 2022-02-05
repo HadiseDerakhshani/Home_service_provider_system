@@ -16,7 +16,7 @@ public interface SubServiceService {
 
     public SubServiceDto findByName(String name);
 
-    public void addExpertToList(ExpertDto expertDto, SubServiceDto service);
+ public SubServiceDto save(SubServiceDto subServiceDto);
 
     public void deleteSubService(String name);
 }

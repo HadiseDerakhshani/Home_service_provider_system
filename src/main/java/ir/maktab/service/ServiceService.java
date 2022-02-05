@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.ServiceDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.serviceSystem.Service;
 
 import java.util.List;
@@ -18,6 +19,6 @@ public interface ServiceService {
     public void deleteService(String name);
 
     public void update(ServiceDto serviceDto);
-
+    public ServiceDto addSubService(ServiceDto serviceDto, SubServiceDto subServiceDto);
     public List<ServiceDto> findAll();
 }

@@ -22,7 +22,7 @@
         <c:forEach var="list" items="${serviceList}">
             <tr>
                 <td>${list.name}</td>
-                <td><a href="/manager/newSubService{name}/${list.name}">add</a></td>
+                <td><a href="/manager/addSubService/${list.name}">add</a></td>
             </tr>
         </c:forEach>
        <tr>
@@ -48,6 +48,7 @@
         </tr>
     </table>
 </div>
+<a href="<c:url value="/manager"/>" class="btn btn-outline-primary">manager page</a>
 <script>
     function ShowChangePassDiv() {
         var show = document.getElementById("show");

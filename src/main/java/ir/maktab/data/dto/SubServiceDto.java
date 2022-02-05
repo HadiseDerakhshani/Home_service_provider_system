@@ -15,9 +15,8 @@ import java.util.List;
 @Data
 public class SubServiceDto {
 
-    private double price;
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "SubService is not alphabet")
+
     private String name;
+    private double price;
     private String description;
-    private List<ExpertDto> expertList = new ArrayList<>();
 }

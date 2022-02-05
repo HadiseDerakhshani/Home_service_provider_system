@@ -2,6 +2,7 @@ package ir.maktab.data.mapping;
 
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.entity.serviceSystem.Service;
+import ir.maktab.data.entity.serviceSystem.SubService;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,14 @@ public class ServiceMap {
     }
 
     public Service createService(ServiceDto serviceDto) {
-        return mapper.map(serviceDto, Service.class);
+        Service service = Service.builder()
+                .name(serviceDto.getName())
+                .build();
+        if (serviceDto.getSubServiceList() != null) {
+            service.setSubServiceList(serviceDto.getSubServiceList().stream().map(subServiceMap::createSubService)
+                    .collect(Collectors.toSet()));
+        }
+        return service ;
     }
 
     public ServiceDto createServiceDto(Service service) {

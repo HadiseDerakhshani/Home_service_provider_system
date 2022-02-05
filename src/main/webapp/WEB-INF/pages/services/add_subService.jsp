@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <h2 style="color: blue">please select service for Add</h2>
+    <h2 style="color: blue">please Enter new sub service for Add</h2>
     <br><br>
     <h2 style="color: darkcyan">${message}</h2>
     <br><br>
@@ -34,33 +34,54 @@
             <td></td>
             </td>
         </tr>
-        <form action="/manager/newSubService" method="post">
+        <form:form action="/manager/newSubService" method="post" modelAttribute="subService">
         <tr>
+
                 <td>
-                        <input type="text" placeholder="Enter New sub Service name" name="name" class="form-control"
-                               required>
+                    <div id="hide2" style="display: none">
+                        <form:input path="name" placeholder="Enter New sub Service name"  class="form-control"  />
+                    </div>
                 </td>
                 <td>
-                    <input type="text" placeholder="Enter New sub Service description" name="description" class="form-control"
-                           required>
+                    <div id="hide4" style="display: none">
+                    <form:input path="price"  placeholder="Enter New sub Service price" class="form-control"/>
+                    </div>
                 </td>
                 <td>
-                    <input type="text" placeholder="Enter New sub Service price" name="price" class="form-control"
-                           required>
+                    <div id="hide5" style="display: none">
+                    <form:input path="description" placeholder="Enter New sub Service description" class="form-control"/>
+                    </div>
                 </td>
 
         </tr>
             <tr>
+
                 <td></td>
             <td>
-                <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">register new sub service</button>
+                <div id="hide3" style="display: none">
+                <form:button name="submit" class="btn btn-primary" style="border-bottom: darkblue">register new sub service</form:button>
+                </div>
             </td>
                 <td></td>
+
             </tr>
-        </form>
+        </form:form>
     </table>
 </div>
-
+<a href="<c:url value="/manager"/>" class="btn btn-outline-primary">manager page</a>
+<script>
+    function ShowChangePassDiv() {
+        var show = document.getElementById("show");
+        var hide2 = document.getElementById("hide2");
+        var hide3 = document.getElementById("hide3");
+        var hide4 = document.getElementById("hide4");
+        var hide5 = document.getElementById("hide5");
+        hide2.style.display = show.value === "change" ? "block" : "none";
+        hide3.style.display = show.value === "change" ? "block" : "none";
+        hide4.style.display = show.value === "change" ? "block" : "none";
+        hide5.style.display = show.value === "change" ? "block" : "none";
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

@@ -13,12 +13,10 @@ import org.springframework.stereotype.Component;
 
 public class SubServiceMap {
     private final ModelMapper mapper;
-    private final ExpertMap expertMap;
 
     @Autowired
-    public SubServiceMap(ModelMapper mapper, @Lazy ExpertMap expertMap) {
+    public SubServiceMap(ModelMapper mapper) {
         this.mapper = mapper;
-        this.expertMap = expertMap;
     }
 
     public SubService createSubService(SubServiceDto subServiceDto) {

@@ -51,8 +51,7 @@ public class OrderController {
     public ModelAndView showRegisterOrder(HttpSession session) {
 
         List<ServiceDto> serviceDtoList = service.findAll();
-        session.setAttribute("serviceList",serviceDtoList);
-
+////////////////
         return new ModelAndView("services/choose_service", "serviceList", serviceDtoList);
     }
 

@@ -15,16 +15,14 @@ import java.util.stream.Collectors;
 public class ExpertMap {
     private final ModelMapper mapper;
     private final SubServiceMap subServiceMap;
-    private final SuggestionMap suggestionMap;
     private final OrderMap orderMap;
     private final CommentMap commentMap;
 
     @Autowired
     public ExpertMap(ModelMapper mapper, @Lazy SubServiceMap subServiceMap,
-                     @Lazy SuggestionMap suggestionMap, @Lazy OrderMap orderMap, @Lazy CommentMap commentMap) {
+                     @Lazy OrderMap orderMap, @Lazy CommentMap commentMap) {
         this.mapper = mapper;
         this.subServiceMap = subServiceMap;
-        this.suggestionMap = suggestionMap;
         this.orderMap = orderMap;
         this.commentMap = commentMap;
     }

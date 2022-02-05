@@ -1,7 +1,9 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.ServiceDto;
+import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.serviceSystem.Service;
+import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.mapping.ServiceMap;
 import ir.maktab.data.repasitory.ServiceRepository;
 import ir.maktab.exception.DuplicateServiceException;
@@ -22,11 +24,15 @@ public class ServiceServiceImpl implements ServiceService {
     private final ServiceRepository serviceRepository;
 
     private final ServiceMap serviceMap;
+    private final SubServiceServiceImpl subServiceService;
+
 
     @Autowired
-    public ServiceServiceImpl(ServiceRepository serviceRepository, @Lazy ServiceMap serviceMap) {
+    public ServiceServiceImpl(ServiceRepository serviceRepository, @Lazy ServiceMap serviceMap,
+                              @Lazy SubServiceServiceImpl subServiceService) {
         this.serviceRepository = serviceRepository;
         this.serviceMap = serviceMap;
+        this.subServiceService=subServiceService;
     }
 
     @Override
@@ -70,5 +76,14 @@ public class ServiceServiceImpl implements ServiceService {
     public List<ServiceDto> findAll() {
         List<Service> serviceList = serviceRepository.findAll();
         return serviceList.stream().map(serviceMap::createServiceDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ServiceDto addSubService(ServiceDto serviceDto, SubServiceDto subServiceDto) {
+        Service service = find(serviceDto.getName()).get();
+        SubService subService = subServiceService.find(subServiceDto.getName());
+        service.getSubServiceList().add(subService);
+        Service save = serviceRepository.save(service);
+        return serviceMap.createServiceDto(save);
     }
 }

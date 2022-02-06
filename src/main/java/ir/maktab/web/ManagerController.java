@@ -26,11 +26,11 @@ public class ManagerController {
 
     @Autowired
     public ManagerController(@Lazy ServiceServiceImpl service, @Lazy SubServiceServiceImpl subServiceImpl,
-                             @Lazy ExpertServiceImpl expertService,@Lazy UserServiceImpl userService) {
+                             @Lazy ExpertServiceImpl expertService, @Lazy UserServiceImpl userService) {
         this.service = service;
         this.subServiceImpl = subServiceImpl;
         this.expertService = expertService;
-        this.userService=userService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -126,21 +126,23 @@ public class ManagerController {
 
         return "/manager/add_expert";
     }
+
     @GetMapping("/userPage")
-    public String showUserPage(Model model){
-        model.addAttribute("userCategory",new UserCategoryDto());
+    public String showUserPage(Model model) {
+        model.addAttribute("userCategory", new UserCategoryDto());
         List<SubServiceDto> list = subServiceImpl.findAll();
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         return "/manager/userList_page";
     }
+
     @PostMapping("/userFilter")
-    public String showUser(Model model,@ModelAttribute("userCategory")UserCategoryDto categoryDto,
-                           @RequestParam(value = "name" ,required = false)String name){
+    public String showUser(Model model, @ModelAttribute("userCategory") UserCategoryDto categoryDto,
+                           @RequestParam(value = "name", required = false) String name) {
         System.out.println(categoryDto);
-        if (name !=null && !name.isEmpty())
-        categoryDto.setService(name);
+        if (name != null && !name.isEmpty())
+            categoryDto.setService(name);
         List<UserDto> list = userService.filtering(categoryDto);
-        model.addAttribute("list",list);
-        return "/manager/page_manager";
+        model.addAttribute("list", list);
+        return "/manager/show_user";
     }
 }

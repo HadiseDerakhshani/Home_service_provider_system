@@ -65,7 +65,7 @@
                 <td>
            User role:
                 </td>
-                <td></td>
+                <td>
           Expert<form:radiobutton path="userRole" value="EXPERT"/>
             Customer<form:radiobutton path="userRole" value="CUSTOMER"/>
                 </td>
@@ -74,7 +74,7 @@
                 <td>
                     Service :
                 </td>
-                <td></td>
+                <td>
             <select name="name">
                 <c:forEach items="${list}" var="list">
                     <option value="${list.name}">${list.name}</option>

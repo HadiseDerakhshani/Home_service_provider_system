@@ -22,11 +22,11 @@ public interface UserSpecifications {
             if (category.getEmail() != null && !category.getEmail().isEmpty())
                 predicateList.add(cb.equal(root.get("email"), category.getEmail()));
             if (category.getUserRole() != null)
-                predicateList.add(cb.equal(root.get("userRole"), category.getUserRole()));
-            if (category.getScore() != null && category.getUserRole().equals(UserRole.EXPERT)) {
+                predicateList.add(cb.equal(root.get("userRole"),UserRole.valueOf(category.getUserRole())));
+            if (category.getScore() != null && UserRole.valueOf(category.getUserRole()).equals(UserRole.EXPERT)) {
                 predicateList.add(cb.equal(root.get("score"), category.getScore()));
             }
-            if (category.getService() != null && category.getUserRole().equals(UserRole.EXPERT.name())) {
+            if (category.getService() != null && UserRole.valueOf(category.getUserRole()).equals(UserRole.EXPERT.name())) {
                 Join<User, SubService> serviceJoin = root.joinList("serviceList");
                 predicateList.add(cb.equal(serviceJoin.get("name"), category.getService()));
             }

@@ -1,5 +1,6 @@
 package ir.maktab.service.implemention;
 
+import ir.maktab.data.dto.UserCategoryDto;
 import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.serviceSystem.SubService;
@@ -8,11 +9,16 @@ import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.entity.user.User;
 import ir.maktab.data.mapping.UserMap;
 import ir.maktab.data.repasitory.UserRepository;
+import ir.maktab.data.repasitory.UserSpecifications;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.UserService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,17 +39,6 @@ public class UserServiceImpl implements UserService {
         this.userMap = userMap;
     }
 
-    @Override
-    public UserDto saveCustomer(Customer customer) {
-        User user = userMap.mapCustomerDtoToUser(customer);
-        return userMap.createUserDto(userRepository.save(user));
-    }
-
-    @Override
-    public UserDto saveExpert(Expert expert) {
-        User user = userMap.mapExpertDtoToUser(expert);
-        return userMap.createUserDto(userRepository.save(user));
-    }
 
     @Override
     public UserRole findByEmail(String email, String pass) {
@@ -65,16 +60,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> filtering(String name, String family, String email, UserRole role, SubService service) {
-        List<UserDto> listDto = new ArrayList<>();
-        List<User> list = userRepository.findAll(UserRepository.filterByCriteria(name, family, email, role, service.getName()));
-        if (list.size() != 0) {
-            for (User user : list) {
-                listDto.add(userMap.createUserDto(user));
-            }
-            return listDto;
-        } else
-            throw new ObjectEntityNotFoundException("-- user list not found --");
+    public List<UserDto> filtering(UserCategoryDto categoryDto) {
+        Pageable pageable = PageRequest.of(categoryDto.getPageNumber(), categoryDto.getPageSize());
+        Specification<User> specification = UserSpecifications.filterByCriteria(categoryDto);
+        return userRepository
+                .findAll(specification, pageable)
+                .stream()
+                .map(userMap::createUserDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -82,4 +75,17 @@ public class UserServiceImpl implements UserService {
         List<User> list = userRepository.findAll();
         return list.stream().map(userMap::createUserDto).collect(Collectors.toList());
     }
-}
+
+
+
+
+}  /*List<UserDto> listDto = new ArrayList<>();
+    List<User> list = userRepository.findAll(UserRepository.filterByCriteria(name, family, email, role, service.getName()));
+        if (list.size() != 0) {
+                for (User user : list) {
+                listDto.add(userMap.createUserDto(user));
+                }
+                return listDto;
+                } else
+                throw new ObjectEntityNotFoundException("-- user list not found --");
+*/

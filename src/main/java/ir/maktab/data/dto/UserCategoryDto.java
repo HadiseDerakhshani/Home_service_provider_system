@@ -15,6 +15,6 @@ public class UserCategoryDto extends BaseDto{
     private String lastName;
     private String email;
     private String service;
-    private int score;
+    private Integer score;
     private UserRole userRole;
 }

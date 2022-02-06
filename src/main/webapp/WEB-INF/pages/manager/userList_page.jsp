@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <h1 style="color:red">${message}</h1>
-    <form:form cssClass="p-3 m-3" modelAttribute="userCategory" action="/userFilter" method="post">
+    <form:form cssClass="p-3 m-3" modelAttribute="userCategory" action="/manager/userFilter" method="post">
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>
@@ -53,6 +53,7 @@
                     <form:input path="email" name="email" placeholder="name@gmail.com"/>
                 </td>
             </tr>
+
             <tr>
                 <td>
                 </td>
@@ -62,54 +63,30 @@
             </tr>
             <tr>
                 <td>
-                    <form:label path="password">Password :</form:label>
+           User role:
                 </td>
+                <td></td>
+          Expert<form:radiobutton path="userRole" value="EXPERT"/>
+            Customer<form:radiobutton path="userRole" value="CUSTOMER"/>
+                </td>
+            </tr>
+            <tr>
                 <td>
-                    <form:input path="password" name="password" placeholder="min 8{number,alphbet,symbole}"/>
+                    Service :
+                </td>
+                <td></td>
+            <select name="name">
+                <c:forEach items="${list}" var="list">
+                    <option value="${list.name}">${list.name}</option>
+                </c:forEach>
+            </select>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <form:errors path="password" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="phoneNumber">Phone Number :</form:label>
-                </td>
-                <td>
-                    <form:input path="phoneNumber" name="phoneNumber" placeholder="09*********"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="phoneNumber" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="credit">Credit :</form:label>
-                </td>
-                <td>
-                    <form:input path="credit" name="credit"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="credit" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:button name="register">Register</form:button>
+                    <input type="submit" value="Submit" />
                 </td>
             </tr>
         </table>

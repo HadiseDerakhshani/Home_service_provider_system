@@ -26,7 +26,7 @@ public interface UserSpecifications {
             if (category.getScore() != null && category.getUserRole().equals(UserRole.EXPERT)) {
                 predicateList.add(cb.equal(root.get("score"), category.getScore()));
             }
-            if (category.getService() != null && category.getUserRole().equals(UserRole.EXPERT)) {
+            if (category.getService() != null && category.getUserRole().equals(UserRole.EXPERT.name())) {
                 Join<User, SubService> serviceJoin = root.joinList("serviceList");
                 predicateList.add(cb.equal(serviceJoin.get("name"), category.getService()));
             }

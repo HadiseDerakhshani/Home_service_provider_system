@@ -1,13 +1,11 @@
 package ir.maktab.web;
 
-import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.ServiceDto;
-import ir.maktab.data.dto.SubServiceDto;
-import ir.maktab.data.dto.UserCategoryDto;
+import ir.maktab.data.dto.*;
 import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
 import ir.maktab.service.implemention.SubServiceServiceImpl;
+import ir.maktab.service.implemention.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -24,13 +22,15 @@ public class ManagerController {
     private final ServiceServiceImpl service;
     private final SubServiceServiceImpl subServiceImpl;
     private final ExpertServiceImpl expertService;
+    private final UserServiceImpl userService;
 
     @Autowired
     public ManagerController(@Lazy ServiceServiceImpl service, @Lazy SubServiceServiceImpl subServiceImpl,
-                             @Lazy ExpertServiceImpl expertService) {
+                             @Lazy ExpertServiceImpl expertService,@Lazy UserServiceImpl userService) {
         this.service = service;
         this.subServiceImpl = subServiceImpl;
         this.expertService = expertService;
+        this.userService=userService;
     }
 
     @GetMapping
@@ -129,11 +129,18 @@ public class ManagerController {
     @GetMapping("/userPage")
     public String showUserPage(Model model){
         model.addAttribute("userCategory",new UserCategoryDto());
+        List<SubServiceDto> list = subServiceImpl.findAll();
+        model.addAttribute("list",list);
         return "/manager/userList_page";
     }
     @PostMapping("/userFilter")
-    public String showUser(Model model,@ModelAttribute("userCategory")UserCategoryDto categoryDto){
-
-        return "/manager/userList_page";
+    public String showUser(Model model,@ModelAttribute("userCategory")UserCategoryDto categoryDto,
+                           @RequestParam(value = "name" ,required = false)String name){
+        System.out.println(categoryDto);
+        if (name !=null && !name.isEmpty())
+        categoryDto.setService(name);
+        List<UserDto> list = userService.filtering(categoryDto);
+        model.addAttribute("list",list);
+        return "/manager/page_manager";
     }
 }

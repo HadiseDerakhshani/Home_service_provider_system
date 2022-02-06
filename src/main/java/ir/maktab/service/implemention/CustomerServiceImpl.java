@@ -206,9 +206,5 @@ public class CustomerServiceImpl implements CustomerService {
         decreaseCredit(customerDto, amount);
     }
 
-    @Override
-    public long totalRecord() {
-        return customerRepository.count();
-    }
 
 }

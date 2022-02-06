@@ -83,7 +83,6 @@ public class SuggestionServiceImpl implements SuggestionService {
         Order order = suggestion.getOrder();
         List<Suggestion> list = order.getSuggestion();
         Expert expert = suggestion.getExpert();
-        expert.setUserStatus(UserStatus.CONFIRMED);
         order.setExpert(expert);
         suggestion.setStatus(SuggestionStatus.CONFIRMED);
         order.setStatus(OrderStatus.WAITING_FOR_EXPERT_TO_COME);

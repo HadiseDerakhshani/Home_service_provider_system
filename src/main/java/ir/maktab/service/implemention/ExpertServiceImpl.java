@@ -142,10 +142,6 @@ public class ExpertServiceImpl implements ExpertService {
             throw new ObjectEntityNotFoundException(" --- list of expert is null ---");
     }
 
-    @Override
-    public long totalRecord() {
-        return expertRepository.count();
-    }
 
     @Override
     public void deleteExpert(String email) {

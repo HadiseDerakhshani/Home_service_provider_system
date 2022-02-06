@@ -91,30 +91,38 @@ public class OrderController {
         model.addAttribute("orderDtoList", orderDtoList);
         return "order/choose_order";
     }
+
+    @GetMapping("/payment")
+    public String payment(@SessionAttribute("customer")CustomerDto customerDto,Model model,
+                          @SessionAttribute("orderDto")OrderDto order){
+      order = orderService.findOrderToPayment(customerDto);
+        if(order!=null){
+            model.addAttribute("orderDto",order);
+            return "";//page select type of payment
+             }
+        return "";//todo
+    }
+
+
     @GetMapping("/paymentPage_online")
     public String showPaymentPage(@SessionAttribute("customer")CustomerDto customerDto, Model model,
-                                  @SessionAttribute("order")OrderDto orderDto){
-
-
-        //todo//find order set session order
-        // session.setAttribute("order",orderDto);
+                                  @SessionAttribute("orderDto")OrderDto orderDto){
         model.addAttribute("order",orderDto);
         model.addAttribute("customer",customerDto);
-
         return "order/payment_online";
     }
     @PostMapping("/payment_online")
     public ModelAndView paymentOnline(@RequestParam("amount") String amount,
-                                      @SessionAttribute("order")OrderDto orderDto) {
+                                      @SessionAttribute("orderDto")OrderDto orderDto) {
         orderService.updatePricePaid(orderDto,Double.parseDouble(amount));
         return new ModelAndView("","message","");
     }
     @GetMapping("/paymentPage_cash")
     public ModelAndView showPaymentCashPage(@SessionAttribute("customer")CustomerDto customerDto, Model model,
-                                  @SessionAttribute("order")OrderDto orderDto){
-        //todo
+                                  @SessionAttribute("orderDto")OrderDto orderDto){
+        //todo//amount of page take and
 
-
+///customerService.payment(customerDto,orderDto,amount);
         model.addAttribute("customer",customerDto);
         return new ModelAndView("","message","");
     }

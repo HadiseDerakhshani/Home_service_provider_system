@@ -42,5 +42,4 @@ public interface CustomerService {
 
     public void payment(CustomerDto customerDto, OrderDto orderDto, double amount);
 
-    public long totalRecord();
 }

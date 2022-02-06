@@ -44,7 +44,7 @@ public interface OrderService {
 
     public List<OrderDto> findOrderByExpert(ExpertDto expertDto);
 
-    public List<OrderDto> findOrderToPayment(Customer customer);
+    public OrderDto findOrderToPayment(CustomerDto customer);
 
     public void startAndEndOrder(int number, int chose, Expert expert);
 }

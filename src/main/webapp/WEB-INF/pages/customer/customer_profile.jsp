@@ -172,7 +172,7 @@
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
     <a href="<c:url value="/order/findOrder"/>" class="btn btn-outline-primary">select expert</a>
     <a href="<c:url value="/order" />" class="btn btn-outline-primary">new Order</a>
-    <a href="<c:url value="" />" class="btn btn-outline-primary"><%// TODO: 2/6/2022  %>></a>
+    <a href="<c:url value="/order/payment" />" class="btn btn-outline-primary">payment</a>
 </div>
 <script>
     function ShowChangePassDiv() {

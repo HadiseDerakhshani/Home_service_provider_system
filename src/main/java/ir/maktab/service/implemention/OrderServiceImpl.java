@@ -89,6 +89,7 @@ public class OrderServiceImpl implements OrderService {
         orderFound.setPricePaid(amount);
         Expert expert = orderFound.getExpert();
        expertServiceImpl.updateCredit((amount*0.70),expert);
+       orderFound.setStatus(OrderStatus.PAID);
         orderRepository.save(orderFound);
     }
 
@@ -141,6 +142,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findOrderToSelectExpert(Customer customer) {
+
         List<Order> list = orderRepository.findAll();
         List<OrderDto> listFind = findAll();
         if (list != null) {
@@ -156,19 +158,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findOrderToPayment(Customer customer) {
-        List<Order> list = orderRepository.findAll();
-        List<OrderDto> listFind = findAll();
+    public OrderDto findOrderToPayment(CustomerDto customer) {
+
+        List<OrderDto> list = findOrderByCustomer(customer);
         if (list != null) {
-            List<Order> orderList = list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
-                    .filter(o -> o.getStatus().equals(OrderStatus.DONE.name()))
-                    .collect(Collectors.toList());
-            if (orderList != null) {
-                for (Order order : orderList)
-                    listFind.add(orderMap.createOrderDto(order));
-                return listFind;
-            } else
-                throw new ObjectEntityNotFoundException(" --- Order is not exit for payment---");
+           return list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
+                    .filter(o -> o.getStatus().equals(OrderStatus.DONE)).findFirst().orElse(null);
+
         } else
             throw new ObjectEntityNotFoundException(" --- Order is not exit yet ---");
     }

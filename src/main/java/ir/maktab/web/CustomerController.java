@@ -54,9 +54,8 @@ public class CustomerController {
     @PostMapping("/phone")
     public ModelAndView StringChangePhone(@RequestParam("phone") String phone,
                                           @SessionAttribute("customer") CustomerDto customerProfile) {
-        customerService.changePassword(customerProfile, phone);
+        customerService.changePhoneNumber(customerProfile, phone);
         return new ModelAndView("customer/customer_profile", "message", "change phone number successfully");
     }
-
 
 }

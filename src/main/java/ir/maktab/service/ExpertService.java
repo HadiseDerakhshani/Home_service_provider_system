@@ -36,7 +36,6 @@ public interface ExpertService {
 
     public List<ExpertDto> findAll();
 
-    public long totalRecord();
 
     public void deleteExpert(String email);
 

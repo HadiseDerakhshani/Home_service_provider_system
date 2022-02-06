@@ -3,6 +3,7 @@ package ir.maktab.web;
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
+import ir.maktab.data.dto.UserCategoryDto;
 import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.service.implemention.ExpertServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
@@ -124,5 +125,10 @@ public class ManagerController {
         model.addAttribute("listAll", listAll);
 
         return "/manager/add_expert";
+    }
+    @GetMapping("/userPage")
+    public String showUserPage(Model model){
+        model.addAttribute("userCategory",new UserCategoryDto());
+        return "";
     }
 }

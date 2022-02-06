@@ -21,5 +21,4 @@ public interface UserService {
 
     public List<UserDto> findAll();
 
-
 }

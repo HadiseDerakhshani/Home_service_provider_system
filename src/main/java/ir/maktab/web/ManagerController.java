@@ -129,6 +129,11 @@ public class ManagerController {
     @GetMapping("/userPage")
     public String showUserPage(Model model){
         model.addAttribute("userCategory",new UserCategoryDto());
-        return "";
+        return "/manager/userList_page";
+    }
+    @PostMapping("/userFilter")
+    public String showUser(Model model,@ModelAttribute("userCategory")UserCategoryDto categoryDto){
+
+        return "/manager/userList_page";
     }
 }

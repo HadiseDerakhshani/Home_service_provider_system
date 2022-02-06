@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -63,11 +62,11 @@
             </tr>
             <tr>
                 <td>
-           User role:
+                    User role:
                 </td>
                 <td>
-          Expert<form:radiobutton path="userRole" value="EXPERT"/>
-            Customer<form:radiobutton path="userRole" value="CUSTOMER"/>
+                    Expert<form:radiobutton path="userRole" value="EXPERT"/>
+                    Customer<form:radiobutton path="userRole" value="CUSTOMER"/>
                 </td>
             </tr>
             <tr>
@@ -75,18 +74,18 @@
                     Service :
                 </td>
                 <td>
-            <select name="name">
-                <c:forEach items="${list}" var="list">
-                    <option value="${list.name}">${list.name}</option>
-                </c:forEach>
-            </select>
+                    <select name="name">
+                        <c:forEach items="${list}" var="list">
+                            <option value="${list.name}">${list.name}</option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit"/>
                 </td>
             </tr>
         </table>

@@ -3,7 +3,6 @@ package ir.maktab.data.repasitory;
 import ir.maktab.data.dto.UserCategoryDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.serviceSystem.SubService;
-import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.entity.user.User;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,9 +19,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
-    Optional<User> findByEmail(String email);
-
-   // static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, String service) {
+    // static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, String service) {
     static Specification<User> filterByCriteria(UserCategoryDto category) {
         return (Specification<User>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
@@ -45,6 +42,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
         };
     }
 
+    Optional<User> findByEmail(String email);
 
 
 }

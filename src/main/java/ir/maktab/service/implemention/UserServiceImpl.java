@@ -3,9 +3,6 @@ package ir.maktab.service.implemention;
 import ir.maktab.data.dto.UserCategoryDto;
 import ir.maktab.data.dto.UserDto;
 import ir.maktab.data.entity.enums.UserRole;
-import ir.maktab.data.entity.serviceSystem.SubService;
-import ir.maktab.data.entity.user.Customer;
-import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.entity.user.User;
 import ir.maktab.data.mapping.UserMap;
 import ir.maktab.data.repasitory.UserRepository;
@@ -17,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,8 +70,6 @@ public class UserServiceImpl implements UserService {
         List<User> list = userRepository.findAll();
         return list.stream().map(userMap::createUserDto).collect(Collectors.toList());
     }
-
-
 
 
 }  /*List<UserDto> listDto = new ArrayList<>();

@@ -22,7 +22,7 @@ public interface UserSpecifications {
             if (category.getEmail() != null && !category.getEmail().isEmpty())
                 predicateList.add(cb.equal(root.get("email"), category.getEmail()));
             if (category.getUserRole() != null)
-                predicateList.add(cb.equal(root.get("userRole"),UserRole.valueOf(category.getUserRole())));
+                predicateList.add(cb.equal(root.get("userRole"), UserRole.valueOf(category.getUserRole())));
             if (category.getScore() != null && UserRole.valueOf(category.getUserRole()).equals(UserRole.EXPERT)) {
                 predicateList.add(cb.equal(root.get("score"), category.getScore()));
             }

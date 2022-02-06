@@ -32,7 +32,7 @@ public class ServiceServiceImpl implements ServiceService {
                               @Lazy SubServiceServiceImpl subServiceService) {
         this.serviceRepository = serviceRepository;
         this.serviceMap = serviceMap;
-        this.subServiceService=subServiceService;
+        this.subServiceService = subServiceService;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Optional<Service> find(String name) {
-     return    serviceRepository.findByName(name);
+        return serviceRepository.findByName(name);
     }
 
     @Override

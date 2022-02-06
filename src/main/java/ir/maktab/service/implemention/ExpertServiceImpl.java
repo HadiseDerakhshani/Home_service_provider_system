@@ -1,7 +1,6 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.ExpertDto;
-import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.serviceSystem.SubService;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -163,6 +161,6 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public List<ExpertDto> findAll() {
         List<Expert> list = expertRepository.findAll();
-      return   list.stream().map(expertMap::createExpertDto).collect(Collectors.toList());
+        return list.stream().map(expertMap::createExpertDto).collect(Collectors.toList());
     }
 }

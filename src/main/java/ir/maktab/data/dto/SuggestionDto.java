@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class SuggestionDto {
-    @CreationTimestamp
+
     private Date dateRegisterSuggest;
 
     private double proposedPrice;

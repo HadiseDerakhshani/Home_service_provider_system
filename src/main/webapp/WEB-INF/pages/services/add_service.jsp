@@ -25,26 +25,27 @@
                 <td><a href="/manager/addSubService/${list.name}">add</a></td>
             </tr>
         </c:forEach>
-       <tr>
+        <tr>
             <td>New Main Service</td>
-            <td>   <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New
-            </button>
+            <td>
+                <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New
+                </button>
             </td>
         </tr>
         <tr>
-        <form action="/manager/newService" method="post">
-            <td>
-                <div id="hide2" style="display: none">
-                    <input type="text" placeholder="Enter New Main Service name" name="name" class="form-control"
-                           required>
-                </div>
-            </td>
-            <td>
-                <div id="hide3" style="display: none">
-                    <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Add</button>
-                </div>
-            </td>
-        </form>
+            <form action="/manager/newService" method="post">
+                <td>
+                    <div id="hide2" style="display: none">
+                        <input type="text" placeholder="Enter New Main Service name" name="name" class="form-control"
+                               required>
+                    </div>
+                </td>
+                <td>
+                    <div id="hide3" style="display: none">
+                        <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Add</button>
+                    </div>
+                </td>
+            </form>
         </tr>
     </table>
 </div>

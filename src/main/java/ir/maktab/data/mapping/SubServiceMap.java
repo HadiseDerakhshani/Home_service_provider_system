@@ -5,7 +5,6 @@ import ir.maktab.data.entity.serviceSystem.SubService;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Data

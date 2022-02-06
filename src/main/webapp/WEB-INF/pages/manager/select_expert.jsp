@@ -29,7 +29,7 @@
 <span></span>
 <br><br>
 <div class="container">
-<form action="/manager/addExpert" method="post">
+    <form action="/manager/addExpert" method="post">
 
         <h4>Email : </h4>
         <br>
@@ -37,8 +37,8 @@
         <%-- pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"--%>>
         <br><br>
         <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Login</button>
-</form>
-    </div>
+    </form>
+</div>
 
 
 <script>
@@ -46,8 +46,8 @@
     $("form").submit(function (event) {
         <c:forEach var="list" items="${expertList}">
         if ($("#e1").val() === "${list.email}") {
-                $("span").text("Submitted Successfully.").show();
-                return;
+            $("span").text("Submitted Successfully.").show();
+            return;
         }
         </c:forEach>
         $("span").text("Not Exit Expert!").show().fadeOut(2000);

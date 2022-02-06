@@ -12,6 +12,7 @@ public interface ServiceService {
 
 
     public ServiceDto save(String name);
+
     public Optional<Service> find(String name);
 
     public ServiceDto findByName(String name);
@@ -19,6 +20,8 @@ public interface ServiceService {
     public void deleteService(String name);
 
     public void update(ServiceDto serviceDto);
+
     public ServiceDto addSubService(ServiceDto serviceDto, SubServiceDto subServiceDto);
+
     public List<ServiceDto> findAll();
 }

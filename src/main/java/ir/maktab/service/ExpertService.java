@@ -2,12 +2,10 @@ package ir.maktab.service;
 
 import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.entity.enums.UserStatus;
-import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.entity.user.Expert;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 public interface ExpertService {
@@ -35,6 +33,7 @@ public interface ExpertService {
     public void updateCredit(double amount, Expert expert);
 
     public List<ExpertDto> findAll(int pageNumber, int pageSize);
+
     public List<ExpertDto> findAll();
 
     public long totalRecord();

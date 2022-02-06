@@ -1,6 +1,5 @@
 package ir.maktab.service;
 
-import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.serviceSystem.SubService;
 
@@ -16,7 +15,7 @@ public interface SubServiceService {
 
     public SubServiceDto findByName(String name);
 
- public SubServiceDto save(SubServiceDto subServiceDto);
+    public SubServiceDto save(SubServiceDto subServiceDto);
 
     public void deleteSubService(String name);
 }

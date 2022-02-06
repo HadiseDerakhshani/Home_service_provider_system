@@ -1,6 +1,5 @@
 package ir.maktab.service.implemention;
 
-import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.mapping.ExpertMap;

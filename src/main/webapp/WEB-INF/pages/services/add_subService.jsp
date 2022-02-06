@@ -18,7 +18,11 @@
     <h2 style="color: red">${alert}</h2>
     <br><br>
     <table border="5" width="70%" cellpadding="2">
-        <tr><td>name</td><td>price</td><td>Description</td></tr>
+        <tr>
+            <td>name</td>
+            <td>price</td>
+            <td>Description</td>
+        </tr>
         <c:forEach var="list" items="${subServiceList}">
             <tr>
                 <td>${list.name}</td>
@@ -29,39 +33,43 @@
         <tr>
 
             <td></td>
-            <td>   <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New sub Service
-            </button>
+            <td>
+                <button class="btn btn-outline-primary" onclick="ShowChangePassDiv()" id="show" value="change">New sub
+                    Service
+                </button>
             <td></td>
             </td>
         </tr>
         <form:form action="/manager/newSubService" method="post" modelAttribute="subService">
-        <tr>
+            <tr>
 
                 <td>
                     <div id="hide2" style="display: none">
-                        <form:input path="name" placeholder="Enter New sub Service name"  class="form-control"  />
+                        <form:input path="name" placeholder="Enter New sub Service name" class="form-control"/>
                     </div>
                 </td>
                 <td>
                     <div id="hide4" style="display: none">
-                    <form:input path="price"  placeholder="Enter New sub Service price" class="form-control"/>
+                        <form:input path="price" placeholder="Enter New sub Service price" class="form-control"/>
                     </div>
                 </td>
                 <td>
                     <div id="hide5" style="display: none">
-                    <form:input path="description" placeholder="Enter New sub Service description" class="form-control"/>
+                        <form:input path="description" placeholder="Enter New sub Service description"
+                                    class="form-control"/>
                     </div>
                 </td>
 
-        </tr>
+            </tr>
             <tr>
 
                 <td></td>
-            <td>
-                <div id="hide3" style="display: none">
-                <form:button name="submit" class="btn btn-primary" style="border-bottom: darkblue">register new sub service</form:button>
-                </div>
-            </td>
+                <td>
+                    <div id="hide3" style="display: none">
+                        <form:button name="submit" class="btn btn-primary"
+                                     style="border-bottom: darkblue">register new sub service</form:button>
+                    </div>
+                </td>
                 <td></td>
 
             </tr>

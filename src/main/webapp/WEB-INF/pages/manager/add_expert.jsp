@@ -13,9 +13,9 @@
 <div class="container">
     <h4 style="color: floralwhite">Please Select service For add ${expertDto.firstName} ${expertDto.lastName}</h4>
     <br><br>
-   <h4 style="color: aquamarine"> ${message}</h4>
+    <h4 style="color: aquamarine"> ${message}</h4>
     <br><br>
-  <table border="5" width="70%" cellpadding="2">
+    <table border="5" width="70%" cellpadding="2">
         <tr>
             <th>Service</th>
         </tr>
@@ -26,14 +26,14 @@
         </c:forEach>
     </table>
     <br><br>
-<form cssClass="p-1 my-5 mx-5" action="/manager/expertAddToService" method="post">
-    <select name="name">
-        <c:forEach items="${listAll}" var="list">
-            <option value="${list.name}">${list.name} , ${list.price} T ,(${list.description})</option>
-        </c:forEach>
-    </select>
-    <button type="submit">register</button>
-</form>
+    <form cssClass="p-1 my-5 mx-5" action="/manager/expertAddToService" method="post">
+        <select name="name">
+            <c:forEach items="${listAll}" var="list">
+                <option value="${list.name}">${list.name} , ${list.price} T ,(${list.description})</option>
+            </c:forEach>
+        </select>
+        <button type="submit">register</button>
+    </form>
     <br><br>
     <a href="<c:url value="/manager"/>" class="btn btn-outline-primary">manager page</a>
 

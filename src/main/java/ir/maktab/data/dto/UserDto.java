@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class UserDto {
+public class UserDto extends BaseDto {
 
     @Pattern(regexp = "^[a-zA-Z]+$", message = "firstName is not alphabet")
     private String firstName;

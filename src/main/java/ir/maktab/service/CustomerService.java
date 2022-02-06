@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.CustomerDto;
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.UserStatus;
@@ -36,10 +37,10 @@ public interface CustomerService {
     public void decreaseCredit(CustomerDto customer, double amount);
 
     public List<CustomerDto> findAll(int pageNumber, int pageSize);
-
+    public List<CustomerDto> findAll();
     public List<SuggestionDto> selectSuggestion(OrderDto orderDto);
 
-    public void payment(CustomerDto customerDto, OrderDto orderDto, double amount, int score, String commentText);
+    public void payment(CustomerDto customerDto, OrderDto orderDto, double amount);
 
     public long totalRecord();
 }

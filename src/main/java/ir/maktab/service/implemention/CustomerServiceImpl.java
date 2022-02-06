@@ -1,6 +1,7 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.CustomerDto;
+import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.UserRole;
@@ -174,6 +175,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<CustomerDto> findAll() {
+        return customerRepository.findAll().stream().map(customerMap::createCustomerDto).collect(Collectors.toList());
+    }
+
+    @Override
     public List<SuggestionDto> selectSuggestion(OrderDto orderDto) {
 
       /*  List<Suggestion> suggestion = orderDto.getSuggestion().stream()
@@ -195,18 +201,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void payment(CustomerDto customerDto, OrderDto orderDto, double amount, int score, String commentText) {
-
-        Order order = orderServiceImpl.findByReceptionNumber(orderDto.getReceptionNumber());
+    public void payment(CustomerDto customerDto, OrderDto orderDto, double amount) {
+        orderServiceImpl.updatePricePaid(orderDto,amount);
         decreaseCredit(customerDto, amount);
-        Expert expert = order.getExpert();
-        expertServiceImpl.updateCredit((0.80 * amount), expert);
-        expertServiceImpl.updateScore(score, expert);
-        //   orderServiceImpl.updateStatus(order, OrderStatus.PAID);
-     ///   orderServiceImpl.updatePricePaid(order, amount);
-
-        if (commentText != null)
-            commentServiceImpl.createComment(expert, customerMap.createCustomer(customerDto), commentText);
     }
 
     @Override

@@ -84,9 +84,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updatePricePaid(Order order, double amount) {
+    public void updatePricePaid(OrderDto order, double amount) {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setPricePaid(amount);
+        Expert expert = orderFound.getExpert();
+       expertServiceImpl.updateCredit((amount*0.70),expert);
         orderRepository.save(orderFound);
     }
 

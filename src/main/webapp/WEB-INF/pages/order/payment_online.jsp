@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <h1 style="color:red">${message}</h1>
-    <form:form cssClass="p-3 m-3" action="" method="post"> <%--todo--%>
+    <form:form cssClass="p-3 m-3" action="/order/payment_online" method="post"> <%--todo--%>
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>

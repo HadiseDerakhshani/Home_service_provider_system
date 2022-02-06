@@ -203,7 +203,7 @@ public class CustomerServiceImpl implements CustomerService {
         expertServiceImpl.updateCredit((0.80 * amount), expert);
         expertServiceImpl.updateScore(score, expert);
         //   orderServiceImpl.updateStatus(order, OrderStatus.PAID);
-        orderServiceImpl.updatePricePaid(order, amount);
+     ///   orderServiceImpl.updatePricePaid(order, amount);
 
         if (commentText != null)
             commentServiceImpl.createComment(expert, customerMap.createCustomer(customerDto), commentText);

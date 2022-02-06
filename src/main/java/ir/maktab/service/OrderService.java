@@ -30,7 +30,7 @@ public interface OrderService {
 
     public void updateStatus(OrderDto order, OrderStatus status);
 
-    public void updatePricePaid(Order order, double amount);
+    public void updatePricePaid(OrderDto order, double amount);
 
     public void addSuggestionToOrder(OrderDto order, SuggestionDto suggest);
 

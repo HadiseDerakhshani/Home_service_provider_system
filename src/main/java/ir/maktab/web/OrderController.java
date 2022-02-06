@@ -91,5 +91,24 @@ public class OrderController {
         model.addAttribute("orderDtoList", orderDtoList);
         return "order/choose_order";
     }
+    @GetMapping("/paymentPage_online")
+    public String showPaymentPage(@SessionAttribute("customer")CustomerDto customerDto, Model model,HttpSession session){
 
+
+        //todo//find order set session order
+        // session.setAttribute("order",orderDto);
+        // model.addAttribute("order",orderDto);
+        double price=0;
+        model.addAttribute("customer",customerDto);
+
+        return "order/payment_online";
+    }
+    @PostMapping("/payment_online")
+    public ModelAndView paymentOnline(@RequestParam("amount") String amount,
+                                      @SessionAttribute("customer") CustomerDto customerDto,
+                                      @SessionAttribute("order")OrderDto orderDto) {
+        //todo
+        orderService.updatePricePaid(orderDto,Double.parseDouble(amount));
+        return new ModelAndView("","message","");
+    }
 }

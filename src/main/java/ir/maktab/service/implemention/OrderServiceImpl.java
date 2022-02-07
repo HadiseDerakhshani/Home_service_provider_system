@@ -232,7 +232,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Double calculatePrice(OrderDto order) {
-        Double amount=null,priceSuggest,priceService,proposedPrice;
+        Double amount,priceSuggest,priceService,proposedPrice;
         priceService=order.getService().getPrice();
         proposedPrice=order.getProposedPrice();
         priceSuggest = order.getSuggestion().stream().filter(s -> s.getStatus().equals(SuggestionStatus.CONFIRMED))

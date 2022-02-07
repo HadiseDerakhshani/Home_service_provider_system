@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<img src="@imgSrc" style="width: 100px"/>
+<%--<img src="@imgSrc" style="width: 100px"/>--%>
 
 <div class="container">
     <h1 style="color: aqua">${message}</h1>
@@ -205,11 +205,11 @@
     <a href="<c:url value="/expert/suggestion"/>" class="btn btn-outline-primary">new suggestion</a>
 </div>
 <script>
-    @{
+  /*  @{
         var: base64 = Convert.ToBase64String(${expert.photo}),
         var: imgSrc = String.Format("data:image/gif;base64,{0}", base64)
     }
-
+*/
     function ShowChangePassDiv() {
         var show = document.getElementById("show");
         var hide1 = document.getElementById("hide1");

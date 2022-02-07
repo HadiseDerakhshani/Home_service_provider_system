@@ -122,10 +122,10 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public void updateCredit(double amount, Expert expert) {
-        Expert expertFound = findByEmail(expert.getEmail()).get();
-        double credit = expertFound.getCredit();
-        expertFound.setCredit(credit + amount);
-        expertRepository.save(expertFound);
+
+        double credit = expert.getCredit();
+        expert.setCredit(credit + (amount*0.70));
+        expertRepository.save(expert);
     }
 
     @Override

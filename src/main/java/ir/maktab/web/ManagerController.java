@@ -91,7 +91,6 @@ public class ManagerController {
 
     @GetMapping("/selectExpert")
     public String showSelectExpert(Model model) {
-        long record = expertService.totalRecord();
         List<ExpertDto> expertDtoList = expertService.findAll();
         model.addAttribute("expertList", expertDtoList);
         return "/manager/select_expert";

@@ -6,6 +6,7 @@ import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.enums.OrderStatus;
+import ir.maktab.data.entity.enums.SuggestionStatus;
 import ir.maktab.service.implemention.CustomerServiceImpl;
 import ir.maktab.service.implemention.OrderServiceImpl;
 import ir.maktab.service.implemention.ServiceServiceImpl;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -94,36 +96,43 @@ public class OrderController {
 
     @GetMapping("/payment")
     public String payment(@SessionAttribute("customer")CustomerDto customerDto,Model model,
-                          @SessionAttribute("orderDto")OrderDto order){
-      order = orderService.findOrderToPayment(customerDto);
+                         HttpSession session){
+        Double amount;
+     OrderDto order = orderService.findOrderToPayment(customerDto);
         if(order!=null){
-            model.addAttribute("orderDto",order);
-            return "";//page select type of payment
+         amount=orderService.calculatePrice(order);
+           if(amount != null){
+            model.addAttribute("order",order);
+            model.addAttribute("customer",customerDto);
+            model.addAttribute("amount",amount);
+            session.setAttribute("amount",amount);
+            session.setAttribute("order",order);
+            return "order/choose_type_payment";//page select type of payment
              }
-        return "";//todo
+        }
+        return "register";//todo
     }
 
 
     @GetMapping("/paymentPage_online")
     public String showPaymentPage(@SessionAttribute("customer")CustomerDto customerDto, Model model,
-                                  @SessionAttribute("orderDto")OrderDto orderDto){
+                                  @SessionAttribute("order")OrderDto orderDto,@SessionAttribute("amount")Double amount){
         model.addAttribute("order",orderDto);
         model.addAttribute("customer",customerDto);
+        model.addAttribute("amount",amount);
         return "order/payment_online";
     }
     @PostMapping("/payment_online")
-    public ModelAndView paymentOnline(@RequestParam("amount") String amount,
-                                      @SessionAttribute("orderDto")OrderDto orderDto) {
+    public ModelAndView paymentOnline(@RequestParam("price") String amount,
+                                      @SessionAttribute("order")OrderDto orderDto) {
         orderService.updatePricePaid(orderDto,Double.parseDouble(amount));
-        return new ModelAndView("","message","");
+        return new ModelAndView("order/choose_type_payment","message","payment successfully");
     }
     @GetMapping("/paymentPage_cash")
     public ModelAndView showPaymentCashPage(@SessionAttribute("customer")CustomerDto customerDto, Model model,
-                                  @SessionAttribute("orderDto")OrderDto orderDto){
-        //todo//amount of page take and
-
-///customerService.payment(customerDto,orderDto,amount);
+                                  @SessionAttribute("order")OrderDto orderDto,@SessionAttribute("amount")Double amount){
+customerService.payment(customerDto,orderDto,amount);
         model.addAttribute("customer",customerDto);
-        return new ModelAndView("","message","");
+        return new ModelAndView("order/choose_type_payment","message","payment successfully");
     }
 }

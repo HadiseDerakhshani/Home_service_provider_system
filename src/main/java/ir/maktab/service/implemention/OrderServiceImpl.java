@@ -2,6 +2,7 @@ package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.*;
 import ir.maktab.data.entity.enums.OrderStatus;
+import ir.maktab.data.entity.enums.SuggestionStatus;
 import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.order.Suggestion;
 import ir.maktab.data.entity.user.Customer;
@@ -88,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setPricePaid(amount);
         Expert expert = orderFound.getExpert();
-       expertServiceImpl.updateCredit((amount*0.70),expert);
+       expertServiceImpl.updateCredit(amount,expert);
        orderFound.setStatus(OrderStatus.PAID);
         orderRepository.save(orderFound);
     }
@@ -229,4 +230,17 @@ public class OrderServiceImpl implements OrderService {
             throw new ObjectEntityNotFoundException(" --- Order is not exit yet ---");
     }
 
+    @Override
+    public Double calculatePrice(OrderDto order) {
+        Double amount=null,priceSuggest,priceService,proposedPrice;
+        priceService=order.getService().getPrice();
+        proposedPrice=order.getProposedPrice();
+        priceSuggest = order.getSuggestion().stream().filter(s -> s.getStatus().equals(SuggestionStatus.CONFIRMED))
+                .map(s -> s.getProposedPrice()).findAny().orElse(null);
+        amount =proposedPrice <= priceService ?  priceService : proposedPrice ;
+        if(priceSuggest!=null)
+                amount = priceSuggest > amount ?priceService:amount;
+
+        return amount;
+    }
 }

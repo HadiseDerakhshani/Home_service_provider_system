@@ -51,23 +51,67 @@
                     Amount :
                 </td>
                 <td>
-                    <input type="text" placeholder="enter password" name="amount" class="form-control" required>
-                    <%// TODO: 2/6/2022  //validatio >=price order%>
+                    <input type="text" placeholder="${amount}" name="price" id="price" class="form-control" required>
+
                 </td>
             </tr>
-
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <span style="color: red"></span>
+                </td>
+            </tr>
 
             <tr>
                 <td>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary" style="border-bottom: darkblue">Change</button>
+                    <button type="submit" class="btn btn-primary" name="submit" style="border-bottom: darkblue">payment</button>
                 </td>
             </tr>
         </table>
     </form:form>
 </div>
+<script>
 
+    $("form").submit(function (event) {
+
+        if ($("#price").val() < "${amount}" || $("#price").val() < "${amount}") {
+
+            $("span").text(" Not valid Price!").show();
+            event.preventDefault();
+        }
+        return;
+    });
+
+
+
+
+
+
+        var IdealTimeOut = 10; //10 seconds
+        var idleSecondsTimer = null;
+        var idleSecondsCounter = 0;
+        document.onclick = function () { idleSecondsCounter = 0; };
+        document.onmousemove = function () { idleSecondsCounter = 0; };
+        document.onkeypress = function () { idleSecondsCounter = 0; };
+        idleSecondsTimer = window.setInterval(CheckIdleTime, 1000);
+
+        function CheckIdleTime() {
+        idleSecondsCounter++;
+        var oPanel = document.getElementById("timeOut");
+        if (oPanel) {
+        oPanel.innerHTML = (IdealTimeOut - idleSecondsCounter);
+    }
+        if (idleSecondsCounter >= IdealTimeOut) {
+        window.clearInterval(idleSecondsTimer);
+        alert("Your Session has expired. Please login again.");
+        window.location = "https://www.aspsnippets.com/";
+    }
+    }
+
+</script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

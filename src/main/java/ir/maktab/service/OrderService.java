@@ -47,4 +47,5 @@ public interface OrderService {
     public OrderDto findOrderToPayment(CustomerDto customer);
 
     public void startAndEndOrder(int number, int chose, Expert expert);
+    public Double calculatePrice(OrderDto orderDto);
 }

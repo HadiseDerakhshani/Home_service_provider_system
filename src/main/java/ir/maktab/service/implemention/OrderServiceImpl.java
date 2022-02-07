@@ -34,13 +34,15 @@ public class OrderServiceImpl implements OrderService {
     private final SubServiceServiceImpl subServiceServiceImpl;
     private final SuggestionServiceImpl suggestionService;
     private final ExpertServiceImpl expertServiceImpl;
+    private final TransactionServiceImpl transactionService;
 
     private final CustomerServiceImpl customerServiceImpl;
 
     @Autowired
     public OrderServiceImpl(@Lazy OrderMap orderMap, OrderRepository orderRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                             @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl,
-                            @Lazy SubServiceMap subServiceMap, @Lazy SuggestionServiceImpl suggestionService) {
+                            @Lazy SubServiceMap subServiceMap, @Lazy SuggestionServiceImpl suggestionService,
+                            @Lazy TransactionServiceImpl transactionService) {
         this.orderMap = orderMap;
         this.orderRepository = orderRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
@@ -48,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
         this.customerServiceImpl = customerServiceImpl;
         this.subServiceMap = subServiceMap;
         this.suggestionService = suggestionService;
+        this.transactionService = transactionService;
     }
 
 
@@ -89,9 +92,11 @@ public class OrderServiceImpl implements OrderService {
         Order orderFound = findByReceptionNumber(order.getReceptionNumber());
         orderFound.setPricePaid(amount);
         Expert expert = orderFound.getExpert();
-       expertServiceImpl.updateCredit(amount,expert);
-       orderFound.setStatus(OrderStatus.PAID);
-        orderRepository.save(orderFound);
+        expertServiceImpl.updateCredit(amount, expert);
+        orderFound.setStatus(OrderStatus.PAID);
+        Order saveOrder = orderRepository.save(orderFound);
+        OrderDto orderDto = orderMap.createOrderDto(saveOrder);
+        transactionService.save(orderDto, amount);
     }
 
     @Override
@@ -163,7 +168,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDto> list = findOrderByCustomer(customer);
         if (list != null) {
-           return list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
+            return list.stream().filter(o -> o.getCustomer().getEmail().equals(customer.getEmail()))
                     .filter(o -> o.getStatus().equals(OrderStatus.DONE)).findFirst().orElse(null);
 
         } else
@@ -232,14 +237,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Double calculatePrice(OrderDto order) {
-        Double amount,priceSuggest,priceService,proposedPrice;
-        priceService=order.getService().getPrice();
-        proposedPrice=order.getProposedPrice();
+        Double amount, priceSuggest, priceService, proposedPrice;
+        priceService = order.getService().getPrice();
+        proposedPrice = order.getProposedPrice();
         priceSuggest = order.getSuggestion().stream().filter(s -> s.getStatus().equals(SuggestionStatus.CONFIRMED))
                 .map(s -> s.getProposedPrice()).findAny().orElse(null);
-        amount =proposedPrice <= priceService ?  priceService : proposedPrice ;
-        if(priceSuggest!=null)
-                amount = priceSuggest > amount ?priceService:amount;
+        amount = proposedPrice <= priceService ? priceService : proposedPrice;
+        if (priceSuggest != null)
+            amount = priceSuggest > amount ? priceService : amount;
 
         return amount;
     }

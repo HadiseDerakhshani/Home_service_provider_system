@@ -21,7 +21,7 @@ public class TransactionDto {
     private long receptionNumber;
     private double amount;
     @OneToOne
-    private Order order;
+    private OrderDto order;
     @CreationTimestamp
     private Date registerDate;
 

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>register_customer Page</title>
+    <title> order filter request Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/static/css/main.css"/>">
@@ -12,61 +12,50 @@
 <body>
 <div class="container">
     <h1 style="color:red">${message}</h1>
-    <form:form cssClass="p-3 m-3" modelAttribute="userCategory" action="/manager/userFilter" method="post">
+    <form:form cssClass="p-3 m-3" modelAttribute="orderFilter" action="/manager/userFilter" method="post">
         <table class="table table-bordered table-striped text-dark">
             <tr>
                 <td>
-                    <form:label path="firstName">First Name :</form:label>
+                    <form:label path="beginDate">Begin Date :</form:label>
                 </td>
                 <td>
-                    <form:input path="firstName" name="firstName" placeholder="enter your name"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <form:errors path="firstName" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="lastName">Last Name :</form:label>
-                </td>
-                <td>
-                    <form:input path="lastName" name="lastName" placeholder="enter your family"/>
+                    <form:input path="beginDate" name="beginDate" placeholder="yyyy/mm/dd"/>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <form:errors path="lastName" cssClass="text-danger"/>
+                    <form:errors path="beginDate" cssClass="text-danger"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form:label path="email">Email :</form:label>
+                    <form:label path="endDate">End Date :</form:label>
                 </td>
                 <td>
-                    <form:input path="email" name="email" placeholder="name@gmail.com"/>
+                    <form:input path="endDate" name="endDate" placeholder="yyyy/mm/dd"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <form:errors path="endDate" cssClass="text-danger"/>
                 </td>
             </tr>
 
             <tr>
                 <td>
+                   Order Status:
                 </td>
                 <td>
-                    <form:errors path="email" cssClass="text-danger"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    User role:
-                </td>
-                <td>
-                    Expert<form:radiobutton path="userRole" value="EXPERT"/>
-                    Customer<form:radiobutton path="userRole" value="CUSTOMER"/>
+                    Expert<form:radiobutton path="status" value="WAITING_FOR_EXPERT_SUGGESTION"/>
+                    Customer<form:radiobutton path="status" value="WAITING_FOR_EXPERT_SELECTION"/>
+                    Customer<form:radiobutton path="status" value="WAITING_FOR_EXPERT_TO_COME"/>
+                    Customer<form:radiobutton path="status" value="STARTED"/>
+                    Customer<form:radiobutton path="status" value="DONE"/>
+                    Customer<form:radiobutton path="status" value="PAID"/>
                 </td>
             </tr>
             <tr>
@@ -75,7 +64,19 @@
                 </td>
                 <td>
                     <select name="name">
-                        <c:forEach items="${list}" var="list">
+                        <c:forEach items="${listServices}" var="list">
+                            <option value="${list.name}">${list.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   Sub Service :
+                </td>
+                <td>
+                    <select name="nameSub">
+                        <c:forEach items="${listSubServices}" var="list">
                             <option value="${list.name}">${list.name}</option>
                         </c:forEach>
                     </select>

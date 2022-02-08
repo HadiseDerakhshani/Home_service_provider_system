@@ -86,7 +86,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         if (order != null) {
             Expert expert = order.getExpert();
-          //  orderServiceImpl.updatePricePaid(order, amount);
+            //  orderServiceImpl.updatePricePaid(order, amount);
             // orderServiceImpl.updateStatus(order, OrderStatus.PAID);//todo
             expertServiceImpl.updateScore(score, expert);
             expertServiceImpl.updateCredit((0.80 * amount), expert);

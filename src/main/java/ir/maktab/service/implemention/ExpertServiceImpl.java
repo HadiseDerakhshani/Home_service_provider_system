@@ -124,7 +124,7 @@ public class ExpertServiceImpl implements ExpertService {
     public void updateCredit(double amount, Expert expert) {
 
         double credit = expert.getCredit();
-        expert.setCredit(credit + (amount*0.70));
+        expert.setCredit(credit + (amount * 0.70));
         expertRepository.save(expert);
     }
 

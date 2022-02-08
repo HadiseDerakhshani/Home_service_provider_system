@@ -131,7 +131,7 @@ public class ManagerController {
         model.addAttribute("userCategory", new UserCategoryDto());
         List<SubServiceDto> list = subServiceImpl.findAll();
         model.addAttribute("list", list);
-        return "/manager/userList_page";
+        return "user_filter_request";
     }
 
     @PostMapping("/userFilter")

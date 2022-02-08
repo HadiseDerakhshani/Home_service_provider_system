@@ -5,7 +5,6 @@ import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.SuggestionStatus;
-import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.order.Suggestion;
 import ir.maktab.data.entity.user.Expert;

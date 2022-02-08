@@ -205,8 +205,8 @@
     <a href="<c:url value="/expert/suggestion"/>" class="btn btn-outline-primary">new suggestion</a>
 </div>
 <script>
-  /*  @{
-        var: base64 = Convert.ToBase64String(${expert.photo}),
+    /*  @{
+          var: base64 = Convert.ToBase64String(${expert.photo}),
         var: imgSrc = String.Format("data:image/gif;base64,{0}", base64)
     }
 */

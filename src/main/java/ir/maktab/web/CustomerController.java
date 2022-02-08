@@ -2,12 +2,9 @@ package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.OrderDto;
 import ir.maktab.service.implemention.CustomerServiceImpl;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

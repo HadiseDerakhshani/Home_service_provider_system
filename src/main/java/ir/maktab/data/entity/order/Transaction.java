@@ -19,11 +19,12 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private long receptionNumber;
+    private long transactionNumber;
     private double amount;
     @OneToOne
     private Order order;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date registerDate;
 
 

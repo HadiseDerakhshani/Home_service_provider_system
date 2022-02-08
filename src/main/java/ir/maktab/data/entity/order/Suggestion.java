@@ -19,6 +19,7 @@ public class Suggestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date dateRegisterSuggest;
     private double ProposedPrice;
     private int durationOfWork;

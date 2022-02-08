@@ -19,7 +19,7 @@
     <div>
         <a href="<c:url value="/order/paymentPage_online"/>" class="btn btn-outline-primary">online</a>
         <c:if test="${customer.credit >= amount}">
-        <a href="<c:url value="/order/paymentPage_cash"/>" class="btn btn-outline-primary">cash</a>
+            <a href="<c:url value="/order/paymentPage_cash"/>" class="btn btn-outline-primary">cash</a>
         </c:if>
     </div>
 

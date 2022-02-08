@@ -29,6 +29,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date dateRegister;
     @UpdateTimestamp
     private Date dateUpdate;

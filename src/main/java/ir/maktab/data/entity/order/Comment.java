@@ -26,5 +26,6 @@ public class Comment {
     @OneToOne(cascade = CascadeType.ALL)
     private Expert expert;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date registerOpinion;
 }

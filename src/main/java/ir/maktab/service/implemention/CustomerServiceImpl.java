@@ -1,14 +1,11 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.CustomerDto;
-import ir.maktab.data.dto.ExpertDto;
 import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
-import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.user.Customer;
-import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.mapping.CustomerMap;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.repasitory.CustomerRepository;
@@ -202,7 +199,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void payment(CustomerDto customerDto, OrderDto orderDto, double amount) {
-        orderServiceImpl.updatePricePaid(orderDto,amount);
+        orderServiceImpl.updatePricePaid(orderDto, amount);
         decreaseCredit(customerDto, amount);
     }
 

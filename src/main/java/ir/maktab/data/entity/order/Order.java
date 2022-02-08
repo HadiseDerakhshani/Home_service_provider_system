@@ -25,6 +25,7 @@ public class Order {
     private double proposedPrice;
     private String jobDescription;
     @CreationTimestamp
+    @Temporal(TemporalType.DATE)
     private Date registerDate;
     private Date doDate;
     private long receptionNumber;

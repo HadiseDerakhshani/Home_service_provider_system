@@ -1,13 +1,12 @@
 package ir.maktab.data.dto;
 
-import ir.maktab.data.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 
@@ -18,7 +17,7 @@ import java.util.Date;
 
 public class TransactionDto {
 
-    private long receptionNumber;
+    private long transactionNumber;
     private double amount;
     @OneToOne
     private OrderDto order;

@@ -19,8 +19,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
-    // static Specification<User> filterByCriteria(String name, String family, String email, UserRole role, String service) {
-    static Specification<User> filterByCriteria(UserCategoryDto category) {
+
+    /*static Specification<User> filterByCriteria(UserCategoryDto category) {
         return (Specification<User>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (category.getFirstName() != null && !category.getFirstName().isEmpty())
@@ -40,7 +40,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
             }
             return cb.and(predicateList.toArray(new Predicate[0]));
         };
-    }
+    }*/
 
     Optional<User> findByEmail(String email);
 

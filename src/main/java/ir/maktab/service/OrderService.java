@@ -49,4 +49,5 @@ public interface OrderService {
     public void startAndEndOrder(int number, int chose, Expert expert);
 
     public Double calculatePrice(OrderDto orderDto);
+    public List<OrderDto> filtering(OrderFilterDto orderFilterDto);
 }

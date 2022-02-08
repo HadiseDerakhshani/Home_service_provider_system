@@ -5,21 +5,26 @@ import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.SuggestionStatus;
 import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.order.Suggestion;
+import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.entity.user.Customer;
 import ir.maktab.data.entity.user.Expert;
+import ir.maktab.data.entity.user.User;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.repasitory.OrderRepository;
+import ir.maktab.data.repasitory.OrderSpecifications;
+import ir.maktab.data.repasitory.UserSpecifications;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.OrderService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -35,14 +40,14 @@ public class OrderServiceImpl implements OrderService {
     private final SuggestionServiceImpl suggestionService;
     private final ExpertServiceImpl expertServiceImpl;
     private final TransactionServiceImpl transactionService;
-
+    private final ServiceServiceImpl serviceImpl;
     private final CustomerServiceImpl customerServiceImpl;
 
     @Autowired
     public OrderServiceImpl(@Lazy OrderMap orderMap, OrderRepository orderRepository, @Lazy SubServiceServiceImpl subServiceServiceImpl,
                             @Lazy ExpertServiceImpl expertServiceImpl, @Lazy CustomerServiceImpl customerServiceImpl,
                             @Lazy SubServiceMap subServiceMap, @Lazy SuggestionServiceImpl suggestionService,
-                            @Lazy TransactionServiceImpl transactionService) {
+                            @Lazy TransactionServiceImpl transactionService,@Lazy ServiceServiceImpl serviceImpl) {
         this.orderMap = orderMap;
         this.orderRepository = orderRepository;
         this.subServiceServiceImpl = subServiceServiceImpl;
@@ -51,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
         this.subServiceMap = subServiceMap;
         this.suggestionService = suggestionService;
         this.transactionService = transactionService;
+        this.serviceImpl =serviceImpl;
     }
 
 
@@ -247,5 +253,22 @@ public class OrderServiceImpl implements OrderService {
             amount = priceSuggest > amount ? priceService : amount;
 
         return amount;
+    }
+
+    @Override
+    public List<OrderDto> filtering(OrderFilterDto orderFilterDto) {
+        Set<SubService> subServiceList=new HashSet<>();
+        if(orderFilterDto.getService() !=null && !orderFilterDto.getService().isEmpty()){
+            ir.maktab.data.entity.serviceSystem.Service serviceFound = serviceImpl.find(orderFilterDto.getService()).get();
+           subServiceList = serviceFound.getSubServiceList();
+        }
+        Pageable pageable = PageRequest.of(orderFilterDto.getPageNumber(), orderFilterDto.getPageSize());
+        Specification<Order> specification = OrderSpecifications.filterByCriteria(orderFilterDto,subServiceList);
+        return orderRepository
+                .findAll(specification, pageable)
+                .stream()
+                .map(orderMap::createOrderDto)
+                .collect(Collectors.toList());
+
     }
 }

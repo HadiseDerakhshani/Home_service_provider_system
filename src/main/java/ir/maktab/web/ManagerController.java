@@ -160,9 +160,11 @@ public class ManagerController {
                               @RequestParam(value = "nameSub", required = false) String nameSub) {
         if (name != null && !name.isEmpty())
            orderFilterDto.setService(name);
+
         if (nameSub != null && !nameSub.isEmpty())
             orderFilterDto.setSubService(nameSub);
-       //todo spicifiction
-        return "/manager/show_user";
+        List<OrderDto> filtering = orderService.filtering(orderFilterDto);
+        model.addAttribute("list",filtering);
+        return "/manager/show_order";
     }
 }

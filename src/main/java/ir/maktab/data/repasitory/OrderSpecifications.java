@@ -1,7 +1,11 @@
 package ir.maktab.data.repasitory;
 
+import ir.maktab.data.dto.OrderFilterDto;
 import ir.maktab.data.dto.UserCategoryDto;
+import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.UserRole;
+import ir.maktab.data.entity.order.Order;
+import ir.maktab.data.entity.serviceSystem.Service;
 import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.entity.user.User;
 import org.springframework.data.jpa.domain.Specification;
@@ -10,25 +14,26 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public interface OrderSpecifications {
-    static Specification<User> filterByCriteria(UserCategoryDto category) {
-        return (Specification<User>) (root, cq, cb) -> {
+    static Specification<Order> filterByCriteria(OrderFilterDto filterDto, Set<SubService> listService) {
+        return (Specification<Order>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
-            if (category.getFirstName() != null && !category.getFirstName().isEmpty())
-                predicateList.add(cb.equal(root.get("firstName"), category.getFirstName()));
-            if (category.getLastName() != null && !category.getLastName().isEmpty())
-                predicateList.add(cb.equal(root.get("lastName"), category.getLastName()));
-            if (category.getEmail() != null && !category.getEmail().isEmpty())
-                predicateList.add(cb.equal(root.get("email"), category.getEmail()));
-            if (category.getUserRole() != null)
-                predicateList.add(cb.equal(root.get("userRole"), UserRole.valueOf(category.getUserRole())));
-            if (category.getScore() != null && UserRole.valueOf(category.getUserRole()).equals(UserRole.EXPERT)) {
-                predicateList.add(cb.equal(root.get("score"), category.getScore()));
-            }
-            if (category.getService() != null && UserRole.valueOf(category.getUserRole()).equals(UserRole.EXPERT.name())) {
-                Join<User, SubService> serviceJoin = root.joinList("serviceList");
-                predicateList.add(cb.equal(serviceJoin.get("name"), category.getService()));
+            if (filterDto.getBeginDate()!= null)
+                predicateList.add(cb.equal(root.get("registerDate"), filterDto.getBeginDate()));
+            if (filterDto.getEndDate() != null )
+                predicateList.add(cb.equal(root.get("registerDate"), filterDto.getEndDate()));
+            if (filterDto.getSubService() != null && !filterDto.getSubService().isEmpty())
+                predicateList.add(cb.equal(root.get("service"),filterDto.getSubService()));
+            if (filterDto.getStatus()!= null)
+                predicateList.add(cb.equal(root.get("status"), OrderStatus.valueOf(filterDto.getStatus())));
+
+            if (filterDto.getService()!= null && !filterDto.getSubService().isEmpty()) {
+
+                for (SubService service:listService) {
+                    predicateList.add(cb.equal(root.get("service"),service));
+                }
             }
             return cb.and(predicateList.toArray(new Predicate[0]));
         };

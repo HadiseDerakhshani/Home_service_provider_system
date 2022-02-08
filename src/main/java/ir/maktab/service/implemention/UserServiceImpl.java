@@ -72,13 +72,4 @@ public class UserServiceImpl implements UserService {
     }
 
 
-}  /*List<UserDto> listDto = new ArrayList<>();
-    List<User> list = userRepository.findAll(UserRepository.filterByCriteria(name, family, email, role, service.getName()));
-        if (list.size() != 0) {
-                for (User user : list) {
-                listDto.add(userMap.createUserDto(user));
-                }
-                return listDto;
-                } else
-                throw new ObjectEntityNotFoundException("-- user list not found --");
-*/
+}

@@ -136,10 +136,6 @@ public class OrderController {
         return new ModelAndView("order/choose_type_payment", "message", "payment successfully");
     }
 
-    @GetMapping("/")
-    public ModelAndView showOrderPage() {
 
-        return new ModelAndView("order/choose_type_payment", "message", "payment successfully");
-    }
 
 }

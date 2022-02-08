@@ -2,10 +2,7 @@ package ir.maktab.web;
 
 import ir.maktab.data.dto.*;
 import ir.maktab.exception.DuplicateServiceException;
-import ir.maktab.service.implemention.ExpertServiceImpl;
-import ir.maktab.service.implemention.ServiceServiceImpl;
-import ir.maktab.service.implemention.SubServiceServiceImpl;
-import ir.maktab.service.implemention.UserServiceImpl;
+import ir.maktab.service.implemention.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -23,14 +20,17 @@ public class ManagerController {
     private final SubServiceServiceImpl subServiceImpl;
     private final ExpertServiceImpl expertService;
     private final UserServiceImpl userService;
+    private final OrderServiceImpl orderService;
 
     @Autowired
     public ManagerController(@Lazy ServiceServiceImpl service, @Lazy SubServiceServiceImpl subServiceImpl,
-                             @Lazy ExpertServiceImpl expertService, @Lazy UserServiceImpl userService) {
+                             @Lazy ExpertServiceImpl expertService, @Lazy UserServiceImpl userService,
+                             @Lazy OrderServiceImpl orderService) {
         this.service = service;
         this.subServiceImpl = subServiceImpl;
         this.expertService = expertService;
         this.userService = userService;
+        this.orderService=orderService;
     }
 
     @GetMapping
@@ -131,7 +131,7 @@ public class ManagerController {
         model.addAttribute("userCategory", new UserCategoryDto());
         List<SubServiceDto> list = subServiceImpl.findAll();
         model.addAttribute("list", list);
-        return "user_filter_request";
+        return "/manager/user_filter_request";
     }
 
     @PostMapping("/userFilter")
@@ -143,5 +143,14 @@ public class ManagerController {
         List<UserDto> list = userService.filtering(categoryDto);
         model.addAttribute("list", list);
         return "/manager/show_user";
+    }
+    @GetMapping("/showOrderPage")
+    public String showOrderPage(Model model) {
+        List<SubServiceDto> listSubServices =subServiceImpl.findAll();
+        List<ServiceDto> listServices = service.findAll();
+       model.addAttribute("orderFilter",new OrderFilterDto());
+       model.addAttribute("listServices",listServices);
+       model.addAttribute("listSubServices",listSubServices);
+        return "/manager/order_filter_request";
     }
 }

@@ -19,7 +19,7 @@
                     <form:label path="beginDate">Begin Date :</form:label>
                 </td>
                 <td>
-                    <form:input path="beginDate" name="beginDate" placeholder="yyyy/mm/dd"/>
+                    <form:input path="beginDate" name="beginDate" placeholder="yyyy/mm/dd" id="beginDate"/>
                 </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                     <form:label path="endDate">End Date :</form:label>
                 </td>
                 <td>
-                    <form:input path="endDate" name="endDate" placeholder="yyyy/mm/dd"/>
+                    <form:input path="endDate" name="endDate" placeholder="yyyy/mm/dd" id="endDate"/>
                 </td>
             </tr>
             <tr>
@@ -93,7 +93,17 @@
     </form:form>
 </div>
 
+<script>
+    $("form").submit(function (event) {
 
+        if ($("#endDate").val() < $("#beginDate").val() ) {
+
+            $("span").text(" Not valid Date!").show();
+            event.preventDefault();
+        }
+        return;
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

@@ -43,7 +43,7 @@ public class UserController {
         if (role.equals(UserRole.EXPERT)) {
             ExpertDto expertProfile = expertService.find(email);
             //  List<OrderDto> orderDtoList = orderService.findOrderByExpert(expertProfile);
-            // System.out.println(orderDtoList);
+            // System.out.println(orderDtoList);//todo null check
 
             List<SuggestionDto> suggestionDtoList = suggestionService.findByExpert(expertProfile);
             List<SubServiceDto> serviceList = expertProfile.getServiceList();

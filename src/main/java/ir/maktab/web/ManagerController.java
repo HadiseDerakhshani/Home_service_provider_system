@@ -137,7 +137,7 @@ public class ManagerController {
     @PostMapping("/userFilter")
     public String showUser(Model model, @ModelAttribute("userCategory") UserCategoryDto categoryDto,
                            @RequestParam(value = "name", required = false) String name) {
-        System.out.println(categoryDto);
+
         if (name != null && !name.isEmpty())
             categoryDto.setService(name);
         List<UserDto> list = userService.filtering(categoryDto);
@@ -152,5 +152,17 @@ public class ManagerController {
        model.addAttribute("listServices",listServices);
        model.addAttribute("listSubServices",listSubServices);
         return "/manager/order_filter_request";
+    }
+
+    @PostMapping("/orderFilter")
+    public String orderFilter(Model model, @ModelAttribute("orderFilter") OrderFilterDto orderFilterDto,
+                           @RequestParam(value = "name", required = false) String name,
+                              @RequestParam(value = "nameSub", required = false) String nameSub) {
+        if (name != null && !name.isEmpty())
+           orderFilterDto.setService(name);
+        if (nameSub != null && !nameSub.isEmpty())
+            orderFilterDto.setSubService(nameSub);
+       //todo spicifiction
+        return "/manager/show_user";
     }
 }

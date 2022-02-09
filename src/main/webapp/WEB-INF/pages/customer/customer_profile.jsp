@@ -157,7 +157,7 @@
             </td>
             <td>
                 <select name="name">
-                    <c:forEach items="${order}" var="list">
+                    <c:forEach items="${orderList}" var="list">
                         <option value="${list.receptionNumber}"> ${list.receptionNumber}
                             , ${list.service.name},${list.status}</option>
                     </c:forEach>
@@ -171,7 +171,13 @@
     <br><br>
     <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
     <a href="<c:url value="/order/findOrder"/>" class="btn btn-outline-primary">select expert</a>
-    <a href="<c:url value="/order" />" class="btn btn-outline-primary">new Order</a>
+    <c:forEach items="${orderList}" var="list">
+        <c:if test="${list.status!='DONE'}">
+            <a href="<c:url value="" />" class="btn btn-outline-primary">new Order</a>
+        </c:if>
+    </c:forEach>
+
+
     <a href="<c:url value="/order/payment" />" class="btn btn-outline-primary">payment</a>
 </div>
 <script>

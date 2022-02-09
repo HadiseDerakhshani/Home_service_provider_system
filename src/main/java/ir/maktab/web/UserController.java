@@ -60,7 +60,7 @@ public class UserController {
             session.setAttribute("customer", customerProfile);
             List<OrderDto> orderList = orderService.findOrderByCustomer(customerProfile);
             model.addAttribute("customer", customerProfile);
-            model.addAttribute("order", orderList);
+            model.addAttribute("orderList", orderList);
             return "customer/customer_profile";
         }
         return "register";

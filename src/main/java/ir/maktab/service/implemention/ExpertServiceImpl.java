@@ -1,8 +1,10 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.mapping.ExpertMap;
@@ -106,8 +108,9 @@ public class ExpertServiceImpl implements ExpertService {
 
 
     @Override
-    public void updateScore(int score, Expert expert) {
-        Expert expertFound = findByEmail(expert.getEmail()).get();
+    public void updateScore(int score, OrderDto orderDto) {
+        Order order = orderServiceImpl.findByReceptionNumber(orderDto.getReceptionNumber());
+        Expert expertFound = order.getExpert();
         expertFound.setScore(score);
         expertRepository.save(expertFound);
 

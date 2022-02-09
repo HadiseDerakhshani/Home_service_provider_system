@@ -47,7 +47,7 @@
 
             <tr>
                 <td>
-                   Order Status:
+                    Order Status:
                 </td>
                 <td>
                     Expert<form:radiobutton path="status" value="WAITING_FOR_EXPERT_SUGGESTION"/>
@@ -72,7 +72,7 @@
             </tr>
             <tr>
                 <td>
-                   Sub Service :
+                    Sub Service :
                 </td>
                 <td>
                     <select name="nameSub">
@@ -96,7 +96,7 @@
 <script>
     $("form").submit(function (event) {
 
-        if ($("#endDate").val() < $("#beginDate").val() ) {
+        if ($("#endDate").val() < $("#beginDate").val()) {
 
             $("span").text(" Not valid Date!").show();
             event.preventDefault();

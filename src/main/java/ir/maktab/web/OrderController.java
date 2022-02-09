@@ -6,10 +6,7 @@ import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.dto.ServiceDto;
 import ir.maktab.data.dto.SubServiceDto;
 import ir.maktab.data.entity.enums.OrderStatus;
-import ir.maktab.service.implemention.CustomerServiceImpl;
-import ir.maktab.service.implemention.OrderServiceImpl;
-import ir.maktab.service.implemention.ServiceServiceImpl;
-import ir.maktab.service.implemention.SubServiceServiceImpl;
+import ir.maktab.service.implemention.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -37,6 +34,7 @@ public class OrderController {
 
     private final ServiceServiceImpl service;
 
+
     @Autowired
     public OrderController(@Lazy CustomerServiceImpl customerService, @Lazy OrderServiceImpl orderService,
                            @Lazy SubServiceServiceImpl subServiceService, @Lazy ServiceServiceImpl service) {
@@ -44,14 +42,16 @@ public class OrderController {
         this.orderService = orderService;
         this.subServiceService = subServiceService;
         this.service = service;
+
+
     }
 
 
     @GetMapping
-    public ModelAndView showRegisterOrder(HttpSession session) {
+    public ModelAndView showRegisterOrder() {
 
         List<ServiceDto> serviceDtoList = service.findAll();
-////////////////
+
         return new ModelAndView("services/choose_service", "serviceList", serviceDtoList);
     }
 
@@ -135,7 +135,6 @@ public class OrderController {
         model.addAttribute("customer", customerDto);
         return new ModelAndView("order/choose_type_payment", "message", "payment successfully");
     }
-
 
 
 }

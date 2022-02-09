@@ -1,37 +1,45 @@
 package ir.maktab.service.implemention;
 
+import ir.maktab.data.dto.CommentDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.entity.order.Comment;
+import ir.maktab.data.entity.order.Order;
 import ir.maktab.data.entity.user.Customer;
 import ir.maktab.data.entity.user.Expert;
+import ir.maktab.data.mapping.CommentMap;
 import ir.maktab.data.repasitory.CommentRepository;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.CommentService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Getter
 @Service
-@RequiredArgsConstructor
+
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-
-    @Override
-    public void save(Comment comment) {
-        commentRepository.save(comment);
+    private final CommentMap commentMap;
+    private final OrderServiceImpl orderService;
+@Autowired
+    public CommentServiceImpl(CommentRepository commentRepository, @Lazy CommentMap commentMap,@Lazy OrderServiceImpl orderService) {
+        this.commentRepository = commentRepository;
+        this.commentMap = commentMap;
+        this.orderService = orderService;
     }
 
     @Override
-    public Comment createComment(Expert expert, Customer customer, String text) {
+    public CommentDto save(OrderDto orderDto, String text) {
+        Order order = orderService.findByReceptionNumber(orderDto.getReceptionNumber());
         Comment comment = Comment.builder()
                 .commentText(text)
-                .customer(customer)
-                .expert(expert).build();
+                .customer(order.getCustomer())
+                .expert(order.getExpert()).build();
 
-        if (comment != null)
-            return comment;
-        else
-            throw new ObjectEntityNotFoundException("-- comment is null --");
+            return commentMap.createCommentDto(comment);
+
     }
 }

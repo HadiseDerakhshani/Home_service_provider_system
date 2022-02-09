@@ -19,6 +19,7 @@
     <div class="btn-group mt-5 mx-5">
 
         <a href="<c:url value="/order" />" class="btn btn-outline-primary">Order</a>
+
         <a href="<c:url value="/"/>" class="btn btn-outline-primary">Main Menu</a>
 
     </div>

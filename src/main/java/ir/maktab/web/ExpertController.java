@@ -2,10 +2,7 @@ package ir.maktab.web;
 
 import ir.maktab.config.LastViewInterceptor;
 import ir.maktab.data.dto.*;
-import ir.maktab.service.implemention.ExpertServiceImpl;
-import ir.maktab.service.implemention.OrderServiceImpl;
-import ir.maktab.service.implemention.SubServiceServiceImpl;
-import ir.maktab.service.implemention.SuggestionServiceImpl;
+import ir.maktab.service.implemention.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -26,7 +23,7 @@ import java.util.List;
 public class ExpertController {
 
     private final ExpertServiceImpl expertService;
-
+    private final CommentServiceImpl commentService;
     private final SubServiceServiceImpl subServiceService;
 
     private final OrderServiceImpl orderService;
@@ -35,11 +32,13 @@ public class ExpertController {
 
     @Autowired
     public ExpertController(@Lazy ExpertServiceImpl expertService, @Lazy SubServiceServiceImpl subServiceService,
-                            @Lazy OrderServiceImpl orderService, @Lazy SuggestionServiceImpl suggestionService) {
+                            @Lazy OrderServiceImpl orderService, @Lazy SuggestionServiceImpl suggestionService,
+                            @Lazy CommentServiceImpl commentService) {
         this.expertService = expertService;
         this.subServiceService = subServiceService;
         this.orderService = orderService;
         this.suggestionService = suggestionService;
+        this.commentService=commentService;
     }
 
 
@@ -111,5 +110,13 @@ public class ExpertController {
     public String selectSuggest(@PathVariable long number, Model model) {
         suggestionService.update(number);
         return "login";
+    }
+    @PostMapping("/registerScore")
+    public ModelAndView registerScore(@RequestParam("score") String score,@RequestParam("comment") String comment,
+                                      @SessionAttribute("order") OrderDto orderDto) {
+        if(comment != null && comment.isEmpty())
+            commentService.save(orderDto,comment);
+        expertService.updateScore(Integer.parseInt(score),orderDto);
+        return new ModelAndView("order/choose_type_payment", "message", "score register Successfully");
     }
 }

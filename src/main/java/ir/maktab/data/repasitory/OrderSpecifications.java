@@ -1,16 +1,11 @@
 package ir.maktab.data.repasitory;
 
 import ir.maktab.data.dto.OrderFilterDto;
-import ir.maktab.data.dto.UserCategoryDto;
 import ir.maktab.data.entity.enums.OrderStatus;
-import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.order.Order;
-import ir.maktab.data.entity.serviceSystem.Service;
 import ir.maktab.data.entity.serviceSystem.SubService;
-import ir.maktab.data.entity.user.User;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +15,19 @@ public interface OrderSpecifications {
     static Specification<Order> filterByCriteria(OrderFilterDto filterDto, Set<SubService> listService) {
         return (Specification<Order>) (root, cq, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
-            if (filterDto.getBeginDate()!= null)
+            if (filterDto.getBeginDate() != null)
                 predicateList.add(cb.equal(root.get("registerDate"), filterDto.getBeginDate()));
-            if (filterDto.getEndDate() != null )
+            if (filterDto.getEndDate() != null)
                 predicateList.add(cb.equal(root.get("registerDate"), filterDto.getEndDate()));
             if (filterDto.getSubService() != null && !filterDto.getSubService().isEmpty())
-                predicateList.add(cb.equal(root.get("service"),filterDto.getSubService()));
-            if (filterDto.getStatus()!= null)
+                predicateList.add(cb.equal(root.get("service"), filterDto.getSubService()));
+            if (filterDto.getStatus() != null)
                 predicateList.add(cb.equal(root.get("status"), OrderStatus.valueOf(filterDto.getStatus())));
 
-            if (filterDto.getService()!= null && !filterDto.getSubService().isEmpty()) {
+            if (filterDto.getService() != null && !filterDto.getSubService().isEmpty()) {
 
-                for (SubService service:listService) {
-                    predicateList.add(cb.equal(root.get("service"),service));
+                for (SubService service : listService) {
+                    predicateList.add(cb.equal(root.get("service"), service));
                 }
             }
             return cb.and(predicateList.toArray(new Predicate[0]));

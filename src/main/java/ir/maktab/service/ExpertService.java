@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dto.ExpertDto;
+import ir.maktab.data.dto.OrderDto;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.user.Expert;
 
@@ -26,7 +27,7 @@ public interface ExpertService {
     public ExpertDto find(String email);
 
 
-    public void updateScore(int score, Expert expert);
+    public void updateScore(int score, OrderDto orderDto);
 
     public void updateStatus(UserStatus status, Expert expert);
 

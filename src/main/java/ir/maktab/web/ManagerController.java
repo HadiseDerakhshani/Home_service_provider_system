@@ -30,7 +30,7 @@ public class ManagerController {
         this.subServiceImpl = subServiceImpl;
         this.expertService = expertService;
         this.userService = userService;
-        this.orderService=orderService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -144,27 +144,28 @@ public class ManagerController {
         model.addAttribute("list", list);
         return "/manager/show_user";
     }
+
     @GetMapping("/showOrderPage")
     public String showOrderPage(Model model) {
-        List<SubServiceDto> listSubServices =subServiceImpl.findAll();
+        List<SubServiceDto> listSubServices = subServiceImpl.findAll();
         List<ServiceDto> listServices = service.findAll();
-       model.addAttribute("orderFilter",new OrderFilterDto());
-       model.addAttribute("listServices",listServices);
-       model.addAttribute("listSubServices",listSubServices);
+        model.addAttribute("orderFilter", new OrderFilterDto());
+        model.addAttribute("listServices", listServices);
+        model.addAttribute("listSubServices", listSubServices);
         return "/manager/order_filter_request";
     }
 
     @PostMapping("/orderFilter")
     public String orderFilter(Model model, @ModelAttribute("orderFilter") OrderFilterDto orderFilterDto,
-                           @RequestParam(value = "name", required = false) String name,
+                              @RequestParam(value = "name", required = false) String name,
                               @RequestParam(value = "nameSub", required = false) String nameSub) {
         if (name != null && !name.isEmpty())
-           orderFilterDto.setService(name);
+            orderFilterDto.setService(name);
 
         if (nameSub != null && !nameSub.isEmpty())
             orderFilterDto.setSubService(nameSub);
         List<OrderDto> filtering = orderService.filtering(orderFilterDto);
-        model.addAttribute("list",filtering);
+        model.addAttribute("list", filtering);
         return "/manager/show_order";
     }
 }

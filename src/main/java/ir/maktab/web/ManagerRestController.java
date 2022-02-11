@@ -77,7 +77,6 @@ public class ManagerRestController {
             System.out.println(e.getMessage());
             return serviceDto.getSubServiceList();
         }
-
         ServiceDto serviceUpdated = this.service.addSubService(serviceDto, saveSubService);
        return serviceUpdated.getSubServiceList();
     }
@@ -107,9 +106,7 @@ public class ManagerRestController {
         Map<String, Object> model = new HashMap<>();
         expertService.addSubServiceToExpert(expertDto, name);
         model.put("message", "expert add to list service Successfully");
-
         ExpertDto expertDtoNew = expertService.find(expertDto.getEmail());
-
         model.put("expertDto", expertDtoNew);
         List<SubServiceDto> serviceList = expertDtoNew.getServiceList();
         model.put("serviceList", serviceList);
@@ -139,7 +136,6 @@ public class ManagerRestController {
     }
 
     @GetMapping("/showOrderPage")
-    @ResponseBody
     public Map<String, Object> showOrderPage() {
         Map<String, Object> model = new HashMap<>();
         List<SubServiceDto> listSubServices = subServiceImpl.findAll();
@@ -151,12 +147,10 @@ public class ManagerRestController {
     }
 
     @PostMapping("/orderFilter")
-    @ResponseBody
     public List<OrderDto>  orderFilter(@RequestBody OrderFilterDto orderFilterDto,
                               @RequestBody String name, @RequestBody String nameSub) {
         if (name != null && !name.isEmpty())
             orderFilterDto.setService(name);
-
         if (nameSub != null && !nameSub.isEmpty())
             orderFilterDto.setSubService(nameSub);
         return  orderService.filtering(orderFilterDto);

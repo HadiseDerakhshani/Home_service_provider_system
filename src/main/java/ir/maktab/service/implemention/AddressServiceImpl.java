@@ -25,13 +25,5 @@ public class AddressServiceImpl implements AddressService {
         return addressMap.createAddressDto(addressRepository.save(addressMap.createAddress(address)));
     }
 
-    @Override
-    public Address createAddress(String city, String street, int plaque) {
-        Address address = Address.builder()
-                .city(city)
-                .street(street)
-                .plaque(plaque)
-                .build();
-        return address;
-    }
+
 }

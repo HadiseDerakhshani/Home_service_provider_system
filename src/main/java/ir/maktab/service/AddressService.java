@@ -7,7 +7,6 @@ import ir.maktab.data.entity.order.Address;
 public interface AddressService {
 
 
-    public AddressDto save(AddressDto address);
+    AddressDto save(AddressDto address);
 
-    public Address createAddress(String city, String street, int plaque);
 }

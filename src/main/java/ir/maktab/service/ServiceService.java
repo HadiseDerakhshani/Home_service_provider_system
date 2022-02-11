@@ -11,17 +11,17 @@ import java.util.Optional;
 public interface ServiceService {
 
 
-    public ServiceDto save(String name);
+    ServiceDto save(String name);
 
-    public Optional<Service> find(String name);
+    Optional<Service> find(String name);
 
-    public ServiceDto findByName(String name);
+    ServiceDto findByName(String name);
 
-    public void deleteService(String name);
+    void deleteService(String name);
 
-    public void update(ServiceDto serviceDto);
+    void update(ServiceDto serviceDto);
 
-    public ServiceDto addSubService(ServiceDto serviceDto, SubServiceDto subServiceDto);
+    ServiceDto addSubService(ServiceDto serviceDto, SubServiceDto subServiceDto);
 
-    public List<ServiceDto> findAll();
+    List<ServiceDto> findAll();
 }

@@ -8,8 +8,5 @@ import java.util.Optional;
 public interface SubServiceRepository extends JpaRepository<SubService, Integer> {
     Optional<SubService> findByName(String name);
 
-   /* @Transactional
-    @Modifying
-    @Query(value = "update SubService set expertList=:expertList where id=:id")
-    void updateExpertList(@Param("id") int id, @Param("expertList") List<Expert> expertList);*/
+
 }

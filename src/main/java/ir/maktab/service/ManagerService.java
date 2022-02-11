@@ -6,13 +6,13 @@ import ir.maktab.data.entity.user.Manager;
 public interface ManagerService {
 
 
-    public Manager createManager(String userName, String pass);
+    Manager createManager(String userName, String pass);
 
-    public void Save(Manager manager);
+    void Save(Manager manager);
 
-    public Manager checkManager(Manager manager);
+    Manager checkManager(Manager manager);
 
-    public void customerConfirmation();
+    void customerConfirmation();
 
-    public void payment(int number, double amount, int score);
+    void payment(int number, double amount, int score);
 }

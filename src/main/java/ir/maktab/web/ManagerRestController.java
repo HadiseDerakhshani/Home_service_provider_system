@@ -74,7 +74,7 @@ public class ManagerRestController {
         try {
             saveSubService = subServiceImpl.save(subServiceDto);
         } catch (DuplicateServiceException e) {
-          //  model.addAttribute("alert", e.getMessage());
+            System.out.println(e.getMessage());
             return serviceDto.getSubServiceList();
         }
 

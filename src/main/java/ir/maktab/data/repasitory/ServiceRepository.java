@@ -12,8 +12,5 @@ public interface ServiceRepository extends JpaRepository<Service, Integer> {
 
     Optional<Service> findByName(String name);
 
-   /* @Transactional
-    @Modifying
-    @Query(value = "update Service set subServiceList=:subServiceList where id=:id")
-    void updateSubList(@Param("id") int id, @Param("subServiceList") Set<SubService> subServiceList);*/
+
 }

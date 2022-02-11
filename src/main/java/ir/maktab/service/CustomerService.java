@@ -13,34 +13,34 @@ import java.util.Optional;
 public interface CustomerService {
 
 
-    public Customer save(CustomerDto customerDto);
+    Customer save(CustomerDto customerDto);
 
-    public List<CustomerDto> findByUserStatus(UserStatus status);
+    List<CustomerDto> findByUserStatus(UserStatus status);
 
-    public CustomerDto find(String email);
+    CustomerDto find(String email);
 
-    public void deleteCustomer(String email);
+    void deleteCustomer(String email);
 
-    public void changePassword(CustomerDto customer, String newPass);
+    void changePassword(CustomerDto customer, String newPass);
 
-    public void updateOrder(CustomerDto customerDto, OrderDto orderDto);
+    void updateOrder(CustomerDto customerDto, OrderDto orderDto);
 
-    public void updateStatus(String email, UserStatus status);
+    void updateStatus(String email, UserStatus status);
 
-    public void changePhoneNumber(CustomerDto customer, String newPhoneNumber);
+    void changePhoneNumber(CustomerDto customer, String newPhoneNumber);
 
-    public Optional<Customer> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
 
-    public void increaseCredit(Customer customer, double amount);
+    void increaseCredit(Customer customer, double amount);
 
-    public void decreaseCredit(CustomerDto customer, double amount);
+    void decreaseCredit(CustomerDto customer, double amount);
 
-    public List<CustomerDto> findAll(int pageNumber, int pageSize);
+    List<CustomerDto> findAll(int pageNumber, int pageSize);
 
-    public List<CustomerDto> findAll();
+    List<CustomerDto> findAll();
 
-    public List<SuggestionDto> selectSuggestion(OrderDto orderDto);
+    List<SuggestionDto> selectSuggestion(OrderDto orderDto);
 
-    public void payment(CustomerDto customerDto, OrderDto orderDto, double amount);
+    void payment(CustomerDto customerDto, OrderDto orderDto, double amount);
 
 }

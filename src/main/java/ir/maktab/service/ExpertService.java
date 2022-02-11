@@ -12,32 +12,30 @@ import java.util.Optional;
 public interface ExpertService {
 
 
-   Expert save(ExpertDto expert);
+    Expert save(ExpertDto expert);
 
-   ExpertDto update(Expert expert);
+    ExpertDto update(Expert expert);
 
-   void updatePassword(ExpertDto expertDto, String newPass);
+    void updatePassword(ExpertDto expertDto, String newPass);
 
-   void updatePhoneNumber(ExpertDto expertDto, String newPhoneNumber);
+    void updatePhoneNumber(ExpertDto expertDto, String newPhoneNumber);
 
-   Optional<Expert> findByEmail(String email);
+    Optional<Expert> findByEmail(String email);
 
-   ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name);
+    ExpertDto addSubServiceToExpert(ExpertDto expertDto, String name);
 
-   ExpertDto find(String email);
-
-
-   void updateScore(int score, OrderDto orderDto);
-
-   void updateStatus(UserStatus status, Expert expert);
-
-   void updateCredit(double amount, Expert expert);
-
-   List<ExpertDto> findAll(int pageNumber, int pageSize);
-
-   List<ExpertDto> findAll();
+    ExpertDto find(String email);
 
 
-   void deleteExpert(String email);
+    void updateScore(int score, OrderDto orderDto);
+
+    void updateStatus(UserStatus status, Expert expert);
+
+    void updateCredit(double amount, Expert expert);
+
+    List<ExpertDto> findAll();
+
+
+    void deleteExpert(String email);
 
 }

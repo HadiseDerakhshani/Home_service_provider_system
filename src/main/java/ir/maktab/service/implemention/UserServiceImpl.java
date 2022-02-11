@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserRole findByEmail(String email, String pass) {
         if (!userRepository.findByEmail(email).isPresent())
-            throw new ObjectEntityNotFoundException("user is not exit");
+            throw new ObjectEntityNotFoundException("--- user is not exit ---");
         else {
             User user = userRepository.findByEmail(email).get();
             if (checkPassword(user, pass)) ;
@@ -68,7 +68,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAll() {
         List<User> list = userRepository.findAll();
-        return list.stream().map(userMap::createUserDto).collect(Collectors.toList());
+        if (list != null)
+            return list.stream().map(userMap::createUserDto).collect(Collectors.toList());
+
+        throw new ObjectEntityNotFoundException(" --- list of expert is null ---");
     }
 
 

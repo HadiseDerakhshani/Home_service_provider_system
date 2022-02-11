@@ -11,12 +11,12 @@ import java.util.List;
 public interface UserService {
 
 
-   UserRole findByEmail(String email, String pass);
+    UserRole findByEmail(String email, String pass);
 
-   boolean checkPassword(User user, String pass);
+    boolean checkPassword(User user, String pass);
 
-   List<UserDto> filtering(UserCategoryDto categoryDto);
+    List<UserDto> filtering(UserCategoryDto categoryDto);
 
-   List<UserDto> findAll();
+    List<UserDto> findAll();
 
 }

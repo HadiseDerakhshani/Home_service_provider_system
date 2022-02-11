@@ -21,7 +21,8 @@ public class UserDto extends BaseDto {
     @Pattern(regexp = "^[a-zA-Z]+$", message = "lastName is not alphabet")
     private String lastName;
 
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "invalid email")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "invalid email")
     @NotBlank(message = "email is blank")
     private String email;
 

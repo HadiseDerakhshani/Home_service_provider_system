@@ -2,14 +2,13 @@ package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.UserRole;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.user.Customer;
 import ir.maktab.data.mapping.CustomerMap;
 import ir.maktab.data.mapping.OrderMap;
 import ir.maktab.data.repasitory.CustomerRepository;
-import ir.maktab.exception.InValidUserInfoException;
+import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.CustomerService;
 import lombok.Getter;
@@ -65,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
             return customerRepository.save(customer);
 
         } else
-            throw new InValidUserInfoException("-- Customer is exit for this email --");
+            throw new DuplicateServiceException("-- Customer is exit for this email --");
     }
 
 
@@ -135,9 +134,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (findByEmail(email).isPresent())
             return customerMap.createCustomerDto(findByEmail(email).get());
         else {
-
-            System.out.println("---------------------------------");
-            return null;
+            throw new ObjectEntityNotFoundException(" --- customer is not by email  ---");
         }
     }
 
@@ -176,26 +173,6 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll().stream().map(customerMap::createCustomerDto).collect(Collectors.toList());
     }
 
-    @Override
-    public List<SuggestionDto> selectSuggestion(OrderDto orderDto) {
-
-      /*  List<Suggestion> suggestion = orderDto.getSuggestion().stream()
-                .filter(s -> s.getStatus().equals(SuggestionStatus.NEW)).collect(Collectors.toList());
-        suggestion.stream().sorted(Comparator.comparing(Suggestion::getProposedPrice))
-                .sorted(Comparator.comparing(i -> i.getExpert().getScore())).collect(Collectors.toList());
-      */
-
-      /*  List<SuggestionDto> suggestDtoList = new ArrayList<>();
-        if (suggestion != null) {
-            for (Suggestion suggest : suggestion) {
-                SuggestionDto suggestDto = suggestService.createSuggestDto(suggest);
-                suggestDtoList.add(suggestDto);
-            }
-            return suggestDtoList;
-        } else
-            throw new ObjectEntityNotFoundException("-- list suggest null --");*/
-        return null;//
-    }
 
     @Override
     public void payment(CustomerDto customerDto, OrderDto orderDto, double amount) {

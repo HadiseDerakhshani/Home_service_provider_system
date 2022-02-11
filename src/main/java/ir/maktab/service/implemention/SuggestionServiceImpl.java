@@ -11,6 +11,7 @@ import ir.maktab.data.entity.user.Expert;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SuggestionMap;
 import ir.maktab.data.repasitory.SuggestionRepository;
+import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.SuggestionService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
     public Suggestion findByReceptionNumber(long number) {
-        return suggestionRepository.findByReceptionNumber(number).get();
+        if (suggestionRepository.findByReceptionNumber(number).isPresent())
+            return suggestionRepository.findByReceptionNumber(number).get();
+        throw new ObjectEntityNotFoundException(" ---  suggestion is not exit ---");
     }
 
 
@@ -91,7 +94,6 @@ public class SuggestionServiceImpl implements SuggestionService {
         suggestionList.stream().forEach(s -> s.setStatus(SuggestionStatus.REJECT));
         order.setSuggestion(suggestionList);
         order.getSuggestion().add(suggestion);
-        //  expert.getOrderList().add(order);////////
         orderServiceImpl.update(order);
         expertServiceImpl.update(expert);
         suggestionRepository.save(suggestion);
@@ -112,9 +114,13 @@ public class SuggestionServiceImpl implements SuggestionService {
     @Override
     public List<SuggestionDto> findByExpert(ExpertDto expertDto) {
         List<Suggestion> list = suggestionRepository.findAll();
-        List<Suggestion> suggestionList = list.stream().filter(s -> s.getExpert().getEmail().equals(expertDto.getEmail()))
-                .collect(Collectors.toList());
-        return suggestionList.stream().sorted().map(suggestionMap::createSuggestionDto)
-                .collect(Collectors.toList());
+        if (list != null) {
+            List<Suggestion> suggestionList = list.stream().filter(s -> s.getExpert().getEmail().equals(expertDto.getEmail()))
+                    .collect(Collectors.toList());
+            if (suggestionList != null)
+                return suggestionList.stream().sorted().map(suggestionMap::createSuggestionDto)
+                        .collect(Collectors.toList());
+        }
+        throw new ObjectEntityNotFoundException(" --- list of suggestion is null ---");
     }
 }

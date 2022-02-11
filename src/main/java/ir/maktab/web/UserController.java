@@ -42,14 +42,14 @@ public class UserController {
 
         if (role.equals(UserRole.EXPERT)) {
             ExpertDto expertProfile = expertService.find(email);
-              List<OrderDto> orderDtoList = orderService.findOrderByExpert(expertProfile);
-             System.out.println(orderDtoList);//todo null check
+            List<OrderDto> orderDtoList = orderService.findOrderByExpert(expertProfile);
+            System.out.println(orderDtoList);//todo null check
 
             List<SuggestionDto> suggestionDtoList = suggestionService.findByExpert(expertProfile);
             List<SubServiceDto> serviceList = expertProfile.getServiceList();
             session.setAttribute("expert", expertProfile);
             model.addAttribute("expert", expertProfile);
-             model.addAttribute("orderList", orderDtoList);
+            model.addAttribute("orderList", orderDtoList);
             model.addAttribute("suggestionDtoList", suggestionDtoList);
             model.addAttribute("serviceList", serviceList);
             return "expert/expert_profile";

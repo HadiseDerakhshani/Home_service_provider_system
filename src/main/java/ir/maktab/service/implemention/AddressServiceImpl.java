@@ -1,7 +1,6 @@
 package ir.maktab.service.implemention;
 
 import ir.maktab.data.dto.AddressDto;
-import ir.maktab.data.entity.order.Address;
 import ir.maktab.data.mapping.AddressMap;
 import ir.maktab.data.repasitory.AddressRepository;
 import ir.maktab.service.AddressService;

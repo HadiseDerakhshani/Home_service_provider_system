@@ -5,8 +5,6 @@ import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.service.implemention.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +32,6 @@ public class ManagerRestController {
         this.userService = userService;
         this.orderService = orderService;
     }
-
 
 
     @GetMapping("/addService")
@@ -67,8 +64,8 @@ public class ManagerRestController {
     }
 
     @PostMapping("/newSubService")
-    public  Set<SubServiceDto> addSubService(@ModelAttribute("subService") SubServiceDto subServiceDto,
-                                @SessionAttribute("service") ServiceDto serviceDto) {
+    public Set<SubServiceDto> addSubService(@ModelAttribute("subService") SubServiceDto subServiceDto,
+                                            @SessionAttribute("service") ServiceDto serviceDto) {
 
         SubServiceDto saveSubService;
         try {
@@ -78,17 +75,17 @@ public class ManagerRestController {
             return serviceDto.getSubServiceList();
         }
         ServiceDto serviceUpdated = this.service.addSubService(serviceDto, saveSubService);
-       return serviceUpdated.getSubServiceList();
+        return serviceUpdated.getSubServiceList();
     }
 
     @GetMapping("/selectExpert")
-    public  List<ExpertDto> showSelectExpert() {
-       return expertService.findAll();
+    public List<ExpertDto> showSelectExpert() {
+        return expertService.findAll();
 
     }
 
     @PostMapping("/addExpert")
-    public Map<String, Object>  showAddExpert(@RequestParam("email") String email, HttpSession session) {
+    public Map<String, Object> showAddExpert(@RequestParam("email") String email, HttpSession session) {
         Map<String, Object> model = new HashMap<>();
         ExpertDto expertDto = expertService.find(email);
         session.setAttribute("expertDto", expertDto);
@@ -102,7 +99,7 @@ public class ManagerRestController {
 
     @PostMapping("/expertAddToService")
     public Map<String, Object> addExpertToService(@RequestParam("name") String name,
-                                     @SessionAttribute("expertDto") ExpertDto expertDto) {
+                                                  @SessionAttribute("expertDto") ExpertDto expertDto) {
         Map<String, Object> model = new HashMap<>();
         expertService.addSubServiceToExpert(expertDto, name);
         model.put("message", "expert add to list service Successfully");
@@ -117,7 +114,7 @@ public class ManagerRestController {
     }
 
     @GetMapping("/userPage")
-    public Map<String, Object>  showUserPage() {
+    public Map<String, Object> showUserPage() {
         Map<String, Object> model = new HashMap<>();
         model.put("userCategory", new UserCategoryDto());
         List<SubServiceDto> list = subServiceImpl.findAll();
@@ -127,11 +124,11 @@ public class ManagerRestController {
 
     @PostMapping("/userFilter")
     public List<UserDto> showUser(@ModelAttribute("userCategory") UserCategoryDto categoryDto,
-                           @RequestParam(value = "name", required = false) String name) {
+                                  @RequestParam(value = "name", required = false) String name) {
 
         if (name != null && !name.isEmpty())
             categoryDto.setService(name);
-       return userService.filtering(categoryDto);
+        return userService.filtering(categoryDto);
 
     }
 
@@ -147,13 +144,13 @@ public class ManagerRestController {
     }
 
     @PostMapping("/orderFilter")
-    public List<OrderDto>  orderFilter(@RequestBody OrderFilterDto orderFilterDto,
-                              @RequestBody String name, @RequestBody String nameSub) {
+    public List<OrderDto> orderFilter(@RequestBody OrderFilterDto orderFilterDto,
+                                      @RequestBody String name, @RequestBody String nameSub) {
         if (name != null && !name.isEmpty())
             orderFilterDto.setService(name);
         if (nameSub != null && !nameSub.isEmpty())
             orderFilterDto.setSubService(nameSub);
-        return  orderService.filtering(orderFilterDto);
+        return orderService.filtering(orderFilterDto);
     }
 
 }

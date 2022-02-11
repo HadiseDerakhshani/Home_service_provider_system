@@ -9,13 +9,13 @@ import java.util.List;
 public interface SubServiceService {
 
 
-   List<SubServiceDto> findAll();
+    List<SubServiceDto> findAll();
 
-   SubService find(String name);
+    SubService find(String name);
 
-   SubServiceDto findByName(String name);
+    SubServiceDto findByName(String name);
 
-   SubServiceDto save(SubServiceDto subServiceDto);
+    SubServiceDto save(SubServiceDto subServiceDto);
 
-   void deleteSubService(String name);
+    void deleteSubService(String name);
 }

@@ -8,9 +8,9 @@ import ir.maktab.data.entity.order.Transaction;
 import java.util.Optional;
 
 public interface TransactionService {
-   Optional<Transaction> findByReceptionNumber(long number);
+    Optional<Transaction> findByReceptionNumber(long number);
 
-   TransactionDto save(OrderDto orderDto, double amount);
+    TransactionDto save(OrderDto orderDto, double amount);
 
-   Transaction giveTransactionNumber(Transaction transaction);
+    Transaction giveTransactionNumber(Transaction transaction);
 }

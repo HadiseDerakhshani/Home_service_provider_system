@@ -2,7 +2,6 @@ package ir.maktab.service;
 
 import ir.maktab.data.dto.CustomerDto;
 import ir.maktab.data.dto.OrderDto;
-import ir.maktab.data.dto.SuggestionDto;
 import ir.maktab.data.entity.enums.UserStatus;
 import ir.maktab.data.entity.user.Customer;
 
@@ -38,8 +37,6 @@ public interface CustomerService {
     List<CustomerDto> findAll(int pageNumber, int pageSize);
 
     List<CustomerDto> findAll();
-
-    List<SuggestionDto> selectSuggestion(OrderDto orderDto);
 
     void payment(CustomerDto customerDto, OrderDto orderDto, double amount);
 

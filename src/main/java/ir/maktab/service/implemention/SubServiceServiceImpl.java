@@ -5,6 +5,7 @@ import ir.maktab.data.entity.serviceSystem.SubService;
 import ir.maktab.data.mapping.ExpertMap;
 import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.repasitory.SubServiceRepository;
+import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.SubServiceService;
 import lombok.Getter;
@@ -42,24 +43,30 @@ public class SubServiceServiceImpl implements SubServiceService {
                     .collect(Collectors.toList());
             return listSubServiceDto;
         } else
-            throw new ObjectEntityNotFoundException(" SubService is null");
+            throw new ObjectEntityNotFoundException(" --- SubService is null ---");
     }
 
     @Override
     public SubServiceDto findByName(String name) {
-        return subServiceMap.createSubServiceDto(subServiceRepository.findByName(name).get());
+
+        return subServiceMap.createSubServiceDto(find(name));
     }
 
     @Override
     public SubService find(String name) {
-        return subServiceRepository.findByName(name).get();
+        if (subServiceRepository.findByName(name).isPresent())
+            return subServiceRepository.findByName(name).get();
+        throw new ObjectEntityNotFoundException(" --- SubService is null ---");
     }
 
     @Override
     public SubServiceDto save(SubServiceDto subServiceDto) {
-        SubService subService = subServiceMap.createSubService(subServiceDto);
-        SubService saveSubService = subServiceRepository.save(subService);
-        return subServiceMap.createSubServiceDto(saveSubService);
+        if (find(subServiceDto.getName()) != null) {
+            SubService subService = subServiceMap.createSubService(subServiceDto);
+            SubService saveSubService = subServiceRepository.save(subService);
+            return subServiceMap.createSubServiceDto(saveSubService);
+        }
+        throw new DuplicateServiceException(" --- SubService is exit for name ---");
     }
 
     @Override

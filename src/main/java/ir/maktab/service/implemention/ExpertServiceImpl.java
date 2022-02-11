@@ -12,17 +12,14 @@ import ir.maktab.data.mapping.SubServiceMap;
 import ir.maktab.data.mapping.SuggestionMap;
 import ir.maktab.data.repasitory.ExpertRepository;
 import ir.maktab.data.repasitory.SubServiceRepository;
-import ir.maktab.exception.InValidUserInfoException;
+import ir.maktab.exception.DuplicateServiceException;
 import ir.maktab.exception.ObjectEntityNotFoundException;
 import ir.maktab.service.ExpertService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,7 +65,7 @@ public class ExpertServiceImpl implements ExpertService {
             expert.setUserRole(UserRole.EXPERT);
             return expertRepository.save(expert);
         } else
-            throw new InValidUserInfoException("-- Expert is exit for this email --");
+            throw new DuplicateServiceException("-- Expert is exit for this email --");
     }
 
 
@@ -103,7 +100,6 @@ public class ExpertServiceImpl implements ExpertService {
         expert.getServiceList().add(subService);
         expertRepository.save(expert);
         return expertMap.createExpertDto(expert);
-        //////
     }
 
 
@@ -131,20 +127,6 @@ public class ExpertServiceImpl implements ExpertService {
         expertRepository.save(expert);
     }
 
-    @Override
-    public List<ExpertDto> findAll(int pageNumber, int pageSize) {
-        Page<Expert> pageList = expertRepository.findAll(PageRequest.of(pageNumber, pageSize));
-        List<Expert> list = pageList.toList();
-        List<ExpertDto> listDto = new ArrayList<>();
-        if (list != null) {
-            for (Expert expert : list) {
-                listDto.add(expertMap.createExpertDto(expert));
-            }
-            return listDto;
-        } else
-            throw new ObjectEntityNotFoundException(" --- list of expert is null ---");
-    }
-
 
     @Override
     public void deleteExpert(String email) {
@@ -154,12 +136,15 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public ExpertDto update(Expert expert) {
         Expert saveExpert = expertRepository.save(expert);
-        return expertMap.createExpertDto(expert);
+        return expertMap.createExpertDto(saveExpert);
     }
 
     @Override
     public List<ExpertDto> findAll() {
         List<Expert> list = expertRepository.findAll();
-        return list.stream().map(expertMap::createExpertDto).collect(Collectors.toList());
+        if (list != null)
+            return list.stream().map(expertMap::createExpertDto).collect(Collectors.toList());
+        else
+            throw new ObjectEntityNotFoundException(" --- list of expert is null ---");
     }
 }

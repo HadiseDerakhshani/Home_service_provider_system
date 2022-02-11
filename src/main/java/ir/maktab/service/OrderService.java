@@ -12,43 +12,43 @@ import java.util.List;
 public interface OrderService {
 
 
-  OrderDto save(OrderDto orderDto);
+    OrderDto save(OrderDto orderDto);
 
-  List<OrderDto> findOrderToSuggest();
+    List<OrderDto> findOrderToSuggest();
 
-  OrderDto find(long number);
+    OrderDto find(long number);
 
-  List<OrderDto> findOrderByCustomer(CustomerDto customer);
+    List<OrderDto> findOrderByCustomer(CustomerDto customer);
 
-  void addCustomerToOrder(CustomerDto customer, OrderDto order);
+    void addCustomerToOrder(CustomerDto customer, OrderDto order);
 
-  void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order);
+    void addServiceToOrder(SubServiceDto subServiceDto, OrderDto order);
 
-  Order giveReceptionNumber(Order order);
+    Order giveReceptionNumber(Order order);
 
-  Order findByReceptionNumber(long number);
+    Order findByReceptionNumber(long number);
 
-  void updateStatus(OrderDto order, OrderStatus status);
+    void updateStatus(OrderDto order, OrderStatus status);
 
-  void updatePricePaid(OrderDto order, double amount);
+    void updatePricePaid(OrderDto order, double amount);
 
-  void addSuggestionToOrder(OrderDto order, SuggestionDto suggest);
+    void addSuggestionToOrder(OrderDto order, SuggestionDto suggest);
 
-  void addExpertToOrder(ExpertDto expert, OrderDto order);
+    void addExpertToOrder(ExpertDto expert, OrderDto order);
 
-  List<OrderDto> findAll();
+    List<OrderDto> findAll();
 
-  List<OrderDto> findOrderToSelectExpert(Customer customer);
+    List<OrderDto> findOrderToSelectExpert(Customer customer);
 
-  OrderDto update(Order order);
+    OrderDto update(Order order);
 
-  List<OrderDto> findOrderByExpert(ExpertDto expertDto);
+    List<OrderDto> findOrderByExpert(ExpertDto expertDto);
 
-  OrderDto findOrderToPayment(CustomerDto customer);
+    OrderDto findOrderToPayment(CustomerDto customer);
 
-  void startAndEndOrder(int number, int chose, Expert expert);
+    void startAndEndOrder(int number, int chose, Expert expert);
 
-  Double calculatePrice(OrderDto orderDto);
+    Double calculatePrice(OrderDto orderDto);
 
-  List<OrderDto> filtering(OrderFilterDto orderFilterDto);
+    List<OrderDto> filtering(OrderFilterDto orderFilterDto);
 }

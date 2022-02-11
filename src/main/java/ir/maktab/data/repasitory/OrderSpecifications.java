@@ -20,7 +20,7 @@ public interface OrderSpecifications {
             if (filterDto.getEndDate() != null)
                 predicateList.add(cb.equal(root.get("registerDate"), filterDto.getEndDate()));
             if (filterDto.getBeginDate() != null && filterDto.getEndDate() != null)
-                predicateList.add(cb.between(root.get("registerDate"), filterDto.getBeginDate(),filterDto.getEndDate()));
+                predicateList.add(cb.between(root.get("registerDate"), filterDto.getBeginDate(), filterDto.getEndDate()));
             if (filterDto.getSubService() != null && !filterDto.getSubService().isEmpty())
                 predicateList.add(cb.equal(root.get("service"), filterDto.getSubService()));
             if (filterDto.getStatus() != null)

@@ -12,17 +12,17 @@ import java.util.List;
 public interface SuggestionService {
 
 
-   SuggestionDto save(SuggestionDto suggestion, OrderDto orderDto, ExpertDto expertDto);
+    SuggestionDto save(SuggestionDto suggestion, OrderDto orderDto, ExpertDto expertDto);
 
-   Suggestion findByReceptionNumber(long number);
+    Suggestion findByReceptionNumber(long number);
 
-   List<SuggestionDto> findByExpert(ExpertDto expertDto);
+    List<SuggestionDto> findByExpert(ExpertDto expertDto);
 
-   Suggestion giveReceptionNumber(Suggestion suggestion);
+    Suggestion giveReceptionNumber(Suggestion suggestion);
 
-   void updateStatus(Suggestion suggestion, SuggestionStatus status);
+    void updateStatus(Suggestion suggestion, SuggestionStatus status);
 
-   List<SuggestionDto> findByOrder(long number);
+    List<SuggestionDto> findByOrder(long number);
 
-   void update(long number);
+    void update(long number);
 }

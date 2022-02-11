@@ -38,7 +38,7 @@ public class ExpertController {
         this.subServiceService = subServiceService;
         this.orderService = orderService;
         this.suggestionService = suggestionService;
-        this.commentService=commentService;
+        this.commentService = commentService;
     }
 
 
@@ -111,12 +111,13 @@ public class ExpertController {
         suggestionService.update(number);
         return "login";
     }
+
     @PostMapping("/registerScore")
-    public ModelAndView registerScore(@RequestParam("score") String score,@RequestParam("comment") String comment,
+    public ModelAndView registerScore(@RequestParam("score") String score, @RequestParam("comment") String comment,
                                       @SessionAttribute("order") OrderDto orderDto) {
-        if(comment != null && comment.isEmpty())
-            commentService.save(orderDto,comment);
-        expertService.updateScore(Integer.parseInt(score),orderDto);
+        if (comment != null && comment.isEmpty())
+            commentService.save(orderDto, comment);
+        expertService.updateScore(Integer.parseInt(score), orderDto);
         return new ModelAndView("order/choose_type_payment", "message", "score register Successfully");
     }
 }
